@@ -1,6 +1,6 @@
 [package]
 name = "steam-rs"
-version = "0.1.0"
+version = "0.0.0"
 authors = ["Garrett Howard <garrett@mersh.com>"]
 edition = "2021"
 description = "A wrapper for the Steam Web API in Rust"
