@@ -2,11 +2,11 @@ use anyhow::Result;
 use serde_derive::{Deserialize, Serialize};
 use serde_json::Value;
 
-use crate::Steam;
+use crate::{Steam, SteamId, AppId};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Player {
-    pub steamid: String,
+    pub steamid: SteamId,
     pub personaname: String,
     pub profileurl: String,
     pub avatar: String,
@@ -20,7 +20,7 @@ pub struct Player {
     pub realname: Option<String>,
     pub primaryclanid: Option<String>,
     pub timecreated: Option<u64>,
-    pub gameid: Option<u64>,
+    pub gameid: Option<AppId>,
     pub gameserverip: Option<String>,
     pub gameextrainfo: Option<String>,
     pub loccountrycode: Option<String>,

@@ -2,7 +2,7 @@ use anyhow::Result;
 use serde_derive::{Serialize, Deserialize};
 use serde_json::Value;
 
-use crate::Steam;
+use crate::{Steam, AppId};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct NewsItem {
@@ -33,7 +33,7 @@ struct Response {
 }
 
 impl Steam {
-    pub async fn get_news_for_app(&self, appid: u32, count: u32, max_length: u32) -> Result<AppNews> {
+    pub async fn get_news_for_app(&self, appid: AppId, count: u32, max_length: u32) -> Result<AppNews> {
         let url = format!("https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid={}&count={}&maxlength={}",
             appid,
             count,

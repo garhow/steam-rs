@@ -2,7 +2,7 @@ use anyhow::Result;
 use serde_derive::Deserialize;
 use serde_json::Value;
 
-use crate::Steam;
+use crate::{Steam, SteamId};
 
 #[derive(PartialEq, Debug, Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -13,7 +13,7 @@ pub enum Relationship {
 
 #[derive(Deserialize, Debug)]
 pub struct Friend {
-    pub steamid: String,
+    pub steamid: SteamId,
     pub relationship: Relationship,
     pub friend_since: u32
 }
