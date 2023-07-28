@@ -14,8 +14,12 @@ categories = ["api-bindings"]
 
 [dependencies]
 anyhow = "1.0.72"
+rayon = "1.7.0"
 reqwest = { version = "0.11.18", features = ["json"] }
 serde = "1.0.175"
 serde_derive = "1.0.175"
 serde_json = "1.0.103"
 tokio = { version = "1.29.1", features = ["full"] }
+
+[dev-dependencies]
+tokio-test = "0.4.2"

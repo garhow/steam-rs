@@ -1,8 +1,6 @@
-use anyhow::Result;
 use serde_derive::{Serialize, Deserialize};
-use serde_json::Value;
-
-use crate::{Steam, AppId};
+use anyhow::Result;
+use crate::{Steam, AppId, errors::{SteamNewsError, ErrorHandle}, macros::do_http};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct NewsItem {
@@ -33,16 +31,14 @@ struct Response {
 }
 
 impl Steam {
-    pub async fn get_news_for_app(&self, appid: AppId, count: u32, max_length: u32) -> Result<AppNews> {
+    pub async fn get_news_for_app(&self, appid: AppId, count: u32, max_length: u32) -> Result<AppNews, SteamNewsError> {
         let url = format!("https://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid={}&count={}&maxlength={}",
             appid,
             count,
             max_length,
         );
 
-        let json: Value = reqwest::get(url).await.unwrap().json().await.unwrap();
-
-        let response: Response = serde_json::from_value(json).unwrap();
+        let response = do_http!(url, Response, ErrorHandle, SteamNewsError::GetNews);
 
         Ok(response.appnews)
     }

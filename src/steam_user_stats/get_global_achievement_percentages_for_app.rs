@@ -1,8 +1,6 @@
-use anyhow::Result;
 use serde_derive::{Deserialize, Serialize};
-use serde_json::Value;
 
-use crate::Steam;
+use crate::{Steam, macros::do_http, errors::{ErrorHandle, SteamUserStatsError}};
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Achievement {
@@ -21,12 +19,11 @@ struct Response {
 }
 
 impl Steam {
-    pub async fn get_global_achievement_percentages_for_app(&self, game_id: u32) -> Result<AchievementPercentages> {
+    /// Gets the global achievement percentages for an app.
+    pub async fn get_global_achievement_percentages_for_app(&self, game_id: u32) -> Result<AchievementPercentages, SteamUserStatsError> {
         let url = format!("https://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid={}", game_id);
 
-        let json: Value = reqwest::get(url).await.unwrap().json().await.unwrap(); 
-
-        let response: Response = serde_json::from_value(json).unwrap();
+        let response = do_http!(url, Response, ErrorHandle, SteamUserStatsError::GetGlobalAchievements);
 
         Ok(response.achievementpercentages)
     }

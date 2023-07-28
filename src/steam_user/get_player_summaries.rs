@@ -1,8 +1,7 @@
-use anyhow::Result;
 use serde_derive::{Deserialize, Serialize};
 use serde_json::Value;
 
-use crate::{Steam, SteamId, AppId};
+use crate::{Steam, SteamId, AppId, macros::do_http, errors::{ErrorHandle, SteamUserError}};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Player {
@@ -34,18 +33,17 @@ pub struct PlayerSummary {
 }
 
 impl Steam {
-    pub async fn get_player_summaries(&self, steam_ids: Vec<&str>) -> Result<PlayerSummary> {
-        let steam_ids: String = steam_ids.iter().map(|&id| id.to_string() + ",").collect();
+    pub async fn get_player_summaries(&self, steam_ids: Vec<&str>) -> Result<PlayerSummary, SteamUserError> {
+        let steam_ids: String = steam_ids.iter().map(|&id| id.to_string() + ",").collect(); // DO NOT RAYON THIS! - Rayon doesn't protect the order of data!
         
         let url = format!("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={}&steamids={}",
             &self.api_key,
             steam_ids
         );
 
-        let response = reqwest::get(url).await.unwrap();
-        let json: Value = response.json().await.unwrap(); 
-        
-        let player_summary: PlayerSummary = serde_json::from_value(json["response"].to_owned()).unwrap();
+        // Don't make this a one-liner, it will become too unreadable.
+        let json = do_http!(url, Value, ErrorHandle, SteamUserError::GetPlayerSummaries);
+        let player_summary: PlayerSummary = ErrorHandle!(serde_json::from_value(json["response"].to_owned()), SteamUserError::GetPlayerSummaries);
 
         return Ok(player_summary);
     }
