@@ -10,6 +10,9 @@ pub mod steam_news;
 pub mod steam_user;
 pub mod steam_user_stats;
 
+mod errors; // This remains private - maybe
+mod macros; // This remains private
+
 /// Struct for Steam IDs
 #[derive(Clone, Copy, Debug, Deserialize, Eq, PartialEq, Serialize)]
 pub struct SteamId(pub u64);
