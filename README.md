@@ -3,6 +3,7 @@
 [![Crate at crates.io](https://img.shields.io/crates/v/steam-rs.svg)](https://crates.io/crates/steam-rs)
 [![Documentation at docs.rs](https://docs.rs/steam-rs/badge.svg)](https://docs.rs/steam-rs)
 [![MIT licensed](https://img.shields.io/crates/l/steam-rs.svg)](./LICENSE)
+[![CI](https://github.com/garhow/steam-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/garhow/steam-rs/actions/workflows/ci.yml)
 
 A wrapper for the Steam Web API in Rust.
 
