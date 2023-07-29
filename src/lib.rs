@@ -4,14 +4,19 @@
 
 use std::fmt;
 
+use rayon::prelude::ParallelDrainRange;
+use serde::Deserialize;
 use serde_derive::{Deserialize, Serialize};
 
+pub mod player_service;
 pub mod steam_news;
 pub mod steam_user;
 pub mod steam_user_stats;
 
 mod errors; // This remains private - maybe
 mod macros; // This remains private
+
+pub const BASE: &str = "https://api.steampowered.com";
 
 /// Struct for Steam IDs
 #[derive(Clone, Copy, Debug, Deserialize, Eq, PartialEq, Serialize)]
@@ -20,6 +25,19 @@ impl fmt::Display for SteamId {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.0)
     }
+}
+
+impl From<String> for SteamId {
+    fn from(value: String) -> Self {
+        SteamId(value.parse::<u64>().unwrap())
+    }
+}
+
+fn de_steamid_from_str<'de, D>(deserializer: D) -> Result<SteamId, D::Error>
+    where D: serde::Deserializer<'de>
+{
+    let s = String::deserialize(deserializer)?;
+    Ok(SteamId::from(s))
 }
 
 /// Struct for Steam App IDs

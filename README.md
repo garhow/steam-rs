@@ -6,6 +6,9 @@ This is based on the [Steam Web API documentation](https://developer.valvesoftwa
 This crate is highly experimental and unfinished so you are advised to be cautious when using it in your projects.
 
 ## Supported API endpoints
+- [ ] IPlayerService
+  - [x] GetOwnedGames
+  - [ ] GetRecentlyPlayedGames
 - [x] ISteamNews
   - [x] GetNewsForApp
 - [ ] ISteamUser
@@ -14,6 +17,5 @@ This crate is highly experimental and unfinished so you are advised to be cautio
   - [ ] GetPlayerAchievements
   - [ ] GetUserStatsForGame
   - [ ] GetOwnedGames
-  - [ ] GetRecentlyPlayedGames
 - [x] ISteamUserStats
   - [x] GetGlobalAchievementPercentagesForApp

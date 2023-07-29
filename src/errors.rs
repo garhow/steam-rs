@@ -2,6 +2,10 @@
 
 use crate::macros::error;
 
+error!(PlayerServiceError{
+    GetOwnedGames(String)
+});
+
 error!(SteamNewsError{
     GetNews(String)
 });

@@ -1,6 +1,11 @@
 use serde_derive::{Deserialize, Serialize};
 
-use crate::{Steam, macros::do_http, errors::{ErrorHandle, SteamUserStatsError}};
+use crate::{Steam, BASE, macros::do_http, errors::{ErrorHandle, SteamUserStatsError}, AppId};
+
+use super::INTERFACE;
+
+const ENDPOINT: &str = "GetGlobalAchievementPercentagesForApp";
+const VERSION: &str = "0002";
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Achievement {
@@ -20,11 +25,13 @@ struct Response {
 
 impl Steam {
     /// Gets the global achievement percentages for an app.
-    pub async fn get_global_achievement_percentages_for_app(&self, game_id: u32) -> Result<AchievementPercentages, SteamUserStatsError> {
-        let url = format!("https://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid={}", game_id);
-
+    pub async fn get_global_achievement_percentages_for_app(
+        &self,
+        game_id: AppId
+    ) -> Result<AchievementPercentages, SteamUserStatsError> {
+        let query = format!("?gameid={}", game_id);
+        let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
         let response = do_http!(url, Response, ErrorHandle, SteamUserStatsError::GetGlobalAchievements);
-
         Ok(response.achievementpercentages)
     }
 }
