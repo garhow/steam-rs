@@ -25,3 +25,9 @@ This crate is highly experimental and unfinished so you are advised to be cautio
   - [ ] GetOwnedGames
 - [x] ISteamUserStats
   - [x] GetGlobalAchievementPercentagesForApp
+
+## Contributing
+This project is in early stages of development, so bug reports, suggestions, and pull requests are highly appreciated!
+
+## License
+This project is licensed under the [MIT License](./LICENSE).
