@@ -22,7 +22,8 @@ pub struct Game {
     pub playtime_2weeks: Option<u32>,
     pub playtime_forever: u32,
     pub img_icon_url: Option<String>,
-    pub img_logo_url: Option<String>
+    pub img_logo_url: Option<String>,
+    pub has_community_visible_stats: Option<bool>
 }
 
 #[derive(Debug, Deserialize, Serialize)]
