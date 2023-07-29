@@ -11,7 +11,7 @@ This is based on the [Steam Web API documentation](https://developer.valvesoftwa
 
 This crate is highly experimental and unfinished so you are advised to be cautious when using it in your projects.
 
-## Supported API endpoints
+### Supported API endpoints
 - [x] IPlayerService
   - [x] GetOwnedGames
   - [x] GetRecentlyPlayedGames
@@ -25,6 +25,28 @@ This crate is highly experimental and unfinished so you are advised to be cautio
   - [ ] GetOwnedGames
 - [x] ISteamUserStats
   - [x] GetGlobalAchievementPercentagesForApp
+
+## Usage
+
+
+```
+use std::env;
+use steam_rs::{Steam, SteamId};
+
+#[tokio::main]
+async fn main() {
+    // Initialize the Steam API client
+    let steam = Steam::new(&env::var("STEAM_API_KEY").expect("Missing an API key"));
+    
+    let steam_id = SteamId(76561197960434622);
+
+    // Request the recently played games of SteamID 76561197960434622
+    let recently_played_games = steam.get_recently_played_games(steam_id, None).await.unwrap();
+
+    // Print the total count of the user's recently played games
+    println!("{}", recently_played_games.total_count);
+}
+```
 
 ## Contributing
 This project is in early stages of development, so bug reports, suggestions, and pull requests are highly appreciated!
