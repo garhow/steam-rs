@@ -8,6 +8,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
 
 jobs:
   build:
@@ -17,5 +18,4 @@ jobs:
     - name: Build
       run: cargo build --verbose
     - name: Run tests
-      env: STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
       run: cargo test --verbose
