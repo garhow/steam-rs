@@ -29,7 +29,7 @@ This crate is highly experimental and unfinished so you are advised to be cautio
 ## Usage
 
 
-```
+```rust
 use std::env;
 use steam_rs::{Steam, SteamId};
 
