@@ -12,10 +12,10 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: testing
     steps:
     - uses: actions/checkout@v3
     - name: Build
       run: cargo build --verbose
     - name: Run tests
+      env: STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
       run: cargo test --verbose
