@@ -1,7 +1,7 @@
 use steam_rs::{Steam, SteamId};
 mod common;
 
-const EXAMPLE_STEAM_ID: SteamId = SteamId(76561197960435530); // Robin Walker
+const EXAMPLE_STEAM_ID: SteamId = SteamId(76561197960434622); // Al Farnsworth
 
 #[test]
 pub fn get_owned_games() {
