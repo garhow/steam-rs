@@ -1,0 +1,60 @@
+# Supported API endpoints
+
+- [ ] IEconService
+  - [ ] GetTradeHistory
+  - [ ] GetTradeOffers
+  - [ ] GetTradeOffer
+  - [ ] GetTradeOffersSummary
+- [ ] IGameServersService
+  - [ ] GetAccountList
+  - [ ] CreateAccount
+  - [ ] SetMemo
+  - [ ] ResetLoginToken
+  - [ ] DeleteAccount
+  - [ ] GetAccountPublicInfo
+  - [ ] QueryLoginToken
+  - [ ] GetServerSteamIDsByIP
+  - [ ] GetServerIPsBySteamID
+- [x] IPlayerService
+  - [x] GetOwnedGames
+  - [x] GetRecentlyPlayedGames
+  - [ ] GetSteamLevel
+  - [ ] GetBadges
+  - [ ] GetCommunityBadgeProgress
+- [ ] IPublishedFileService
+  - [ ] QueryFiles
+- [ ] ISiteLicenseService
+  - [ ] GetCurrentClientConnections
+  - [ ] GetTotalPlaytime
+- [ ] ISteamApps
+  - [ ] GetAppList
+  - [ ] GetServersAtAddress
+  - [ ] UpToDateCheck
+- [ ] ISteamEconomy
+  - [ ] GetAssetClassInfo
+  - [ ] GetAssetPrices
+- [x] ISteamNews
+  - [x] GetNewsForApp
+- [ ] ISteamRemoteStorage
+  - [ ] GetCollectionDetails
+  - [ ] GetPublishedFileDetails
+- [ ] ISteamUser
+  - [ ] GetDeletedSteamIDs
+  - [x] GetFriendList
+  - [ ] GetPlayerAchievements
+  - [ ] GetPlayerBans
+  - [x] GetPlayerSummaries
+  - [ ] GetUserGroupList
+  - [ ] GetUserStatsForGame
+  - [ ] GetOwnedGames
+  - [ ] ResolveVanityURL
+- [x] ISteamUserStats
+  - [x] GetGlobalAchievementPercentagesForApp
+  - [ ] GetGlobalStatsForGame
+  - [ ] GetNumberOfCurrentPlayers
+  - [ ] GetPlayerAchievements
+  - [ ] GetSchemaForGame
+  - [ ] GetUserStatsForGame
+- [ ] ISteamWebAPIUtil
+  - [ ] GetServerInfo
+  - [ ] GetSupportedAPIList
