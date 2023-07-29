@@ -41,3 +41,14 @@ macro_rules! error {
 }
 
 pub(crate) use error;
+
+macro_rules! optional_argument {
+    ($key:ident) => {
+        match $key {
+            Some(value) => format!("&{}={:?}", stringify!($key), value),
+            None => String::new()
+        }
+    };
+}
+
+pub(crate) use optional_argument;
