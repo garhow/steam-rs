@@ -1,5 +1,4 @@
 use serde_derive::{Serialize, Deserialize};
-use anyhow::Result;
 use crate::{Steam, AppId, errors::{SteamNewsError, ErrorHandle}, macros::do_http};
 
 #[derive(Serialize, Deserialize, Debug)]
