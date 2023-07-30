@@ -50,7 +50,7 @@ use crate::Steam;
 /// println!("Parsed SteamId: {}", steam_id);
 /// ```
 #[derive(Clone, Copy, Debug, Deserialize, Eq, PartialEq, Serialize)]
-pub struct SteamId(u64);
+pub struct SteamId(pub u64);
 impl fmt::Display for SteamId {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.0)
