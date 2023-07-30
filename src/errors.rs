@@ -37,6 +37,11 @@ error!(SteamEconomyError{
     GetAssetClassInfo(String),
 });
 
+error!(SteamWebAPIUtilError{
+    GetServerInfo(String),
+    GetSupportedAPIList(String),
+});
+
 
 macro_rules! ErrorHandle {
     ($function:expr, $error:expr) => {

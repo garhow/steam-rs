@@ -12,6 +12,7 @@ pub mod steam_id;
 pub mod steam_news;
 pub mod steam_user;
 pub mod steam_user_stats;
+pub mod steam_webapi_util;
 
 /// IEconService Interface
 /// Do Not Use - Not fully implemented!
