@@ -5,9 +5,7 @@
 [![MIT licensed](https://img.shields.io/crates/l/steam-rs.svg)](./LICENSE)
 [![CI](https://github.com/garhow/steam-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/garhow/steam-rs/actions/workflows/ci.yml)
 
-A wrapper for the Steam Web API in Rust.
-
-This is based on the [Steamworks Web API Reference](https://partner.steamgames.com/doc/webapi) and [Better Steam Web API Documentation](https://steamwebapi.azurewebsites.net/).
+This crate provides safe and convenient Rust bindings for the Steam Web API, as documented in the [Steamworks Web API Reference](https://partner.steamgames.com/doc/webapi) and [Better Steam Web API Documentation](https://steamwebapi.azurewebsites.net/).
 
 ### This is not production ready!
 This crate is highly experimental and unfinished so you are advised to be cautious when using it in your projects.
