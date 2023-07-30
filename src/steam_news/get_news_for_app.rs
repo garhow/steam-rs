@@ -1,7 +1,6 @@
-use rayon::vec;
 use serde_derive::{Serialize, Deserialize};
 use crate::{Steam,
-    AppId,
+    app_id::AppId,
     errors::{SteamNewsError, ErrorHandle},
     macros::{do_http, optional_argument},
     BASE,
@@ -30,7 +29,7 @@ pub struct NewsItem {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct AppNews {
-    appid: u32,
+    appid: u32, // TODO: Convert to AppId
     newsitems: Vec<NewsItem>,
     count: u32
 }

@@ -1,4 +1,4 @@
-use steam_rs::{Steam, AppId};
+use steam_rs::{Steam, app_id::AppId};
 mod common;
 
 const EXAMPLE_APP_ID: AppId = AppId(440); // Team Fortress 2

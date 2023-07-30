@@ -3,8 +3,8 @@ use serde_json::Value;
 
 use crate::{
     Steam,
-    AppId,
-    SteamId,
+    steam_id::SteamId,
+    app_id::AppId,
     errors::{PlayerServiceError, ErrorHandle},
     macros::{do_http, optional_argument},
     BASE,

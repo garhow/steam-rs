@@ -1,6 +1,6 @@
 use serde_derive::{Deserialize, Serialize};
 
-use crate::{Steam, BASE, macros::do_http, errors::{ErrorHandle, SteamUserStatsError}, AppId};
+use crate::{Steam, BASE, macros::do_http, errors::{ErrorHandle, SteamUserStatsError}, app_id::AppId};
 
 use super::INTERFACE;
 
