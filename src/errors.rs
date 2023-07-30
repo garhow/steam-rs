@@ -31,7 +31,9 @@ error!(SteamNewsError{
 
 error!(SteamUserError{
     GetFriendList(String),
-    GetPlayerSummaries(String)
+    GetPlayerSummaries(String),
+    GetPlayerAchievements(String),
+    GetUserStatsForGame(String)
 });
 
 error!(SteamUserStatsError {
