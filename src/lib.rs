@@ -2,8 +2,8 @@
 //!
 //! The `steam-rs` crate provides convenient Rust bindings for the Steam Web API.
 
-pub mod app_id;
 pub mod player_service;
+pub mod published_file_service;
 pub mod steam_id;
 pub mod steam_news;
 pub mod steam_user;

@@ -4,7 +4,6 @@ use serde_json::Value;
 use crate::{
     Steam,
     steam_id::{de_steamid_from_str, SteamId},
-    app_id::AppId,
     macros::do_http,
     errors::{ErrorHandle, SteamUserError},
     BASE};
@@ -45,7 +44,7 @@ pub struct Player {
     #[serde(rename = "timecreated")]
     pub time_created: Option<u64>,
     #[serde(rename = "gameid")]
-    pub game_id: Option<AppId>,
+    pub game_id: Option<u32>,
     #[serde(rename = "gameserverip")]
     pub game_server_ip: Option<String>,
     #[serde(rename = "gameextrainfo")]

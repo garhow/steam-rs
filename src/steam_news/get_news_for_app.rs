@@ -1,6 +1,5 @@
 use serde_derive::{Serialize, Deserialize};
 use crate::{Steam,
-    app_id::AppId,
     errors::{SteamNewsError, ErrorHandle},
     macros::{do_http, optional_argument},
     BASE,
@@ -41,7 +40,7 @@ struct Response {
 
 impl Steam {
     pub async fn get_news_for_app(
-        app_id: AppId,
+        app_id: u32,
         max_length: Option<u32>,
         end_date: Option<u32>,
         count: Option<u32>,

@@ -1,7 +1,7 @@
-use steam_rs::{Steam, app_id::AppId};
+use steam_rs::Steam;
 mod common;
 
-const EXAMPLE_APP_ID: AppId = AppId(440); // Team Fortress 2
+const EXAMPLE_APP_ID: u32 = 440; // Team Fortress 2
 
 #[test]
 pub fn get_news() {
