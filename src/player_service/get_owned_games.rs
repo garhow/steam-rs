@@ -43,6 +43,10 @@ impl Steam {
         include_played_free_games: Option<bool>,
         appids_filter: Option<Vec<AppId>>
     ) -> Result<OwnedGames, PlayerServiceError> {
+        let appids_filter: Option<String> = if let Some(appids_filter) = appids_filter {
+            Some(appids_filter.iter().map(|&appid| appid.to_string() + ",").collect())
+        } else { None }; // DO NOT RAYON THIS! - Rayon doesn't protect the order of data!
+
         let optional_arguments = [
             optional_argument!(include_appinfo),
             optional_argument!(include_played_free_games),
