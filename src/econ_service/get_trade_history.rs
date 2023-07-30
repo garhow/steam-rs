@@ -21,7 +21,7 @@ impl Steam {
         let args = gen_args!(key, max_trades, start_after_time, start_after_trade_id, navigating_back, get_descriptions, language, include_failed, include_total);
         let url = format!("{END_POINT}{args}");
 
-        println!("{url}");
+        // println!("{url}");
 
         let data = do_http!(url);
 

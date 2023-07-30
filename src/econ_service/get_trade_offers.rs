@@ -19,7 +19,7 @@ impl Steam {
         let args = gen_args!(key, get_sent_offers, get_received_offers, get_descriptions, language, active_only, historical_only, time_historical_cutoff);
         let url = format!("{END_POINT}{args}");
 
-        println!("{url}");
+        // println!("{url}");
 
         let data = do_http!(url);
 

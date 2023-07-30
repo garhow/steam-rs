@@ -1,6 +1,14 @@
 macro_rules! do_http {
     ($url:ident, $output_type:ty, $error_handle:ident, $error:expr) => {
-        $error_handle!($error_handle!(reqwest::get($url).await, $error).json::<$output_type>().await, $error)
+
+    if let Ok(response) = reqwest::get($url).await {
+        if response.status() != 200 { return Err($error("Expected 200 Status".to_string())); };
+        $error_handle!(response.json::<$output_type>().await, $error)
+    } else {
+        // TODO: Make this more descriptive
+        return Err($error("HTTPS Error".to_string()));
+    }
+
     };
     ($url:ident, $output_type:ty) => {
         reqwest::get($url).await.unwrap().json::<$output_type>().await.unwrap()
