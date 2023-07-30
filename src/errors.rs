@@ -7,9 +7,16 @@ error!(PublishedFileServiceError{
 });
 
 error!(PlayerServiceError{
+    GetBadges(String),
+    GetCommunityBadgeProgress(String),
     GetOwnedGames(String),
     GetRecentlyPlayedGames(String),
     GetSteamLevel(String)
+});
+
+error!(SiteLicenseServiceError{
+    GetCurrentClientConnections(String),
+    GetTotalPlaytime(String)
 });
 
 error!(SteamNewsError{
@@ -30,11 +37,18 @@ error!(SteamUserStatsError {
 error!(EconServiceError{
     GetTradeHistory(String),
     GetTradeOffers(String),
+    GetTradeOffer(String),
+    GetTradeOffersSummary(String),
 });
 
 error!(SteamEconomyError{
     GetAssetPrices(String),
     GetAssetClassInfo(String),
+});
+
+error!(SteamWebAPIUtilError{
+    GetServerInfo(String),
+    GetSupportedAPIList(String),
 });
 
 

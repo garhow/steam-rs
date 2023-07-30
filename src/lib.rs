@@ -8,10 +8,12 @@
 
 pub mod player_service;
 pub mod published_file_service;
+pub mod site_license_service;
 pub mod steam_id;
 pub mod steam_news;
 pub mod steam_user;
 pub mod steam_user_stats;
+pub mod steam_webapi_util;
 
 /// IEconService Interface
 /// Do Not Use - Not fully implemented!

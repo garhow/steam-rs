@@ -1,5 +1,9 @@
 # Supported API endpoints
 
+The following is a list of interfaces and endpoints that are currently supported by this crate.
+
+Interfaces that are prefixed with ✓ are fully implemented!
+
 ## IEconService
   - [ ] GetTradeHistory
   - [ ] GetTradeOffers
@@ -15,14 +19,14 @@
   - [ ] QueryLoginToken
   - [ ] GetServerSteamIDsByIP
   - [ ] GetServerIPsBySteamID
-## IPlayerService
+## ✓ IPlayerService
   - [x] GetOwnedGames
   - [x] GetRecentlyPlayedGames
-  - [ ] GetSteamLevel
-  - [ ] GetBadges
-  - [ ] GetCommunityBadgeProgress
-## IPublishedFileService
-  - [ ] QueryFiles
+  - [x] GetSteamLevel
+  - [x] GetBadges
+  - [x] GetCommunityBadgeProgress
+## ✓ IPublishedFileService
+  - [x] QueryFiles
 ## ISiteLicenseService
   - [ ] GetCurrentClientConnections
   - [ ] GetTotalPlaytime
@@ -30,10 +34,10 @@
   - [ ] GetAppList
   - [ ] GetServersAtAddress
   - [ ] UpToDateCheck
-## ISteamEconomy
-  - [ ] GetAssetClassInfo
-  - [ ] GetAssetPrices
-## ISteamNews
+## ✓ ISteamEconomy
+  - [x] GetAssetClassInfo
+  - [x] GetAssetPrices
+## ✓ ISteamNews
   - [x] GetNewsForApp
 ## ISteamRemoteStorage
   - [ ] GetCollectionDetails
@@ -46,7 +50,6 @@
   - [x] GetPlayerSummaries
   - [ ] GetUserGroupList
   - [ ] GetUserStatsForGame
-  - [ ] GetOwnedGames
   - [ ] ResolveVanityURL
 ## ISteamUserStats
   - [x] GetGlobalAchievementPercentagesForApp
@@ -55,6 +58,6 @@
   - [ ] GetPlayerAchievements
   - [ ] GetSchemaForGame
   - [ ] GetUserStatsForGame
-## ISteamWebAPIUtil
-  - [ ] GetServerInfo
-  - [ ] GetSupportedAPIList
+## ✓ ISteamWebAPIUtil
+  - [x] GetServerInfo
+  - [x] GetSupportedAPIList
