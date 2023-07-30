@@ -6,10 +6,6 @@
 //! ### Warning!
 //! This crate is currently a work in progress, so please expect breaking changes and instability. Please be careful when using this! **This is not production ready!**
 
-use std::fmt;
-
-use serde::{Deserialize, Serialize};
-
 pub mod player_service;
 pub mod published_file_service;
 pub mod steam_id;

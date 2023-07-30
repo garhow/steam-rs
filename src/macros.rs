@@ -47,12 +47,21 @@ pub(crate) use error;
 macro_rules! optional_argument {
     () => { String::new() };
 
+    ($key:ident, $rename:literal) => {
+        match $key {
+            Some(value) => format!("&{}={}", stringify!($rename), value),
+            None => String::new()
+        }
+    };
+
     ($first:expr $(, $rest:expr)*) => {
         match $first {
             Some(value) => format!("&{}={:?}{}", stringify!($first), value,optional_argument!($($rest),*)),
             None => format!("{}", optional_argument!($($rest),*) )
-        }        
+        }
     };
+
+
 }
 
 pub(crate) use optional_argument;

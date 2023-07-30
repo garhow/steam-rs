@@ -1,4 +1,4 @@
-use steam_rs::{Steam};
+use steam_rs::Steam;
 mod common;
 
 
