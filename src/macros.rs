@@ -45,7 +45,13 @@ pub(crate) use error;
 macro_rules! optional_argument {
     ($key:ident) => {
         match $key {
-            Some(value) => format!("&{}={:?}", stringify!($key), value),
+            Some(value) => format!("&{}={}", stringify!($key), value),
+            None => String::new()
+        }
+    };
+    ($key:ident, $rename:expr) => {
+        match $key {
+            Some(value) => format!("&{}={}", stringify!($rename), value),
             None => String::new()
         }
     };
