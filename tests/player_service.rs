@@ -12,6 +12,14 @@ pub fn get_badges() {
 }
 
 #[test]
+pub fn get_community_badge_progress() {
+    async_test!(async {
+        let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
+        println!("{:?}", steam.get_community_badge_progress(EXAMPLE_STEAM_ID, None).await.unwrap());
+    });
+}
+
+#[test]
 pub fn get_owned_games() {
     async_test!(async {
         let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));

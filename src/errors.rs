@@ -8,6 +8,7 @@ error!(PublishedFileServiceError{
 
 error!(PlayerServiceError{
     GetBadges(String),
+    GetCommunityBadgeProgress(String),
     GetOwnedGames(String),
     GetRecentlyPlayedGames(String),
     GetSteamLevel(String)
