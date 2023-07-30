@@ -1,7 +1,12 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-use crate::{Steam, SteamId, AppId, macros::do_http, errors::{ErrorHandle, SteamUserError}, de_steamid_from_str, BASE};
+use crate::{
+    Steam,
+    steam_id::{de_steamid_from_str, SteamId},
+    macros::do_http,
+    errors::{ErrorHandle, SteamUserError},
+    BASE};
 
 use super::INTERFACE;
 
@@ -39,7 +44,7 @@ pub struct Player {
     #[serde(rename = "timecreated")]
     pub time_created: Option<u64>,
     #[serde(rename = "gameid")]
-    pub game_id: Option<AppId>,
+    pub game_id: Option<u32>,
     #[serde(rename = "gameserverip")]
     pub game_server_ip: Option<String>,
     #[serde(rename = "gameextrainfo")]

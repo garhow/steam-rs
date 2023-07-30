@@ -5,11 +5,10 @@ use serde_json::Value;
 use rayon::prelude::*;
 
 use crate::{
-    Steam,
-    SteamId,
     BASE,
-    de_steamid_from_str,
+    Steam,
     macros::{do_http, optional_argument},
+    steam_id::{de_steamid_from_str, SteamId},
     errors::{SteamUserError, ErrorHandle},
 };
 

@@ -3,8 +3,7 @@ use serde_json::Value;
 
 use crate::{
     Steam,
-    AppId,
-    SteamId,
+    steam_id::SteamId,
     errors::{PlayerServiceError, ErrorHandle},
     macros::{do_http, optional_argument},
     BASE,
@@ -17,7 +16,7 @@ const VERSION: &str = "0001";
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Game {
-    pub appid: AppId,
+    pub appid: u32,
     pub name: Option<String>,
     pub playtime_2weeks: Option<u32>,
     pub playtime_forever: u32,

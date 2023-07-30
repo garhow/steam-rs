@@ -2,6 +2,10 @@
 
 use crate::macros::error;
 
+error!(PublishedFileServiceError{
+    QueryFiles(String)
+});
+
 error!(PlayerServiceError{
     GetOwnedGames(String),
     GetRecentlyPlayedGames(String)

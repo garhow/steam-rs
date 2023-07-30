@@ -1,4 +1,4 @@
-use steam_rs::{Steam, SteamId};
+use steam_rs::{Steam, steam_id::SteamId};
 mod common;
 
 const EXAMPLE_STEAM_ID: SteamId = SteamId(76561197960434622); // Al Farnsworth

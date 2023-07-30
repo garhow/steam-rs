@@ -3,8 +3,7 @@ use serde_json::Value;
 
 use crate::{
     Steam,
-    AppId,
-    SteamId,
+    steam_id::SteamId,
     errors::{PlayerServiceError, ErrorHandle},
     macros::{do_http, optional_argument},
     BASE,
@@ -17,7 +16,7 @@ const VERSION: &str = "0001";
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Game {
-    pub appid: AppId,
+    pub appid: u32,
     pub name: Option<String>,
     pub playtime_2weeks: Option<u32>,
     pub playtime_forever: u32,
@@ -41,8 +40,12 @@ impl Steam {
         steam_id: SteamId,
         include_appinfo: Option<bool>,
         include_played_free_games: Option<bool>,
-        appids_filter: Option<Vec<AppId>>
+        appids_filter: Option<Vec<u32>>
     ) -> Result<OwnedGames, PlayerServiceError> {
+        let appids_filter: Option<String> = if let Some(appids_filter) = appids_filter {
+            Some(appids_filter.iter().map(|&appid| appid.to_string() + ",").collect())
+        } else { None }; // DO NOT RAYON THIS! - Rayon doesn't protect the order of data!
+
         let optional_arguments = [
             optional_argument!(include_appinfo),
             optional_argument!(include_played_free_games),
