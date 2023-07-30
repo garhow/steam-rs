@@ -14,6 +14,11 @@ error!(PlayerServiceError{
     GetSteamLevel(String)
 });
 
+error!(SiteLicenseServiceError{
+    GetCurrentClientConnections(String),
+    GetTotalPlaytime(String)
+});
+
 error!(SteamNewsError{
     GetNews(String)
 });
