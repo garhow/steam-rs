@@ -129,10 +129,10 @@ pub struct Preview {
     preview_id: String,
     #[serde(rename = "sortorder")]
     sort_order: u16,
-    url: String,
-    size: u32,
+    url:  Option<String>,
+    size: Option<u32>,
     #[serde(rename = "filename")]
-    file_name: String,
+    file_name: Option<String>,
     preview_type: u8
 }
 
@@ -169,7 +169,7 @@ pub struct File {
     preview_file_size: String,
     preview_url: String,
     url: String,
-    hcontent_file: String,
+    hcontent_file: Option<String>,
     hcontent_preview: String,
     title: String,
     short_description: String,
