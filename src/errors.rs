@@ -27,6 +27,8 @@ error!(SteamUserStatsError {
 error!(EconServiceError{
     GetTradeHistory(String),
     GetTradeOffers(String),
+    GetTradeOffer(String),
+    GetTradeOffersSummary(String),
 });
 
 error!(SteamEconomyError{
