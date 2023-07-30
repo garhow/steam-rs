@@ -40,7 +40,7 @@ impl Steam {
         let query = format!("?key={}&steamid={}", &self.api_key, steam_id);
         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
         let json = do_http!(url, Value, ErrorHandle, PlayerServiceError::GetOwnedGames);
-        let player_level: Wrapper = ErrorHandle!(serde_json::from_value(json.to_owned()), PlayerServiceError::GetBadges);
-        Ok(player_level.response)
+        let wrapper: Wrapper = ErrorHandle!(serde_json::from_value(json.to_owned()), PlayerServiceError::GetBadges);
+        Ok(wrapper.response)
     }
 }
