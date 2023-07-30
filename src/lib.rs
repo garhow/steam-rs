@@ -4,14 +4,18 @@
 
 use std::fmt;
 
-use rayon::prelude::ParallelDrainRange;
-use serde::Deserialize;
-use serde_derive::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
 
 pub mod player_service;
 pub mod steam_news;
 pub mod steam_user;
 pub mod steam_user_stats;
+
+/// IEconService Interface
+/// Do Not Use - Not fully implemented!
+pub mod econ_service;
+
+pub mod steam_economy;
 
 mod errors; // This remains private - maybe
 mod macros; // This remains private

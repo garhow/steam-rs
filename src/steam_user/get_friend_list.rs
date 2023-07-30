@@ -1,6 +1,6 @@
 use core::fmt;
 
-use serde_derive::Deserialize;
+use serde::Deserialize;
 use serde_json::Value;
 use rayon::prelude::*;
 

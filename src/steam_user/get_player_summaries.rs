@@ -1,4 +1,4 @@
-use serde_derive::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 use crate::{Steam, SteamId, AppId, macros::do_http, errors::{ErrorHandle, SteamUserError}, de_steamid_from_str, BASE};
