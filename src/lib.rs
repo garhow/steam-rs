@@ -9,6 +9,7 @@
 pub mod player_service;
 pub mod published_file_service;
 pub mod site_license_service;
+pub mod steam_apps;
 pub mod steam_id;
 pub mod steam_news;
 pub mod steam_user;

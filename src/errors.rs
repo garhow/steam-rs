@@ -19,6 +19,12 @@ error!(SiteLicenseServiceError{
     GetTotalPlaytime(String)
 });
 
+error!(SteamAppsError{
+    GetAppList(String),
+    GetServersAtAddress(String),
+    UpToDateCheck(String)
+});
+
 error!(SteamNewsError{
     GetNews(String)
 });
