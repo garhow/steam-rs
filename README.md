@@ -7,8 +7,9 @@
 
 A wrapper for the Steam Web API in Rust.
 
-This is based on the [Steamworks Web API Reference](https://partner.steamgames.com/doc/webapi).
+This is based on the [Steamworks Web API Reference](https://partner.steamgames.com/doc/webapi) and [Better Steam Web API Documentation](https://steamwebapi.azurewebsites.net/).
 
+### This is not production ready!
 This crate is highly experimental and unfinished so you are advised to be cautious when using it in your projects.
 
 ### Supported API endpoints
