@@ -18,3 +18,11 @@ pub fn get_recently_played_games() {
         println!("{:?}", steam.get_recently_played_games(EXAMPLE_STEAM_ID, Some(2)).await.unwrap());
     });
 }
+
+#[test]
+pub fn get_steam_level() {
+    async_test!(async {
+        let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
+        println!("{:?}", steam.get_steam_level(EXAMPLE_STEAM_ID).await.unwrap());
+    });
+}

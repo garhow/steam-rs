@@ -8,7 +8,8 @@ error!(PublishedFileServiceError{
 
 error!(PlayerServiceError{
     GetOwnedGames(String),
-    GetRecentlyPlayedGames(String)
+    GetRecentlyPlayedGames(String),
+    GetSteamLevel(String)
 });
 
 error!(SteamNewsError{
