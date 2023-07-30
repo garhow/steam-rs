@@ -1,5 +1,6 @@
 //! # steam-rs: Safe bindings for the Steam Web API
 //!
+//! The `steam-rs` crate provides convenient Rust bindings for the Steam Web API.
 //! This crate provides safe and convenient Rust bindings for the Steam Web API.
 //! 
 //! ### Warning!
@@ -11,6 +12,12 @@ pub mod steam_id;
 pub mod steam_news;
 pub mod steam_user;
 pub mod steam_user_stats;
+
+/// IEconService Interface
+/// Do Not Use - Not fully implemented!
+pub mod econ_service;
+
+pub mod steam_economy;
 
 mod errors; // This remains private - maybe
 mod macros; // This remains private

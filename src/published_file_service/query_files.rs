@@ -1,8 +1,7 @@
 use core::fmt;
 
-use serde_derive::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
 
-//use serde_derive::{Serialize, Deserialize};
 use crate::{Steam,
     errors::{PublishedFileServiceError, ErrorHandle},
     macros::{do_http, optional_argument},
@@ -130,10 +129,10 @@ pub struct Preview {
     preview_id: String,
     #[serde(rename = "sortorder")]
     sort_order: u16,
-    url: String,
-    size: u32,
+    url:  Option<String>,
+    size: Option<u32>,
     #[serde(rename = "filename")]
-    file_name: String,
+    file_name: Option<String>,
     preview_type: u8
 }
 
@@ -170,7 +169,7 @@ pub struct File {
     preview_file_size: String,
     preview_url: String,
     url: String,
-    hcontent_file: String,
+    hcontent_file: Option<String>,
     hcontent_preview: String,
     title: String,
     short_description: String,
@@ -231,7 +230,7 @@ impl Steam {
         query_type: PublishedFileQueryType,
         page: u32,
         cursor: &str,
-        num_per_page: Option<u32>, // numperpage
+        numperpage: Option<u32>, // numperpage
         creator_app_id: u32,
         app_id: u32,
         required_tags: &str,
@@ -286,7 +285,7 @@ impl Steam {
             format!("&return_short_description={}", return_short_description),
             format!("&return_for_sale_data={}", return_for_sale_data),
             format!("&return_playtime_stats={}", return_playtime_stats),
-            optional_argument!(num_per_page, "numperpage"),
+            optional_argument!(numperpage),
             optional_argument!(match_all_tags),
             optional_argument!(cache_max_age_seconds),
             optional_argument!(language),

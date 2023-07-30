@@ -1,7 +1,6 @@
 use core::fmt;
 
-use serde::Deserialize;
-use serde_derive::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
 
 /// Represents a SteamID64 type which is used to uniquely identify users on the Steam platform.
 /// SteamID64 is a 64-bit unsigned integer.

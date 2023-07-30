@@ -24,6 +24,17 @@ error!(SteamUserStatsError {
     GetGlobalAchievements(String)
 });
 
+error!(EconServiceError{
+    GetTradeHistory(String),
+    GetTradeOffers(String),
+});
+
+error!(SteamEconomyError{
+    GetAssetPrices(String),
+    GetAssetClassInfo(String),
+});
+
+
 macro_rules! ErrorHandle {
     ($function:expr, $error:expr) => {
         $function.map_err(move |error| { $error(error.to_string()) })?
