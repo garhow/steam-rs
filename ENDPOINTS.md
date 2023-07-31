@@ -4,11 +4,11 @@ The following is a list of interfaces and endpoints that are currently supported
 
 Interfaces that are prefixed with ✓ are fully implemented!
 
-## IEconService
-  - [ ] GetTradeHistory
-  - [ ] GetTradeOffers
-  - [ ] GetTradeOffer
-  - [ ] GetTradeOffersSummary
+## ✓ IEconService
+  - [x] GetTradeHistory
+  - [x] GetTradeOffers
+  - [x] GetTradeOffer
+  - [x] GetTradeOffersSummary
 ## IGameServersService
   - [ ] GetAccountList
   - [ ] CreateAccount
@@ -27,13 +27,13 @@ Interfaces that are prefixed with ✓ are fully implemented!
   - [x] GetCommunityBadgeProgress
 ## ✓ IPublishedFileService
   - [x] QueryFiles
-## ISiteLicenseService
-  - [ ] GetCurrentClientConnections
-  - [ ] GetTotalPlaytime
-## ISteamApps
-  - [ ] GetAppList
-  - [ ] GetServersAtAddress
-  - [ ] UpToDateCheck
+## ✓ ISiteLicenseService
+  - [x] GetCurrentClientConnections
+  - [x] GetTotalPlaytime
+## ✓ ISteamApps
+  - [x] GetAppList
+  - [x] GetServersAtAddress
+  - [x] UpToDateCheck
 ## ✓ ISteamEconomy
   - [x] GetAssetClassInfo
   - [x] GetAssetPrices
@@ -45,11 +45,11 @@ Interfaces that are prefixed with ✓ are fully implemented!
 ## ISteamUser
   - [ ] GetDeletedSteamIDs
   - [x] GetFriendList
-  - [ ] GetPlayerAchievements
+  - [x] GetPlayerAchievements
   - [ ] GetPlayerBans
   - [x] GetPlayerSummaries
   - [ ] GetUserGroupList
-  - [ ] GetUserStatsForGame
+  - [x] GetUserStatsForGame
   - [ ] ResolveVanityURL
 ## ISteamUserStats
   - [x] GetGlobalAchievementPercentagesForApp
