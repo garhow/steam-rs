@@ -15,6 +15,7 @@ pub mod steam_news;
 pub mod steam_user;
 pub mod steam_user_stats;
 pub mod steam_webapi_util;
+pub mod steam_remote_storage;
 
 /// IEconService Interface
 /// Do Not Use - Not fully implemented!
