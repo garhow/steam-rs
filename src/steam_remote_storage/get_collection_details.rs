@@ -1,51 +1,59 @@
 use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
-use serde_json::json;
+use serde_json::{from_value, Value};
 
-use crate::{macros::{gen_args, do_http, optional_argument}, errors::{SteamEconomyError, ErrorHandle}, Steam};
+use crate::{Steam, BASE, errors::SteamRemoteStorageError};
 
-const END_POINT: &str = "https://api.steampowered.com/ISteamRemoteStorage/GetCollectionDetails/v1";
+use super::INTERFACE;
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
-#[serde(rename_all = "lowercase")]
-pub enum AssetPrices {
-    Result {
-        success: bool,
-        assets: Vec<Asset>,
-        tags: HashMap<String, String>,
-        tag_ids: HashMap<u64, u64>,
-    }
+const ENDPOINT: &str = "GetCollectionDetails";
+const VERSION: &str = "1";
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct CollectionDetails {
+    #[serde(rename = "publishedfileid")]
+    published_fileid: String,
+    result: u32
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct Asset {
-    pub prices: HashMap<String, u64>,
-    pub name: String,
-    pub date: String,
-    pub class: Vec<HashMap<String, String>>,
-    pub classid: String,
-    pub tags: Vec<String>,
-    pub tag_ids: Vec<u64>,
+#[derive(Debug, Deserialize, Serialize)]
+pub struct Response {
+    pub result: u32,
+    #[serde(rename = "resultcount")]
+    pub result_count: u32,
+    #[serde(rename = "collectiondetails")]
+    pub collection_details: Vec<CollectionDetails>
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Wrapper {
+    response: Response
 }
 
 impl Steam {
-    /// This end point gives a 1:1 output of the api, if you were to put the endpoint into a browser, expect the same layout
-    /// ( carbon-copy )
-    pub async fn get_collection_details(&self, publishedfileids: &[u64]) -> Result<String, SteamEconomyError> {
-        let key = &self.api_key.clone();
+    pub async fn get_collection_details(published_fileids: &[u64]) -> Result<Response, SteamRemoteStorageError> {
+        let url = format!("{BASE}/{INTERFACE}/{ENDPOINT}/v{VERSION}");
+        
+        let mut params = HashMap::new();
+        params.insert("collectioncount".to_string(), published_fileids.len().to_string());
 
-        let collectioncount = publishedfileids.len();
+        for (index, fileid) in published_fileids.iter().enumerate() {
+            params.insert(format!("publishedfileids[{index}]"), fileid.to_string());
+        }
 
-        let mut arg_buffer = String::new();
-        for field in publishedfileids { arg_buffer.push_str(&format!("{field},")); }
-        if arg_buffer != "" {arg_buffer.remove(arg_buffer.len() - 1);}
+        let client = reqwest::Client::new();
 
-        let args = gen_args!(key, arg_buffer, collectioncount);
+        let request = client.post(url)
+            .form(&params)
+            .send()
+            .await
+            .unwrap();
 
-        let body = json!({}).to_string();
+        let json: Value = request.json().await.unwrap();
 
-        let url = format!("{END_POINT}?{args}");
-        Ok(do_http!(url, AssetPrices, ErrorHandle, SteamEconomyError::GetAssetPrices, body, true))
+        let wrapper: Wrapper = from_value(json).unwrap();
+
+        Ok(wrapper.response)
     }
 }

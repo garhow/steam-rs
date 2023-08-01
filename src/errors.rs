@@ -57,6 +57,11 @@ error!(SteamWebAPIUtilError{
     GetSupportedAPIList(String),
 });
 
+error!(SteamRemoteStorageError{
+    GetCollectionDetails(String),
+    GetPublishedFile(String)
+});
+
 
 macro_rules! ErrorHandle {
     ($function:expr, $error:expr) => {
