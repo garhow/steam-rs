@@ -39,9 +39,9 @@ Interfaces that are prefixed with ✓ are fully implemented!
   - [x] GetAssetPrices
 ## ✓ ISteamNews
   - [x] GetNewsForApp
-## ISteamRemoteStorage
-  - [ ] GetCollectionDetails
-  - [ ] GetPublishedFileDetails
+## ✓ ISteamRemoteStorage
+  - [x] GetCollectionDetails
+  - [x] GetPublishedFileDetails
 ## ISteamUser
   - [ ] GetDeletedSteamIDs
   - [x] GetFriendList
