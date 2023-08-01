@@ -220,7 +220,7 @@ pub struct PublishedFiles {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct Response {
+struct Response {
     response: PublishedFiles
 }
 
