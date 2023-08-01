@@ -1,11 +1,6 @@
-use std::collections::HashMap;
-
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
 
 use crate::{macros::{gen_args, do_http, optional_argument}, errors::{SteamUserError, ErrorHandle}, Steam, steam_id::SteamId};
-
-use super::get_player_achievements::Achievement;
 
 const END_POINT: &str = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v1";
 
