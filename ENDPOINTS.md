@@ -50,7 +50,7 @@ Interfaces that are prefixed with ✓ are fully implemented!
   - [x] GetPlayerSummaries
   - [ ] GetUserGroupList
   - [x] GetUserStatsForGame
-  - [ ] ResolveVanityURL
+  - [x] ResolveVanityURL
 ## ISteamUserStats
   - [x] GetGlobalAchievementPercentagesForApp
   - [ ] GetGlobalStatsForGame
