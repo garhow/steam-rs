@@ -20,4 +20,4 @@ jobs:
     - name: Run tests
       run: cargo test --verbose
     - name: Build the documentation
-      run: cargo build --verbose
+      run: cargo doc --verbose
