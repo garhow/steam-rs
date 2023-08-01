@@ -1,8 +1,7 @@
 use core::fmt;
 
 use serde::Deserialize;
-use serde_json::Value;
-use rayon::prelude::*;
+use serde_json::{Value, from_value};
 
 use crate::{
     BASE,
@@ -15,7 +14,7 @@ use crate::{
 use super::INTERFACE;
 
 const ENDPOINT: &str = "GetFriendList";
-const VERSION: &str = "0001";
+const VERSION: &str = "1";
 
 #[derive(PartialEq, Debug, Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -37,9 +36,20 @@ impl fmt::Display for Relationship {
 pub struct Friend {
     #[serde(rename = "steamid")]
     #[serde(deserialize_with = "de_steamid_from_str")]
-    pub steam_id: SteamId,
-    pub relationship: Relationship,
-    pub friend_since: u32
+    pub steam_id: SteamId, // The 64 bit ID of the friend.
+    pub relationship: Relationship, // Role in relation to the given SteamID
+    pub friend_since: u32 // A unix timestamp of when the friend was added to the list.
+}
+
+#[derive(Deserialize, Debug)]
+pub struct FriendsList {
+    pub friends: Vec<Friend> // A list of objects for each list entry. 
+}
+
+#[derive(Deserialize, Debug)]
+struct Wrapper {
+    #[serde(rename = "friendslist")]
+    friends_list: Option<FriendsList> // If the profile is not public or there are no available entries for the given relationship only an empty object will be returned. 
 }
 
 impl Steam {
@@ -47,22 +57,12 @@ impl Steam {
         &self,
         steam_id: SteamId,
         relationship: Option<Relationship>
-    ) -> Result<Vec<Friend>, SteamUserError> {
-
+    ) -> Result<FriendsList, SteamUserError> {
         let query = format!("?key={}&steamid={}{}", &self.api_key, steam_id, optional_argument!(relationship));
-
         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
-        
         let json = do_http!(url, Value, ErrorHandle, SteamUserError::GetFriendList);
+        let wrapper: Wrapper = ErrorHandle!(from_value(json.to_owned()), SteamUserError::GetFriendList);
 
-        let buffer = json["friendslist"]["friends"].as_array();
-        if buffer == None { return Err(SteamUserError::GetFriendList("Invalid JSON".to_owned()) );}
-
-        let friend_list: Vec<Friend> = buffer.unwrap().par_iter().map(|item | {
-            println!("TODO: Handle invalid json data! (src/steam_user/get_friend_list.rs:35) ");
-            serde_json::from_value(item.clone()).unwrap()
-        }).collect();
-            
-        return Ok(friend_list);
+        return Ok(wrapper.friends_list.unwrap());
     }
 }

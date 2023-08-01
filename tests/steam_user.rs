@@ -13,7 +13,13 @@ const EXAMPLE_VANITY_URLS: [&'static str; 2] = [
 pub fn get_friend_list() {
     async_test!(async {
         let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
+
+        // Test a working SteamID
         println!("{:?}", steam.get_friend_list(EXAMPLE_STEAM_ID, None).await.unwrap());
+
+        // TODO: support safe error handling? need a second opinion
+        // Test a broken SteamID
+        // println!("{:?}", steam.get_friend_list(SteamId(20), None).await.unwrap());
     });
 }
 
