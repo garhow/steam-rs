@@ -4,8 +4,6 @@ use serde::{Deserialize, Serialize};
 
 use crate::{macros::{gen_args, do_http}, errors::{SteamUserError, ErrorHandle}, Steam, steam_id::SteamId};
 
-use super::get_player_achievements::Achievement;
-
 const END_POINT: &str = "https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v1";
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -20,6 +18,14 @@ pub enum UserGameStats {
         achievements: HashMap<String, Achievement>,
         stats: HashMap<String, Stat>
     }
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct Achievement {
+    pub apiname: Option<String>,
+    pub achieved: u8,
+    /// TODO: Reconsider this
+    pub unlocktime: Option<u64>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
