@@ -7,7 +7,7 @@
 
 This crate provides safe and convenient Rust bindings for the Steam Web API.
 
-The following API references and documentation are helpful resources for the development of this project:
+The following resources were used in the developement in this crate:
 - [Better Steam Web API Documentation](https://steamwebapi.azurewebsites.net/)
 - [Steam Web API - Valve Developer Community](https://developer.valvesoftware.com/wiki/Steam_Web_API)
 - [Steamworks Web API Reference](https://partner.steamgames.com/doc/webapi)
