@@ -43,21 +43,26 @@ Interfaces that are prefixed with ✓ are fully implemented!
   - [x] GetCollectionDetails
   - [x] GetPublishedFileDetails
 ## ISteamUser
-  - [ ] GetDeletedSteamIDs
+  - [ ] CheckAppOwnership **(requires publisher key)**
+  - [ ] GetAppPriceInfo **(requires publisher key)**
+  - [ ] GetDeletedSteamIDs **(requires publisher key)**
   - [x] GetFriendList
   - [x] GetPlayerAchievements
   - [x] GetPlayerBans
   - [x] GetPlayerSummaries
+  - [ ] GetPublisherAppOwnership **(requires publisher key)**
+  - [ ] GetPublisherAppOwnershipChanges **(requires publisher key)**
   - [ ] GetUserGroupList
-  - [x] GetUserStatsForGame
+  - [ ] GrantPackage **(requires publisher key)**
   - [x] ResolveVanityURL
+  - [ ] RevokePackage **(requires publisher key)**
 ## ISteamUserStats
   - [x] GetGlobalAchievementPercentagesForApp
   - [ ] GetGlobalStatsForGame
   - [ ] GetNumberOfCurrentPlayers
-  - [ ] GetPlayerAchievements
+  - [x] GetPlayerAchievements
   - [ ] GetSchemaForGame
-  - [ ] GetUserStatsForGame
+  - [x] GetUserStatsForGame
 ## ✓ ISteamWebAPIUtil
   - [x] GetServerInfo
   - [x] GetSupportedAPIList
