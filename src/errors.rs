@@ -32,12 +32,12 @@ error!(SteamNewsError{
 error!(SteamUserError{
     GetFriendList(String),
     GetPlayerSummaries(String),
-    GetPlayerAchievements(String),
-    GetUserStatsForGame(String)
 });
 
 error!(SteamUserStatsError {
-    GetGlobalAchievements(String)
+    GetGlobalAchievements(String),
+    GetPlayerAchievements(String),
+    GetUserStatsForGame(String),
 });
 
 error!(EconServiceError{

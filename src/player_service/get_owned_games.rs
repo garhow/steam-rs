@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     macros::{gen_args, do_http, optional_argument},
-    errors::{SteamUserError, ErrorHandle},
+    errors::{ErrorHandle, PlayerServiceError},
     Steam,
     steam_id::SteamId,
     BASE
@@ -48,7 +48,7 @@ impl Steam {
         skip_unvetted_apps: Option<bool>,
         language: &str,
         include_extended_appinfo: bool
-    ) -> Result<OwnedGames, SteamUserError> {
+    ) -> Result<OwnedGames, PlayerServiceError> {
         let key = &self.api_key.clone();
         let steamid = steamid.into_u64();
         let args = gen_args!(
@@ -62,7 +62,7 @@ impl Steam {
             include_extended_appinfo
         ) + &optional_argument!(skip_unvetted_apps);
         let url = format!("{BASE}/{INTERFACE}/{ENDPOINT}/v{VERSION}/?{args}");
-        let wrapper = do_http!(url, Wrapper, ErrorHandle, SteamUserError::GetUserStatsForGame);
+        let wrapper = do_http!(url, Wrapper, ErrorHandle, PlayerServiceError::GetOwnedGames);
         Ok(wrapper.response)
     }
 }
