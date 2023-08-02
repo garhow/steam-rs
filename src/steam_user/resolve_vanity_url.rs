@@ -67,8 +67,8 @@ impl Steam {
         ];
 
         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query.concat());
-        let json = do_http!(url, Value, ErrorHandle, SteamUserError::GetPlayerSummaries);
-        let wrapper: Wrapper = ErrorHandle!(from_value(json.to_owned()), SteamUserError::GetPlayerSummaries);
+        let json = do_http!(url, Value, ErrorHandle, SteamUserError::ResolveVanityURL);
+        let wrapper: Wrapper = ErrorHandle!(from_value(json.to_owned()), SteamUserError::ResolveVanityURL);
 
         Ok(wrapper.response)
     }

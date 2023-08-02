@@ -23,6 +23,14 @@ pub fn get_friend_list() {
 }
 
 #[test]
+pub fn get_player_bans() {
+    async_test!(async {
+        let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
+        println!("{:?}", steam.get_player_bans(vec![EXAMPLE_STEAM_ID]).await.unwrap());
+    });
+}
+
+#[test]
 pub fn get_player_summaries() {
     async_test!(async {
         let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));

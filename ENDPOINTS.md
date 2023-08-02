@@ -46,7 +46,7 @@ Interfaces that are prefixed with ✓ are fully implemented!
   - [ ] GetDeletedSteamIDs
   - [x] GetFriendList
   - [x] GetPlayerAchievements
-  - [ ] GetPlayerBans
+  - [x] GetPlayerBans
   - [x] GetPlayerSummaries
   - [ ] GetUserGroupList
   - [x] GetUserStatsForGame

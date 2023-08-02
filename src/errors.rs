@@ -31,7 +31,9 @@ error!(SteamNewsError{
 
 error!(SteamUserError{
     GetFriendList(String),
+    GetPlayerBans(String),
     GetPlayerSummaries(String),
+    ResolveVanityURL(String),
 });
 
 error!(SteamUserStatsError {
