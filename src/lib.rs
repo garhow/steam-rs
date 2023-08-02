@@ -6,22 +6,18 @@
 //! ### Warning!
 //! This crate is currently a work in progress, so please expect breaking changes and instability. Please be careful when using this! **This is not production ready!**
 
+pub mod econ_service;
 pub mod player_service;
 pub mod published_file_service;
 pub mod site_license_service;
 pub mod steam_apps;
+pub mod steam_economy;
 pub mod steam_id;
 pub mod steam_news;
+pub mod steam_remote_storage;
 pub mod steam_user;
 pub mod steam_user_stats;
 pub mod steam_webapi_util;
-pub mod steam_remote_storage;
-
-/// IEconService Interface
-/// Do Not Use - Not fully implemented!
-pub mod econ_service;
-
-pub mod steam_economy;
 
 mod errors; // This remains private - maybe
 mod macros; // This remains private
