@@ -5,7 +5,14 @@
 [![MIT licensed](https://img.shields.io/crates/l/steam-rs.svg)](./LICENSE)
 [![CI](https://github.com/garhow/steam-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/garhow/steam-rs/actions/workflows/ci.yml)
 
-This crate provides safe and convenient Rust bindings for the Steam Web API, as documented in the [Steamworks Web API Reference](https://partner.steamgames.com/doc/webapi) and [Better Steam Web API Documentation](https://steamwebapi.azurewebsites.net/).
+This crate provides safe and convenient Rust bindings for the Steam Web API.
+
+The following API references and documentation are helpful resources for the development of this project:
+- [Better Steam Web API Documentation](https://steamwebapi.azurewebsites.net/)
+- [Steam Web API - Valve Developer Community](https://developer.valvesoftware.com/wiki/Steam_Web_API)
+- [Steamworks Web API Reference](https://partner.steamgames.com/doc/webapi)
+- [WebAPI - Official TF2 Wiki](https://wiki.teamfortress.com/wiki/WebAPI)
+- [xpaw's Steam Web API Documentation](https://steamapi.xpaw.me/)
 
 ### This is not production ready!
 This crate is highly experimental and unfinished so you are advised to be cautious when using it in your projects.
