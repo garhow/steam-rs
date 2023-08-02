@@ -22,7 +22,6 @@ For a list of all supported API interfaces and endpoints, please see [ENDPOINTS.
 
 ## Usage
 
-
 ```rust
 use std::env;
 use steam_rs::{Steam, SteamId};
@@ -30,12 +29,12 @@ use steam_rs::{Steam, SteamId};
 #[tokio::main]
 async fn main() {
     // Get the Steam API Key as an environment variable
-    let steam_api_key = env::var("STEAM_API_KEY").expect("Missing an API key")
+    let steam_api_key = env::var("STEAM_API_KEY").expect("Missing an API key");
 
     // Initialize the Steam API client
     let steam = Steam::new(steam_api_key);
 
-    // Request the recently played games of SteamID 76561197960434622
+    // Request the recently played games of SteamID `76561197960434622`
     let steam_id = SteamId::new(76561197960434622);
     let recently_played_games = steam.get_recently_played_games(steam_id, None).await.unwrap();
 
