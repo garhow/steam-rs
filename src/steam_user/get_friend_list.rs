@@ -1,4 +1,4 @@
-//! # Implements the GetFriendList endpoint
+//! # Implements the `GetFriendList` endpoint
 
 use core::fmt;
 

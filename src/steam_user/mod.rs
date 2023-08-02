@@ -1,4 +1,4 @@
-//! # Implements the ISteamUser interface
+//! # Implements the `ISteamUser` interface
 //! 
 //! **Note:** This implementation is incomplete!
 //! The following endpoints are currently unimplemented:
