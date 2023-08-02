@@ -32,37 +32,49 @@ impl fmt::Display for Relationship {
     }
 }
 
+/// Represents a friend of a Steam user
 #[derive(Deserialize, Debug)]
 pub struct Friend {
+    /// The 64 bit ID of the friend.
     #[serde(rename = "steamid")]
     #[serde(deserialize_with = "de_steamid_from_str")]
-    pub steam_id: SteamId, // The 64 bit ID of the friend.
-    pub relationship: Relationship, // Role in relation to the given SteamID
-    pub friend_since: u32 // A unix timestamp of when the friend was added to the list.
+    pub steam_id: SteamId,
+
+    /// Role in relation to the given SteamID
+    pub relationship: Relationship,
+
+    /// A unix timestamp of when the friend was added to the list.
+    pub friend_since: u32
 }
 
+// Represents the user's friend list
+//
+// **Note:** If the profile is not public or there are no available entries for the given relationship only an empty object will be returned.
 #[derive(Deserialize, Debug)]
-pub struct FriendsList {
-    pub friends: Vec<Friend> // A list of objects for each list entry. 
+struct FriendsList {
+    /// A list of objects for each list entry.
+    friends: Vec<Friend>
 }
 
 #[derive(Deserialize, Debug)]
 struct Wrapper {
+    /// If the profile is not public or there are no available entries for the given relationship only an empty object will be returned. 
     #[serde(rename = "friendslist")]
-    friends_list: Option<FriendsList> // If the profile is not public or there are no available entries for the given relationship only an empty object will be returned. 
+    friends_list: Option<FriendsList> 
 }
 
 impl Steam {
+    /// Get a user's friend list
     pub async fn get_friend_list(
         &self,
-        steam_id: SteamId,
-        relationship: Option<Relationship>
-    ) -> Result<FriendsList, SteamUserError> {
+        steam_id: SteamId, // SteamID of user
+        relationship: Option<Relationship> // relationship type (ex: Relationship::Friend)
+    ) -> Result<Vec<Friend>, SteamUserError> {
         let query = format!("?key={}&steamid={}{}", &self.api_key, steam_id, optional_argument!(relationship));
         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
         let json = do_http!(url, Value, ErrorHandle, SteamUserError::GetFriendList);
         let wrapper: Wrapper = ErrorHandle!(from_value(json.to_owned()), SteamUserError::GetFriendList);
 
-        return Ok(wrapper.friends_list.unwrap());
+        Ok(wrapper.friends_list.unwrap().friends)
     }
 }
