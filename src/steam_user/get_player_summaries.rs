@@ -135,10 +135,6 @@ impl Steam {
     ///
     /// * `steam_ids` - A vector of `SteamId` objects
     ///
-    /// # Returns
-    ///
-    /// Returns a `Result` containing a vector of `Player` objects if successful, or a `SteamUserError` if there was an error.
-    /// 
     /// # Example
     /// 
     /// ```
@@ -149,7 +145,7 @@ impl Steam {
     ///     let player_summaries = steam.get_player_summaries(vec![SteamId(76561197960435530)]).await.unwrap();
     /// 
     ///     // Prints the first user's profile name
-    ///     println!("{:?}", friend_list[0].persona_name);
+    ///     println!("{:?}", player_summaries[0].persona_name);
     /// ```
     pub async fn get_player_summaries(
         &self,
