@@ -76,10 +76,6 @@ impl Steam {
     /// * `steam_id` - The SteamID of the user.
     /// * `relationship` - Optional relationship type (e.g., `Relationship::Friend`).
     ///
-    /// # Returns
-    ///
-    /// Returns a `Result` containing a vector of `Friend` objects if successful, or a `SteamUserError` if there was an error.
-    /// 
     /// # Example
     /// 
     /// ```
