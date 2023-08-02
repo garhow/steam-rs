@@ -25,7 +25,7 @@ pub fn get_community_badge_progress() {
 pub fn get_owned_games() {
     async_test!(async {
         let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-        println!("{:?}", steam.get_owned_games(EXAMPLE_STEAM_ID, None, None, None).await.unwrap());
+        println!("{:?}", steam.get_owned_games(EXAMPLE_STEAM_ID, true, true, 440, true, None, "english", true).await.unwrap());
     });
 }
 
@@ -53,11 +53,11 @@ pub fn get_user_stats_for_game() {
     });
 }
 
-#[test]
-/// TODO: Extensive testing for each argument
-pub fn get_owned_game() {
-    async_test!(async {
-        let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-        println!("{:?}", steam.get_owned_game(EXAMPLE_STEAM_ID, true, true, 440, true, None, "english", true).await.unwrap());
-    });
-}
+// #[test]
+// TODO: Extensive testing for each argument
+// pub fn get_owned_game() {
+//    async_test!(async {
+//        let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
+//        println!("{:?}", steam.get_owned_games(EXAMPLE_STEAM_ID, true, true, 440, true, None, "english", true).await.unwrap());
+//    });
+// }

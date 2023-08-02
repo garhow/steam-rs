@@ -8,7 +8,6 @@ const EXAMPLE_VANITY_URLS: [&'static str; 2] = [
     "!@#$%^&*()" // Represents a broken vanity URL that would fail
 ];
 
-/// Test the `GetFriendList` endpoint
 #[test]
 pub fn get_friend_list() {
     async_test!(async {
@@ -23,7 +22,6 @@ pub fn get_friend_list() {
     });
 }
 
-/// Test the `GetPlayerSummaries` endpoint
 #[test]
 pub fn get_player_summaries() {
     async_test!(async {
@@ -32,7 +30,6 @@ pub fn get_player_summaries() {
     });
 }
 
-/// Test the `ResolveVanityURL` endpoint
 #[test]
 pub fn resolve_vanity_url() {
     async_test!(async {
