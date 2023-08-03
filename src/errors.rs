@@ -33,6 +33,7 @@ error!(SteamUserError{
     GetFriendList(String),
     GetPlayerBans(String),
     GetPlayerSummaries(String),
+    GetUserGroupList(String),
     ResolveVanityURL(String),
 });
 

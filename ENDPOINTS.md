@@ -52,7 +52,7 @@ Interfaces that are prefixed with ✓ are fully implemented!
   - [x] GetPlayerSummaries
   - [ ] GetPublisherAppOwnership **(requires publisher key)**
   - [ ] GetPublisherAppOwnershipChanges **(requires publisher key)**
-  - [ ] GetUserGroupList
+  - [x] GetUserGroupList
   - [ ] GrantPackage **(requires publisher key)**
   - [x] ResolveVanityURL
   - [ ] RevokePackage **(requires publisher key)**
