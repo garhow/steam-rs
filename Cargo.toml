@@ -1,6 +1,6 @@
 [package]
 name = "steam-rs"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Garrett Howard <garrett@mersh.com>"]
 edition = "2021"
 description = "Safe Rust bindings for the Steam Web API"
