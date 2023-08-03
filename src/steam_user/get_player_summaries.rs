@@ -72,7 +72,7 @@ pub struct Player {
 
     /// A unix timestamp of when the user was last online.
     #[serde(rename = "lastlogoff")]
-    pub last_logoff: u64,
+    pub last_logoff: Option<u64>,
 
     /// If present the profile allows public comments.
     #[serde(rename = "commentpermission")]
