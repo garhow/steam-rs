@@ -4,10 +4,9 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 use crate::{
-    Steam,
-    errors::{SteamWebAPIUtilError, ErrorHandle},
+    errors::{ErrorHandle, SteamWebAPIUtilError},
     macros::do_http,
-    BASE,
+    Steam, BASE,
 };
 
 use super::INTERFACE;
@@ -30,18 +29,21 @@ impl Steam {
     /// Returns WebAPI server time & checks server status.
     ///
     /// # Example
-    /// 
+    ///
     /// ```
     ///     // Retrieves server info.
     ///     let server_info = Steam::get_server_info().await.unwrap();
-    /// 
+    ///
     ///     // Prints the current server time as a string.
     ///     println!("{}", server_info.server_time_string);
     /// ```
     pub async fn get_server_info() -> Result<ServerInfo, SteamWebAPIUtilError> {
         let url = format!("{}/{}/{}/v{}/", BASE, INTERFACE, ENDPOINT, VERSION);
         let json = do_http!(url, Value, ErrorHandle, SteamWebAPIUtilError::GetServerInfo);
-        let server_info: ServerInfo = ErrorHandle!(serde_json::from_value(json.to_owned()), SteamWebAPIUtilError::GetServerInfo);
+        let server_info: ServerInfo = ErrorHandle!(
+            serde_json::from_value(json.to_owned()),
+            SteamWebAPIUtilError::GetServerInfo
+        );
         Ok(server_info)
     }
 }

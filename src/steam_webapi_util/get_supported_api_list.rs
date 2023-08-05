@@ -4,10 +4,9 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 use crate::{
-    Steam,
-    errors::{SteamWebAPIUtilError, ErrorHandle},
+    errors::{ErrorHandle, SteamWebAPIUtilError},
     macros::do_http,
-    BASE,
+    Steam, BASE,
 };
 
 use super::INTERFACE;
@@ -28,7 +27,7 @@ pub struct Parameter {
     pub optional: bool,
 
     /// API documentation of parameter.
-    pub description: Option<String>
+    pub description: Option<String>,
 }
 
 /// Represents a method within an API interface.
@@ -45,7 +44,7 @@ pub struct Method {
     pub http_method: String,
 
     /// Parameters for the method.
-    pub parameters: Option<Vec<Parameter>>
+    pub parameters: Option<Vec<Parameter>>,
 }
 
 /// Represents an API interface
@@ -54,41 +53,47 @@ pub struct Interface {
     /// Name of the interface.
     pub name: String,
 
-    /// Methods within the interface. 
-    pub methods: Vec<Method>
+    /// Methods within the interface.
+    pub methods: Vec<Method>,
 }
 
 /// List of WebAPI interfaces
 #[derive(Debug, Deserialize, Serialize)]
 pub struct APIList {
     /// Vector of API interfaces
-    pub interfaces: Vec<Interface>
+    pub interfaces: Vec<Interface>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 struct Wrapper {
-    apilist: APIList
+    apilist: APIList,
 }
 
 impl Steam {
-    /// Lists all available WebAPI interfaces.
+    /// Lists all supported API calls.
     ///
     /// # Example
-    /// 
+    ///
     /// ```
     ///     // Creates new `Steam` instance using the environment variable `STEAM_API_KEY`.
     ///     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-    /// 
+    ///
     ///     // Retrieves list of supported WebAPIs.
     ///     let api_list = steam.get_supported_api_list().await.unwrap();
-    /// 
+    ///
     ///     // Prints the WebAPI list.
     ///     println!("{:?}", api_list);
     /// ```
     pub async fn get_supported_api_list(&self) -> Result<APIList, SteamWebAPIUtilError> {
-        let url = format!("{}/{}/{}/v{}/?key={}", BASE, INTERFACE, ENDPOINT, VERSION, &self.api_key);
+        let url = format!(
+            "{}/{}/{}/v{}/?key={}",
+            BASE, INTERFACE, ENDPOINT, VERSION, &self.api_key
+        );
         let json = do_http!(url, Value, ErrorHandle, SteamWebAPIUtilError::GetServerInfo);
-        let wrapper: Wrapper = ErrorHandle!(serde_json::from_value(json.to_owned()), SteamWebAPIUtilError::GetServerInfo);
+        let wrapper: Wrapper = ErrorHandle!(
+            serde_json::from_value(json.to_owned()),
+            SteamWebAPIUtilError::GetServerInfo
+        );
         Ok(wrapper.apilist)
     }
 }
