@@ -267,7 +267,7 @@ struct Response {
 }
 
 impl Steam {
-    /// Performs a search query for published files
+    /// Performs a search query for published files.
     ///
     /// # Arguments
     /// 

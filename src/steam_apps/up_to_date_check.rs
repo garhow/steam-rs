@@ -1,10 +1,11 @@
+//! # Implements the `UpToDateCheck` endpoint 
+
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    Steam,
-    BASE,
+    errors::{ErrorHandle, SteamAppsError},
     macros::do_http,
-    errors::{ErrorHandle, SteamAppsError}
+    Steam, BASE,
 };
 
 use super::INTERFACE;
@@ -14,25 +15,56 @@ const VERSION: &str = "1";
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct UpToDateResponse {
+    /// Boolean indicating if request was successful.
     pub success: bool,
+
+    /// Boolean indicating if the given version number is the most current version.
     pub up_to_date: bool,
+
+    /// Boolean indicating if the given version can be listed in public changelogs. [\[debated\]](https://wiki.teamfortress.com/wiki/WebAPI/UpToDateCheck#cite_note-1)
     pub version_is_listable: bool,
+
+    /// Integer of the most current version of the app available.
     pub required_version: Option<u32>,
-    pub message: Option<String>
+
+    /// A string giving the status message if applicable.
+    pub message: Option<String>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
 struct Wrapper {
-    response: UpToDateResponse
+    response: UpToDateResponse,
 }
 
 impl Steam {
-    /// Checks if the app is up to date.
+    /// Check if a given app version is the most current available.
+    /// 
+    /// # Arguments
+    ///
+    /// * `appid` - AppID of game.
+    /// * `version` - The installed version of the game.
+    ///
+    /// # Example
+    /// 
+    /// ```
+    ///     let appid = 440; // Team Fortress 2
+    /// 
+    ///     let version = 8227024;
+    /// 
+    ///     // Check if game is up-to-date.
+    ///     let up_to_date = Steam::up_to_date_check(appid, version).await.unwrap();
+    /// 
+    ///     // Prints the response.
+    ///     println!("{:?}", up_to_date);
+    /// ```
     pub async fn up_to_date_check(
         appid: u32,
-        version: u32
+        version: u32,
     ) -> Result<UpToDateResponse, SteamAppsError> {
-        let url = format!("{}/{}/{}/v{}/?appid={}&version={}", BASE, INTERFACE, ENDPOINT, VERSION, appid, version);
+        let url = format!(
+            "{}/{}/{}/v{}/?appid={}&version={}",
+            BASE, INTERFACE, ENDPOINT, VERSION, appid, version
+        );
         let wrapper = do_http!(url, Wrapper, ErrorHandle, SteamAppsError::GetAppList);
         Ok(wrapper.response)
     }
