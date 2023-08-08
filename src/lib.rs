@@ -22,7 +22,7 @@ pub mod steam_webapi_util;
 mod errors; // This remains private - maybe
 mod macros; // This remains private
 
-pub const BASE: &str = "https://api.steampowered.com";
+const BASE: &str = "https://api.steampowered.com";
 
 pub struct Steam {
     api_key: String,
