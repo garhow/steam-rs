@@ -92,7 +92,7 @@ pub struct Player {
 
     /// If the user is in game this will be set to it's app ID as a string.
     #[serde(rename = "gameid")]
-    pub game_id: Option<u32>,
+    pub game_id: Option<String>,
 
     /// The server URL given as an IP address and port number separated by a colon.
     /// This will not be present or set to "0.0.0.0:0" if none is available.
