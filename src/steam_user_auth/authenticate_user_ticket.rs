@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     errors::{ErrorHandle, SteamUserAuthError},
-    macros::{do_http, gen_args},
+    macros::do_http,
     Steam, BASE,
 };
 
@@ -45,8 +45,7 @@ impl Steam {
         ticket: &str,
     ) -> Result<TicketAuthResponse, SteamUserAuthError> {
         let key = &self.api_key.clone();
-        let args = gen_args!(key, app_id, ticket);
-        let url = format!("{BASE}/{INTERFACE}/{ENDPOINT}/v{VERSION}/?{args}");
+        let url = format!("{BASE}/{INTERFACE}/{ENDPOINT}/v{VERSION}/?key={key}&appid={app_id}&ticket={ticket}");
         let wrapper = do_http!(
             url,
             Wrapper,
