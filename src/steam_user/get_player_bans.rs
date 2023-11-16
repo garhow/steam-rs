@@ -5,7 +5,7 @@ use serde_json::{from_value, Value};
 
 use crate::{
     Steam,
-    steam_id::{de_steamid_from_str, SteamId},
+    steam_id::SteamId,
     macros::do_http,
     errors::{ErrorHandle, SteamUserError},
     BASE

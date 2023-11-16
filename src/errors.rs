@@ -65,12 +65,14 @@ error!(SteamRemoteStorageError{
     GetPublishedFile(String)
 });
 
+error!(SteamUserAuthError{
+    AuthenticateUserTicket(String)
+});
 
 macro_rules! ErrorHandle {
     ($function:expr, $error:expr) => {
-        $function.map_err(move |error| { $error(error.to_string()) })?
+        $function.map_err(move |error| $error(error.to_string()))?
     };
 }
 
 pub(crate) use ErrorHandle;
-

@@ -16,6 +16,7 @@ pub mod steam_id;
 pub mod steam_news;
 pub mod steam_remote_storage;
 pub mod steam_user;
+pub mod steam_user_auth;
 pub mod steam_user_stats;
 pub mod steam_webapi_util;
 
