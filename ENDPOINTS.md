@@ -56,6 +56,9 @@ Interfaces that are prefixed with ✓ are fully implemented!
   - [ ] GrantPackage **(requires publisher key)**
   - [x] ResolveVanityURL
   - [ ] RevokePackage **(requires publisher key)**
+## ISteamUserAuth
+  - [ ] AuthenticateUser
+  - [x] AuthenticateUserTicket
 ## ISteamUserStats
   - [x] GetGlobalAchievementPercentagesForApp
   - [ ] GetGlobalStatsForGame
