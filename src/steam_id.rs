@@ -88,13 +88,6 @@ impl FromStr for SteamId {
     }
 }
 
-impl From<u32> for SteamId {
-    /// Converts a `u64` into a `SteamId`.
-    fn from(value: u32) -> Self {
-        SteamId(value)
-    }
-}
-
 impl From<u64> for SteamId {
     /// Converts a `u64` into a `SteamId`.
     fn from(value: u64) -> Self {
