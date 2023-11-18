@@ -65,6 +65,11 @@ impl SteamId {
     pub fn into_u64(self) -> u64 {
         self.0
     }
+
+    /// Converts the `SteamId` into the unsigned 32-bit number used in its SteamID3.
+    pub fn into_u32(self) -> u32 {
+        (self.0 & 0xFFFFFFFF) as u32
+    }
 }
 
 impl FromStr for SteamId {
@@ -80,6 +85,13 @@ impl FromStr for SteamId {
             Ok(value) => Ok(SteamId(value)),
             Err(_) => Err(ParseSteamIdError),
         }
+    }
+}
+
+impl From<u32> for SteamId {
+    /// Converts a `u64` into a `SteamId`.
+    fn from(value: u32) -> Self {
+        SteamId(value)
     }
 }
 

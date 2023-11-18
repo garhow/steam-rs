@@ -3,7 +3,7 @@ use steam_rs::steam_id::SteamId;
 
 mod common;
 
-const EXAMPLE_STEAM_ID64: u64 = 76561197960435530; // Robin Walker
+const EXAMPLE_STEAM_ID64: u64 = 76561198307851839; // m1nt_
 
 #[test]
 pub fn new() {
@@ -23,5 +23,12 @@ pub fn from_str() {
 pub fn into_u64() {
     async_test!(async {
         println!("{:?}", SteamId::new(EXAMPLE_STEAM_ID64).into_u64());
+    });
+}
+
+#[test]
+pub fn into_u32() {
+    async_test!(async {
+        println!("{:?}", SteamId::new(EXAMPLE_STEAM_ID64).into_u32());
     });
 }
