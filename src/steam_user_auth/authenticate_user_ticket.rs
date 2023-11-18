@@ -17,15 +17,15 @@ const VERSION: &str = "1";
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct TicketAuthResponse {
-    result: String,
+    pub result: String,
     #[serde(rename = "steamid")]
-    steam_id: String,
+    pub steam_id: String,
     #[serde(rename = "ownersteamid")]
-    owner_steam_id: String,
+    pub owner_steam_id: String,
     #[serde(rename = "vacbanned")]
-    vac_banned: bool,
+    pub vac_banned: bool,
     #[serde(rename = "publisherbanned")]
-    publisher_banned: bool,
+    pub publisher_banned: bool,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
