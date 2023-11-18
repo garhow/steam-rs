@@ -46,11 +46,9 @@ impl Steam {
         count: Option<u32>,
         feeds: Option<Vec<&str>>,
     ) -> Result<AppNews, SteamNewsError> {
-        let feeds: Option<String> = if let Some(feeds) = feeds {
-            Some(feeds.iter().map(|&feed| feed.to_string() + ",").collect())
-        } else {
-            None
-        }; // DO NOT RAYON THIS! - Rayon doesn't protect the order of data!
+        // DO NOT RAYON THIS! - Rayon doesn't protect the order of data!
+        let feeds: Option<String> =
+            feeds.map(|feeds| feeds.iter().map(|&feed| feed.to_string() + ",").collect());
 
         let optional_arguments = vec![
             optional_argument!(max_length, "maxlength"),
