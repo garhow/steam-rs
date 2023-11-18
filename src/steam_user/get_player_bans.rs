@@ -4,11 +4,10 @@ use serde::{Deserialize, Serialize};
 use serde_json::{from_value, Value};
 
 use crate::{
-    Steam,
-    steam_id::SteamId,
-    macros::do_http,
     errors::{ErrorHandle, SteamUserError},
-    BASE
+    macros::do_http,
+    steam_id::SteamId,
+    Steam, BASE,
 };
 
 use super::INTERFACE;
@@ -18,8 +17,8 @@ const VERSION: &str = "1";
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Wrapper {
-    /// Vector of player objects for each given (and valid) 64-bit ID. 
-    players: Vec<Player>
+    /// Vector of player objects for each given (and valid) 64-bit ID.
+    players: Vec<Player>,
 }
 
 /// Represents a player object with data about bans.
@@ -54,7 +53,7 @@ pub struct Player {
     /// If the player has no bans on record the string will be "none",
     /// if the player is on probation it will say "probation", and so forth.
     #[serde(rename = "EconomyBan")]
-    pub economy_ban: String
+    pub economy_ban: String,
 }
 
 impl Steam {
@@ -65,20 +64,20 @@ impl Steam {
     /// * `steam_ids` - A vector of `SteamId` objects
     ///
     /// # Example
-    /// 
+    ///
     /// ```
     ///     // Creates new `Steam` instance using the environment variable `STEAM_API_KEY`.
     ///     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-    /// 
+    ///
     ///     // Retrieves player ban status of user `76561197960435530`.
     ///     let player_bans = steam.get_player_bans(vec![SteamId(76561197960435530)]).await.unwrap();
-    /// 
+    ///
     ///     // Prints the user's VAC ban status.
     ///     println!("{:?}", player_bans[0].vac_banned);
     /// ```
     pub async fn get_player_bans(
         &self,
-        steam_ids: Vec<SteamId>
+        steam_ids: Vec<SteamId>,
     ) -> Result<Vec<Player>, SteamUserError> {
         let steam_ids: String = steam_ids.iter().map(|&id| id.to_string() + ",").collect();
 
@@ -86,7 +85,8 @@ impl Steam {
         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
 
         let json = do_http!(url, Value, ErrorHandle, SteamUserError::GetPlayerBans);
-        let wrapper: Wrapper = ErrorHandle!(from_value(json.to_owned()), SteamUserError::GetPlayerBans);
+        let wrapper: Wrapper =
+            ErrorHandle!(from_value(json.to_owned()), SteamUserError::GetPlayerBans);
 
         Ok(wrapper.players)
     }

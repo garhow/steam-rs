@@ -45,7 +45,9 @@ impl Steam {
         ticket: &str,
     ) -> Result<TicketAuthResponse, SteamUserAuthError> {
         let key = &self.api_key.clone();
-        let url = format!("{BASE}/{INTERFACE}/{ENDPOINT}/v{VERSION}/?key={key}&appid={app_id}&ticket={ticket}");
+        let url = format!(
+            "{BASE}/{INTERFACE}/{ENDPOINT}/v{VERSION}/?key={key}&appid={app_id}&ticket={ticket}"
+        );
         let wrapper = do_http!(
             url,
             Wrapper,

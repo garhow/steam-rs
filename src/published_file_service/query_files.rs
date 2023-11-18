@@ -126,10 +126,10 @@ pub enum PublishedFileInfoMatchingFileType {
 
     /// Workshop items that can be sold in-game.
     ItemsMtx,
-    
+
     /// Workshop items that can be used right away by the user.
     ItemsReadyToUse,
-    
+
     WorkshopShowcase,
 
     /// Managed completely by the game, not the user, and not shown on the web.
@@ -270,7 +270,7 @@ impl Steam {
     /// Performs a search query for published files.
     ///
     /// # Arguments
-    /// 
+    ///
     /// * `query_type` - Type of the query, see [PublishedFileQueryType](crate::published_file_service::query_files::PublishedFileQueryType).
     /// * `page` - Current page. Currently there is an upper limit of 1000.
     /// * `cursor` - Cursor to paginate through the results (set to '*' for the first request). Prefer this over using the page parameter, as it will allow you to do deep pagination. When used, the page parameter will be ignored. Use the "next_cursor" value returned in the response to set up the next query to get the next set of results.
@@ -283,7 +283,7 @@ impl Steam {
     /// * `required_flags` - Required flags that must be set on any returned items.
     /// * `omitted_flags` - Flags that must not be set on any returned items
     /// * `search_text` - Text to match in the item's title or description.
-    /// * `file_type` - 
+    /// * `file_type` -
     /// * `child_published_file_id` - Find all items that reference the given item.
     /// * `days` - If `query_type` is [RankedByTrend](crate::published_file_service::query_files::PublishedFileQueryType::RankedByTrend), then this is the number of days to get votes for \[1,7\].
     /// * `include_recent_votes_only` - If `query_type` is [RankedByTrend](crate::published_file_service::query_files::PublishedFileQueryType::RankedByTrend), then limit result set just to items that have votes within the day range given.

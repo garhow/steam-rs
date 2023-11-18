@@ -11,7 +11,12 @@ pub fn get_app_list() {
 #[test]
 pub fn get_servers_at_address() {
     async_test!(async {
-        println!("{:?}", Steam::get_servers_at_address("158.255.2.173:27016").await.unwrap());
+        println!(
+            "{:?}",
+            Steam::get_servers_at_address("158.255.2.173:27016")
+                .await
+                .unwrap()
+        );
     });
 }
 

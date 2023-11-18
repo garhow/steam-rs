@@ -1,4 +1,5 @@
 use core::fmt;
+use std::str::FromStr;
 
 use serde::{Deserialize, Serialize};
 
@@ -60,21 +61,30 @@ impl SteamId {
         SteamId(value)
     }
 
+    /// Converts the `SteamId` into its underlying 64-bit unsigned integer value.
+    pub fn into_u64(self) -> u64 {
+        self.0
+    }
+
+    /// Converts the `SteamId` into the unsigned 32-bit number used in its SteamID3.
+    pub fn into_u32(self) -> u32 {
+        (self.0 & 0xFFFFFFFF) as u32
+    }
+}
+
+impl FromStr for SteamId {
+    type Err = ParseSteamIdError;
+
     /// Parses a `SteamId` from a string representation.
     ///
     /// # Errors
     ///
     /// Returns an `Err` if the parsing fails.
-    pub fn from_str(s: &str) -> Result<Self, ParseSteamIdError> {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s.parse::<u64>() {
             Ok(value) => Ok(SteamId(value)),
             Err(_) => Err(ParseSteamIdError),
         }
-    }
-
-    /// Converts the `SteamId` into its underlying 64-bit unsigned integer value.
-    pub fn into_u64(self) -> u64 {
-        self.0
     }
 }
 
@@ -94,7 +104,8 @@ impl From<String> for SteamId {
 
 /// Deserializes the `SteamId` from a `String`
 pub fn de_steamid_from_str<'de, D>(deserializer: D) -> Result<SteamId, D::Error>
-    where D: serde::Deserializer<'de>
+where
+    D: serde::Deserializer<'de>,
 {
     let s = String::deserialize(deserializer)?;
     Ok(SteamId::from(s))

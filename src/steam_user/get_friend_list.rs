@@ -3,14 +3,13 @@
 use core::fmt;
 
 use serde::Deserialize;
-use serde_json::{Value, from_value};
+use serde_json::{from_value, Value};
 
 use crate::{
-    BASE,
-    Steam,
+    errors::{ErrorHandle, SteamUserError},
     macros::{do_http, optional_argument},
     steam_id::{de_steamid_from_str, SteamId},
-    errors::{SteamUserError, ErrorHandle},
+    Steam, BASE,
 };
 
 use super::INTERFACE;
@@ -25,7 +24,7 @@ pub enum Relationship {
     /// All relationships.
     All,
     /// Friends relationship.
-    Friend
+    Friend,
 }
 
 impl fmt::Display for Relationship {
@@ -49,7 +48,7 @@ pub struct Friend {
     pub relationship: Relationship,
 
     /// A unix timestamp of when the friend was added to the list.
-    pub friend_since: u32
+    pub friend_since: u32,
 }
 
 // Represents the user's friend list.
@@ -58,14 +57,14 @@ pub struct Friend {
 #[derive(Deserialize, Debug)]
 struct FriendsList {
     /// A vector of Friend objects.
-    friends: Vec<Friend>
+    friends: Vec<Friend>,
 }
 
 #[derive(Deserialize, Debug)]
 struct Wrapper {
-    /// If the profile is not public or there are no available entries for the given relationship only an empty object will be returned. 
+    /// If the profile is not public or there are no available entries for the given relationship only an empty object will be returned.
     #[serde(rename = "friendslist")]
-    friends_list: Option<FriendsList> 
+    friends_list: Option<FriendsList>,
 }
 
 impl Steam {
@@ -77,26 +76,32 @@ impl Steam {
     /// * `relationship` - Optional relationship type (e.g., `Relationship::Friend`).
     ///
     /// # Example
-    /// 
+    ///
     /// ```
     ///     // Creates new `Steam` instance using the environment variable `STEAM_API_KEY`.
     ///     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-    /// 
+    ///
     ///     // Retrieves friend list of user `76561197960435530`.
     ///     let friend_list = steam.get_friend_list(SteamId(76561197960435530), None).await.unwrap();
-    /// 
+    ///
     ///     // Prints their first friend's SteamID
     ///     println!("{:?}", friend_list[0].steamid);
     /// ```
     pub async fn get_friend_list(
         &self,
-        steam_id: SteamId, // SteamID of user
-        relationship: Option<Relationship> // relationship type (ex: Relationship::Friend)
+        steam_id: SteamId,                  // SteamID of user
+        relationship: Option<Relationship>, // relationship type (ex: Relationship::Friend)
     ) -> Result<Vec<Friend>, SteamUserError> {
-        let query = format!("?key={}&steamid={}{}", &self.api_key, steam_id, optional_argument!(relationship));
+        let query = format!(
+            "?key={}&steamid={}{}",
+            &self.api_key,
+            steam_id,
+            optional_argument!(relationship)
+        );
         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
         let json = do_http!(url, Value, ErrorHandle, SteamUserError::GetFriendList);
-        let wrapper: Wrapper = ErrorHandle!(from_value(json.to_owned()), SteamUserError::GetFriendList);
+        let wrapper: Wrapper =
+            ErrorHandle!(from_value(json.to_owned()), SteamUserError::GetFriendList);
 
         Ok(wrapper.friends_list.unwrap().friends)
     }

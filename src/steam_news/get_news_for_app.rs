@@ -1,9 +1,9 @@
-use serde::{Serialize, Deserialize};
-use crate::{Steam,
-    errors::{SteamNewsError, ErrorHandle},
+use crate::{
+    errors::{ErrorHandle, SteamNewsError},
     macros::{do_http, optional_argument},
-    BASE,
+    Steam, BASE,
 };
+use serde::{Deserialize, Serialize};
 
 use super::INTERFACE;
 
@@ -23,19 +23,19 @@ pub struct NewsItem {
     feedname: String,
     feed_type: u8,
     appid: u32,
-    tags: Option<Vec<String>>
+    tags: Option<Vec<String>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct AppNews {
     appid: u32, // TODO: Convert to AppId
     newsitems: Vec<NewsItem>,
-    count: u32
+    count: u32,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Response {
-    appnews: AppNews
+    appnews: AppNews,
 }
 
 impl Steam {
@@ -44,11 +44,11 @@ impl Steam {
         max_length: Option<u32>,
         end_date: Option<u32>,
         count: Option<u32>,
-        feeds: Option<Vec<&str>>
+        feeds: Option<Vec<&str>>,
     ) -> Result<AppNews, SteamNewsError> {
-        let feeds: Option<String> = if let Some(feeds) = feeds {
-            Some(feeds.iter().map(|&feed| feed.to_string() + ",").collect())
-        } else { None }; // DO NOT RAYON THIS! - Rayon doesn't protect the order of data!
+        // DO NOT RAYON THIS! - Rayon doesn't protect the order of data!
+        let feeds: Option<String> =
+            feeds.map(|feeds| feeds.iter().map(|&feed| feed.to_string() + ",").collect());
 
         let optional_arguments = vec![
             optional_argument!(max_length, "maxlength"),

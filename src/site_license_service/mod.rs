@@ -1,5 +1,5 @@
 //! # Implements the `ISiteLicenseService` interface
-//! 
+//!
 //! Provides access to services related to operating sites which are part of the Steam PC Cafe program.
 
 pub mod get_current_client_connections;

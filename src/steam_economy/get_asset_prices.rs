@@ -2,7 +2,11 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
-use crate::{macros::{gen_args, do_http, optional_argument}, errors::{SteamEconomyError, ErrorHandle}, Steam};
+use crate::{
+    errors::{ErrorHandle, SteamEconomyError},
+    macros::{do_http, gen_args, optional_argument},
+    Steam,
+};
 
 const END_POINT: &str = "https://api.steampowered.com/ISteamEconomy/GetAssetPrices/v1/?";
 
@@ -14,7 +18,7 @@ pub enum AssetPrices {
         assets: Vec<Asset>,
         tags: HashMap<String, String>,
         tag_ids: HashMap<u64, u64>,
-    }
+    },
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -31,10 +35,20 @@ pub struct Asset {
 impl Steam {
     /// This end point gives a 1:1 output of the api, if you were to put the endpoint into a browser, expect the same layout
     /// ( carbon-copy )
-    pub async fn get_asset_prices(&self, appid: u32, language: Option<&str>, currency: Option<&str>) -> Result<AssetPrices, SteamEconomyError> {
+    pub async fn get_asset_prices(
+        &self,
+        appid: u32,
+        language: Option<&str>,
+        currency: Option<&str>,
+    ) -> Result<AssetPrices, SteamEconomyError> {
         let key = &self.api_key.clone();
         let args = gen_args!(key, appid) + &optional_argument!(language, currency);
         let url = format!("{END_POINT}{args}");
-        Ok(do_http!(url, AssetPrices, ErrorHandle, SteamEconomyError::GetAssetPrices))
+        Ok(do_http!(
+            url,
+            AssetPrices,
+            ErrorHandle,
+            SteamEconomyError::GetAssetPrices
+        ))
     }
 }

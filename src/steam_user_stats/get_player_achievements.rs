@@ -3,11 +3,10 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    macros::{gen_args, do_http, optional_argument},
     errors::{ErrorHandle, SteamUserStatsError},
-    Steam,
+    macros::{do_http, gen_args, optional_argument},
     steam_id::SteamId,
-    BASE
+    Steam, BASE,
 };
 
 use super::INTERFACE;
@@ -17,7 +16,7 @@ const VERSION: &str = "1";
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 struct Wrapper {
-    playerstats: PlayerStats
+    playerstats: PlayerStats,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -29,7 +28,7 @@ pub struct PlayerStats {
     pub steam_id: Option<String>,
     #[serde(rename = "gameName")]
     pub game_name: Option<String>,
-    pub achievements: Option<Vec<Achievement>>
+    pub achievements: Option<Vec<Achievement>>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -45,15 +44,24 @@ impl Steam {
         &self,
         steamid: SteamId,
         appid: u32,
-        language: Option<&str>
+        language: Option<&str>,
     ) -> Result<PlayerStats, SteamUserStatsError> {
         let key = &self.api_key.clone();
         let steamid = steamid.into_u64();
         let args = gen_args!(key, appid, steamid) + &optional_argument!(language, "l");
         let url = format!("{BASE}/{INTERFACE}/{ENDPOINT}/v{VERSION}/?{args}");
-        let wrapper = do_http!(url, Wrapper, ErrorHandle, SteamUserStatsError::GetPlayerAchievements);
+        let wrapper = do_http!(
+            url,
+            Wrapper,
+            ErrorHandle,
+            SteamUserStatsError::GetPlayerAchievements
+        );
         Ok(wrapper.playerstats)
     }
 }
 
-impl Achievement { pub fn achieved(&self) -> bool { self.achieved == 1 } }
+impl Achievement {
+    pub fn achieved(&self) -> bool {
+        self.achieved == 1
+    }
+}

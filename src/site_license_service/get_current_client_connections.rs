@@ -69,24 +69,24 @@ impl Steam {
     /// See current activity at one or more sites.
     ///
     /// # Warning
-    /// 
+    ///
     /// This method is unsupported as it requires a Steamworks Web API publisher authentication key and we cannot test it at the moment!
     /// Bug reports are appreciated for unsupported methods, so please file one if you encounter errors.
-    /// 
+    ///
     /// # Arguments
     ///
     /// * `publisher_key` - Steamworks Web API publisher authentication key
     /// * `site_id` - Site ID to see; zero for all sites
     ///
     /// # Example
-    /// 
+    ///
     /// ```
     ///     // Creates new `Steam` instance using the environment variable `STEAM_API_KEY`.
     ///     let publisher_key = &std::env::var("STEAM_PUBLISHER_API_KEY").expect("Missing an API key");
-    /// 
+    ///
     ///     // Retrive current client connections at all sites.
     ///     let current_connections = Steam::get_current_client_connections(publisher_key, 0).await.unwrap();
-    /// 
+    ///
     ///     // Prints the client activity data.
     ///     println!("{:?}", current_connections);
     /// ```

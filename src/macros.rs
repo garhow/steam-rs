@@ -1,63 +1,103 @@
 macro_rules! do_http {
     ($url:ident, $output_type:ty, $error_handle:ident, $error:expr) => {
+        if let Ok(response) = reqwest::get($url).await {
+            match response.status() {
+                reqwest::StatusCode::OK => {
+                    $error_handle!(response.json::<$output_type>().await, $error)
+                }
 
-    if let Ok(response) = reqwest::get($url).await {
-        match response.status() { 
-            reqwest::StatusCode::OK => $error_handle!(response.json::<$output_type>().await, $error),
-
-            _ => { return Err($error(format!("Expected 200 Status, got {}", response.status()))); }
+                _ => {
+                    return Err($error(format!(
+                        "Expected 200 Status, got {}",
+                        response.status()
+                    )));
+                }
+            }
+        } else {
+            // TODO: Make this more descriptive
+            return Err($error("HTTPS Error".to_string()));
         }
-    } else {
-        // TODO: Make this more descriptive
-        return Err($error("HTTPS Error".to_string()));
-    }
-    
     };
 
     // Post Support
     ($url:ident, $output_type:ty, $error_handle:ident, $error:expr, $json_data:ident) => {
-        if let Ok(response) = reqwest::Client::new().post($url).header("Content-Type", "application/json").body($json_data.to_owned()).send().await {
-            match response.status() { 
-                reqwest::StatusCode::OK => $error_handle!(response.json::<$output_type>().await, $error),
-    
-                _ => { return Err($error(format!("Expected 200 Status, got {}", response.status()))); }
+        if let Ok(response) = reqwest::Client::new()
+            .post($url)
+            .header("Content-Type", "application/json")
+            .body($json_data.to_owned())
+            .send()
+            .await
+        {
+            match response.status() {
+                reqwest::StatusCode::OK => {
+                    $error_handle!(response.json::<$output_type>().await, $error)
+                }
+
+                _ => {
+                    return Err($error(format!(
+                        "Expected 200 Status, got {}",
+                        response.status()
+                    )));
+                }
             }
         } else {
             // TODO: Make this more descriptive
             return Err($error("HTTPS Error".to_string()));
         }
-        
     };
 
     // Post support with debugging
     ($url:ident, $output_type:ty, $error_handle:ident, $error:expr, $json_data:ident, $debug:literal) => {
-        if let Ok(response) = reqwest::Client::new().post($url).header("Content-Type", "application/json").body($json_data.to_owned()).send().await {
-            match response.status() { 
+        if let Ok(response) = reqwest::Client::new()
+            .post($url)
+            .header("Content-Type", "application/json")
+            .body($json_data.to_owned())
+            .send()
+            .await
+        {
+            match response.status() {
                 reqwest::StatusCode::OK => $error_handle!(response.text().await, $error),
-    
-                _ => { return Err($error(format!("Expected 200 Status, got {}", response.status()))); }
+
+                _ => {
+                    return Err($error(format!(
+                        "Expected 200 Status, got {}",
+                        response.status()
+                    )));
+                }
             }
         } else {
             // TODO: Make this more descriptive
             return Err($error("HTTPS Error".to_string()));
         }
-        
     };
 
-    ($url:ident, $output_type:ty) => { reqwest::get($url).await.unwrap().json::<$output_type>().await.unwrap() };
-
+    ($url:ident, $output_type:ty) => {
+        reqwest::get($url)
+            .await
+            .unwrap()
+            .json::<$output_type>()
+            .await
+            .unwrap()
+    };
 
     ($url:ident, $error_handle:ident, $error:expr) => {
-        $error_handle!($error_handle!(reqwest::get($url).await, $error).json().await, $error)
+        $error_handle!(
+            $error_handle!(reqwest::get($url).await, $error)
+                .json()
+                .await,
+            $error
+        )
     };
     ($url:ident, $error:expr) => {
         use crate::errors::ErrorHandle;
-        ErrorHandle!(ErrorHandle!(reqwest::get($url).await, $error).json().await, $error)
+        ErrorHandle!(
+            ErrorHandle!(reqwest::get($url).await, $error).json().await,
+            $error
+        )
     };
     ($url:ident) => {
         reqwest::get($url).await.unwrap().text().await.unwrap()
     };
-
 }
 
 pub(crate) use do_http;
