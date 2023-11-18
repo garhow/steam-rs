@@ -94,7 +94,8 @@ impl From<String> for SteamId {
 
 /// Deserializes the `SteamId` from a `String`
 pub fn de_steamid_from_str<'de, D>(deserializer: D) -> Result<SteamId, D::Error>
-    where D: serde::Deserializer<'de>
+where
+    D: serde::Deserializer<'de>,
 {
     let s = String::deserialize(deserializer)?;
     Ok(SteamId::from(s))

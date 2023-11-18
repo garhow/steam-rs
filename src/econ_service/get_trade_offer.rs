@@ -1,16 +1,18 @@
-
 use serde::Deserialize;
 use serde::Serialize;
 use serde_json::Value;
 
-
 use crate::errors::ErrorHandle;
-use crate::{macros::{gen_args, do_http}, errors::EconServiceError, Steam};
+use crate::{
+    errors::EconServiceError,
+    macros::{do_http, gen_args},
+    Steam,
+};
 
 const END_POINT: &str = "https://api.steampowered.com/IEconService/GetTradeOffer/v1/?";
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct TradeOffer{
+pub struct TradeOffer {
     #[serde(rename = "tradeofferid")]
     pub id: String,
     pub accountid_other: u32,
@@ -42,14 +44,17 @@ pub struct Item {
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Offer {
-    pub offer: TradeOffer
+    pub offer: TradeOffer,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
-struct Wrapper { response: Offer }
+struct Wrapper {
+    response: Offer,
+}
 
 impl Steam {
-    pub async fn get_trade_offer(&self,
+    pub async fn get_trade_offer(
+        &self,
         tradeofferid: u64,
         language: &str,
     ) -> Result<TradeOffer, EconServiceError> {
@@ -57,7 +62,10 @@ impl Steam {
         let args = gen_args!(key, tradeofferid, language);
         let url = format!("{END_POINT}{args}");
         let data = do_http!(url, Value, ErrorHandle, EconServiceError::GetTradeOffer);
-        let trade_offer: Wrapper = ErrorHandle!(serde_json::from_value(data.to_owned()), EconServiceError::GetTradeOffer);
+        let trade_offer: Wrapper = ErrorHandle!(
+            serde_json::from_value(data.to_owned()),
+            EconServiceError::GetTradeOffer
+        );
         Ok(trade_offer.response.offer)
     }
 }

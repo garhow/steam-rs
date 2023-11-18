@@ -1,4 +1,4 @@
-//! # Implements the `UpToDateCheck` endpoint 
+//! # Implements the `UpToDateCheck` endpoint
 
 use serde::{Deserialize, Serialize};
 
@@ -38,22 +38,22 @@ struct Wrapper {
 
 impl Steam {
     /// Check if a given app version is the most current available.
-    /// 
+    ///
     /// # Arguments
     ///
     /// * `appid` - AppID of game.
     /// * `version` - The installed version of the game.
     ///
     /// # Example
-    /// 
+    ///
     /// ```
     ///     let appid = 440; // Team Fortress 2
-    /// 
+    ///
     ///     let version = 8227024;
-    /// 
+    ///
     ///     // Check if game is up-to-date.
     ///     let up_to_date = Steam::up_to_date_check(appid, version).await.unwrap();
-    /// 
+    ///
     ///     // Prints the response.
     ///     println!("{:?}", up_to_date);
     /// ```

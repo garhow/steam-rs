@@ -57,10 +57,10 @@ impl Steam {
     /// Get total playtime amounts for all games over a period of time; for one or all sites.
     ///
     /// # Warning
-    /// 
+    ///
     /// This method is unsupported as it requires a Steamworks Web API publisher authentication key and we cannot test it at the moment!
     /// Bug reports are appreciated for unsupported methods, so please file one if you encounter errors.
-    /// 
+    ///
     /// # Arguments
     ///
     /// * `publisher_key` - Steamworks Web API publisher authentication key
@@ -69,11 +69,11 @@ impl Steam {
     /// * `site_id` - Site ID to see; zero for all sites
     ///
     /// # Example
-    /// 
+    ///
     /// ```
     ///     // Creates new `Steam` instance using the environment variable `STEAM_API_KEY`.
     ///     let publisher_key = &std::env::var("STEAM_PUBLISHER_API_KEY").expect("Missing an API key");
-    /// 
+    ///
     ///     // Retrive total playtime from 01 January 2020 to 14 March 2022.
     ///     let total_playtime = Steam::get_total_playtime(
     ///         publisher_key,
@@ -81,7 +81,7 @@ impl Steam {
     ///         "2022-03-14T02:29:44Z",
     ///         0,
     ///     ).await.unwrap();
-    /// 
+    ///
     ///     // Prints the total playtime data.
     ///     println!("{:?}", total_playtime);
     /// ```

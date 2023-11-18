@@ -3,7 +3,11 @@ use serde::Serialize;
 use serde_json::Value;
 
 use crate::errors::ErrorHandle;
-use crate::{macros::{gen_args, do_http}, errors::EconServiceError, Steam};
+use crate::{
+    errors::EconServiceError,
+    macros::{do_http, gen_args},
+    Steam,
+};
 
 const END_POINT: &str = "https://api.steampowered.com/IEconService/GetTradeOffersSummary/v1/?";
 
@@ -23,15 +27,28 @@ pub struct TradeOffersSummary {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
-struct Wrapper { response: TradeOffersSummary }
+struct Wrapper {
+    response: TradeOffersSummary,
+}
 
 impl Steam {
-    pub async fn get_trade_offers_summary(&self, time_last_visit: u32) -> Result<TradeOffersSummary, EconServiceError> {
+    pub async fn get_trade_offers_summary(
+        &self,
+        time_last_visit: u32,
+    ) -> Result<TradeOffersSummary, EconServiceError> {
         let key = &self.api_key.clone();
         let args = gen_args!(key, time_last_visit);
         let url = format!("{END_POINT}{args}");
-        let data = do_http!(url, Value, ErrorHandle, EconServiceError::GetTradeOffersSummary);
-        let trade_offers_summary: Wrapper = ErrorHandle!(serde_json::from_value(data.to_owned()), EconServiceError::GetTradeOffersSummary);
+        let data = do_http!(
+            url,
+            Value,
+            ErrorHandle,
+            EconServiceError::GetTradeOffersSummary
+        );
+        let trade_offers_summary: Wrapper = ErrorHandle!(
+            serde_json::from_value(data.to_owned()),
+            EconServiceError::GetTradeOffersSummary
+        );
         Ok(trade_offers_summary.response)
     }
 }

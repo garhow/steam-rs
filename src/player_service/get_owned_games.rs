@@ -1,11 +1,10 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    macros::{gen_args, do_http, optional_argument},
     errors::{ErrorHandle, PlayerServiceError},
-    Steam,
+    macros::{do_http, gen_args, optional_argument},
     steam_id::SteamId,
-    BASE
+    Steam, BASE,
 };
 
 use super::INTERFACE;
@@ -15,13 +14,13 @@ const VERSION: &str = "1";
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 struct Wrapper {
-    response: OwnedGames
+    response: OwnedGames,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct OwnedGames {
     pub game_count: u64,
-    pub games: Vec<Game>
+    pub games: Vec<Game>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -33,7 +32,7 @@ pub struct Game {
     pub capsule_filename: Option<String>,
     pub has_workshop: bool,
     pub has_market: bool,
-    pub has_dlc: bool
+    pub has_dlc: bool,
 }
 
 impl Steam {
@@ -47,7 +46,7 @@ impl Steam {
         include_free_sub: bool,
         skip_unvetted_apps: Option<bool>,
         language: &str,
-        include_extended_appinfo: bool
+        include_extended_appinfo: bool,
     ) -> Result<OwnedGames, PlayerServiceError> {
         let key = &self.api_key.clone();
         let steamid = steamid.into_u64();

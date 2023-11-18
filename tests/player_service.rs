@@ -1,4 +1,4 @@
-use steam_rs::{Steam, steam_id::SteamId};
+use steam_rs::{steam_id::SteamId, Steam};
 mod common;
 
 const EXAMPLE_STEAM_ID: SteamId = SteamId(76561197960434622); // Al Farnsworth
@@ -17,7 +17,13 @@ pub fn get_badges() {
 pub fn get_community_badge_progress() {
     async_test!(async {
         let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-        println!("{:?}", steam.get_community_badge_progress(EXAMPLE_STEAM_ID, None).await.unwrap());
+        println!(
+            "{:?}",
+            steam
+                .get_community_badge_progress(EXAMPLE_STEAM_ID, None)
+                .await
+                .unwrap()
+        );
     });
 }
 
@@ -25,7 +31,22 @@ pub fn get_community_badge_progress() {
 pub fn get_owned_games() {
     async_test!(async {
         let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-        println!("{:?}", steam.get_owned_games(EXAMPLE_STEAM_ID, true, true, 440, true, None, "english", true).await.unwrap());
+        println!(
+            "{:?}",
+            steam
+                .get_owned_games(
+                    EXAMPLE_STEAM_ID,
+                    true,
+                    true,
+                    440,
+                    true,
+                    None,
+                    "english",
+                    true
+                )
+                .await
+                .unwrap()
+        );
     });
 }
 
@@ -33,7 +54,13 @@ pub fn get_owned_games() {
 pub fn get_recently_played_games() {
     async_test!(async {
         let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-        println!("{:?}", steam.get_recently_played_games(EXAMPLE_STEAM_ID, Some(2)).await.unwrap());
+        println!(
+            "{:?}",
+            steam
+                .get_recently_played_games(EXAMPLE_STEAM_ID, Some(2))
+                .await
+                .unwrap()
+        );
     });
 }
 
@@ -41,7 +68,13 @@ pub fn get_recently_played_games() {
 pub fn get_player_achievements() {
     async_test!(async {
         let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-        println!("{:?}", steam.get_player_achievements(EXAMPLE_STEAM_ID, 440, None).await.unwrap());
+        println!(
+            "{:?}",
+            steam
+                .get_player_achievements(EXAMPLE_STEAM_ID, 440, None)
+                .await
+                .unwrap()
+        );
     });
 }
 
@@ -49,7 +82,13 @@ pub fn get_player_achievements() {
 pub fn get_user_stats_for_game() {
     async_test!(async {
         let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-        println!("{:?}", steam.get_user_stats_for_game(EXAMPLE_STEAM_ID, 440).await.unwrap());
+        println!(
+            "{:?}",
+            steam
+                .get_user_stats_for_game(EXAMPLE_STEAM_ID, 440)
+                .await
+                .unwrap()
+        );
     });
 }
 

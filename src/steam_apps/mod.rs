@@ -1,7 +1,7 @@
 //! # Implements the `ISteamApps` interface
 //!
 //! Used to access data about applications on Steam.
-//! 
+//!
 //! **Note:** This implementation is incomplete!
 //! The following endpoints are currently unimplemented:
 //!

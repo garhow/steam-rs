@@ -1,7 +1,7 @@
 //! # Implements the `ISteamUserAuth` interface
 //!
 //! Used to authenticate users in your application.
-//! 
+//!
 //! **Note:** This implementation is incomplete!
 //! The following endpoints are currently unimplemented:
 //!

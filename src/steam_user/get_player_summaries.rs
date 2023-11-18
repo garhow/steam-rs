@@ -4,11 +4,10 @@ use serde::{Deserialize, Serialize};
 use serde_json::{from_value, Value};
 
 use crate::{
-    Steam,
-    steam_id::{de_steamid_from_str, SteamId},
-    macros::do_http,
     errors::{ErrorHandle, SteamUserError},
-    BASE
+    macros::do_http,
+    steam_id::{de_steamid_from_str, SteamId},
+    Steam, BASE,
 };
 
 use super::INTERFACE;
@@ -16,9 +15,8 @@ use super::INTERFACE;
 const ENDPOINT: &str = "GetPlayerSummaries";
 const VERSION: &str = "0002";
 
-
 /// Represents a user profile object.
-/// 
+///
 /// Contained information varies depending on whether or not the user has their profile set to Friends only or Private.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Player {
@@ -119,13 +117,13 @@ pub struct Player {
 #[derive(Serialize, Deserialize, Debug)]
 struct PlayerSummary {
     /// A list of profile objects. Contained information varies depending on
-    /// whether or not the user has their profile set to Friends only or Private. 
-    players: Vec<Player>
+    /// whether or not the user has their profile set to Friends only or Private.
+    players: Vec<Player>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Wrapper {
-    response: PlayerSummary
+    response: PlayerSummary,
 }
 
 impl Steam {
@@ -136,20 +134,20 @@ impl Steam {
     /// * `steam_ids` - A vector of `SteamId` objects
     ///
     /// # Example
-    /// 
+    ///
     /// ```
     ///     // Creates new `Steam` instance using the environment variable `STEAM_API_KEY`.
     ///     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-    /// 
+    ///
     ///     // Retrieves player summary of user `76561197960435530`.
     ///     let player_summaries = steam.get_player_summaries(vec![SteamId(76561197960435530)]).await.unwrap();
-    /// 
+    ///
     ///     // Prints the first user's profile name
     ///     println!("{:?}", player_summaries[0].persona_name);
     /// ```
     pub async fn get_player_summaries(
         &self,
-        steam_ids: Vec<SteamId>
+        steam_ids: Vec<SteamId>,
     ) -> Result<Vec<Player>, SteamUserError> {
         let steam_ids: String = steam_ids.iter().map(|&id| id.to_string() + ",").collect();
 
@@ -157,7 +155,10 @@ impl Steam {
         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
 
         let json = do_http!(url, Value, ErrorHandle, SteamUserError::GetPlayerSummaries);
-        let wrapper: Wrapper = ErrorHandle!(from_value(json.to_owned()), SteamUserError::GetPlayerSummaries);
+        let wrapper: Wrapper = ErrorHandle!(
+            from_value(json.to_owned()),
+            SteamUserError::GetPlayerSummaries
+        );
 
         Ok(wrapper.response.players)
     }

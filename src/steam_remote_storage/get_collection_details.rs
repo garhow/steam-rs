@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 use serde_json::{from_value, Value};
 
-use crate::{Steam, BASE, errors::SteamRemoteStorageError};
+use crate::{errors::SteamRemoteStorageError, Steam, BASE};
 
 use super::INTERFACE;
 
@@ -14,7 +14,7 @@ const VERSION: &str = "1";
 pub struct CollectionDetails {
     #[serde(rename = "publishedfileid")]
     published_file_id: String,
-    result: u32
+    result: u32,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -23,20 +23,25 @@ pub struct Response {
     #[serde(rename = "resultcount")]
     pub result_count: u32,
     #[serde(rename = "collectiondetails")]
-    pub collection_details: Vec<CollectionDetails>
+    pub collection_details: Vec<CollectionDetails>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 struct Wrapper {
-    response: Response
+    response: Response,
 }
 
 impl Steam {
-    pub async fn get_collection_details(published_fileids: &[u64]) -> Result<Response, SteamRemoteStorageError> {
+    pub async fn get_collection_details(
+        published_fileids: &[u64],
+    ) -> Result<Response, SteamRemoteStorageError> {
         let url = format!("{BASE}/{INTERFACE}/{ENDPOINT}/v{VERSION}");
-        
+
         let mut params = HashMap::new();
-        params.insert("collectioncount".to_string(), published_fileids.len().to_string());
+        params.insert(
+            "collectioncount".to_string(),
+            published_fileids.len().to_string(),
+        );
 
         for (index, fileid) in published_fileids.iter().enumerate() {
             params.insert(format!("publishedfileids[{index}]"), fileid.to_string());
@@ -44,11 +49,7 @@ impl Steam {
 
         let client = reqwest::Client::new();
 
-        let request = client.post(url)
-            .form(&params)
-            .send()
-            .await
-            .unwrap();
+        let request = client.post(url).form(&params).send().await.unwrap();
 
         let json: Value = request.json().await.unwrap();
 

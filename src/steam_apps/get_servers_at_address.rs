@@ -40,7 +40,7 @@ pub struct Server {
 
     /// If server is secure or not.
     pub secure: bool,
-    
+
     /// If server is a lan game.
     pub lan: bool,
 
@@ -56,7 +56,7 @@ pub struct ServersResponse {
     /// Returns true if IP address is valid, does not mean server is functioning properly.
     pub success: bool,
 
-    /// A list of every server from this IP address. 
+    /// A list of every server from this IP address.
     pub servers: Option<Vec<Server>>,
 
     /// Message given if success is false.
@@ -70,17 +70,17 @@ struct Wrapper {
 
 impl Steam {
     /// Gets a list of all Steam-compatible game servers running at the specified IP address.
-    /// 
+    ///
     /// # Arguments
     ///
     /// * `address` - IP or IP:queryport to list.
     ///
     /// # Example
-    /// 
+    ///
     /// ```
     ///     // Find servers at the specified address.
     ///     let servers = Steam::get_servers_at_address("203.0.113.0").await.unwrap();
-    /// 
+    ///
     ///     // Prints the response.
     ///     println!("{:?}", servers);
     /// ```
