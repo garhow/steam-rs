@@ -1,4 +1,5 @@
 use core::fmt;
+use std::str::FromStr;
 
 use serde::{Deserialize, Serialize};
 
@@ -60,21 +61,25 @@ impl SteamId {
         SteamId(value)
     }
 
+    /// Converts the `SteamId` into its underlying 64-bit unsigned integer value.
+    pub fn into_u64(self) -> u64 {
+        self.0
+    }
+}
+
+impl FromStr for SteamId {
+    type Err = ParseSteamIdError;
+
     /// Parses a `SteamId` from a string representation.
     ///
     /// # Errors
     ///
     /// Returns an `Err` if the parsing fails.
-    pub fn from_str(s: &str) -> Result<Self, ParseSteamIdError> {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s.parse::<u64>() {
             Ok(value) => Ok(SteamId(value)),
             Err(_) => Err(ParseSteamIdError),
         }
-    }
-
-    /// Converts the `SteamId` into its underlying 64-bit unsigned integer value.
-    pub fn into_u64(self) -> u64 {
-        self.0
     }
 }
 
