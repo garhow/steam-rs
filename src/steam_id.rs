@@ -63,17 +63,17 @@ impl SteamId {
     }
 
     /// Converts the `SteamId` into its underlying 64-bit unsigned integer value.
-    pub fn into_u64(self) -> u64 {
+    pub fn into_u64(&self) -> u64 {
         self.0
     }
 
-    /// Converts the `SteamId` into the unsigned 32-bit number used in its SteamID3.
-    pub fn into_u32(self) -> u32 {
+    /// Converts the `SteamId` into the unsigned 32-bit account ID used in its SteamID3 (and to some extent in the SteamID2).
+    pub fn get_account_id(&self) -> u32 {
         (self.0 & 0xFFFFFFFF) as u32
     }
 
     /// Get Universe that the `SteamId` belongs to.
-    pub fn get_universe(self) -> Universe {
+    pub fn get_universe(&self) -> Universe {
         Universe::try_from((self.0 >> 56) & 0xF).unwrap_or(Universe::Invalid)
     }
 
@@ -82,6 +82,16 @@ impl SteamId {
         AccountType::try_from((self.0 >> 52) & 0xF).unwrap_or(AccountType::Invalid)
     }
 
+    /// Get the `SteamId`'s SteamID2 string representation.
+    pub fn to_id2_string(&self) -> String {
+        let id = self.get_account_id();
+        format!(
+            "STEAM_{}:{}:{}",
+            self.get_universe() as u64,
+            id & 1,
+            id >> 1
+        )
+    }
 }
 
 impl FromStr for SteamId {

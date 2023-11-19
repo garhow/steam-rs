@@ -27,9 +27,9 @@ pub fn into_u64() {
 }
 
 #[test]
-pub fn into_u32() {
+pub fn get_account_id() {
     async_test!(async {
-        println!("{:?}", SteamId::new(EXAMPLE_STEAM_ID64).into_u32());
+        println!("{:?}", SteamId::new(EXAMPLE_STEAM_ID64).get_account_id());
     });
 }
 
@@ -44,5 +44,12 @@ pub fn get_universe() {
 pub fn get_account_type() {
     async_test!(async {
         println!("{:?}", SteamId::new(EXAMPLE_STEAM_ID64).get_account_type());
+    });
+}
+
+#[test]
+pub fn to_id2_string() {
+    async_test!(async {
+        println!("{:?}", SteamId::new(EXAMPLE_STEAM_ID64).to_id2_string());
     });
 }
