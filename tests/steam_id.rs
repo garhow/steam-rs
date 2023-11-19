@@ -32,3 +32,17 @@ pub fn into_u32() {
         println!("{:?}", SteamId::new(EXAMPLE_STEAM_ID64).into_u32());
     });
 }
+
+#[test]
+pub fn get_universe() {
+    async_test!(async {
+        println!("{:?}", SteamId::new(EXAMPLE_STEAM_ID64).get_universe());
+    });
+}
+
+#[test]
+pub fn get_account_type() {
+    async_test!(async {
+        println!("{:?}", SteamId::new(EXAMPLE_STEAM_ID64).get_account_type());
+    });
+}
