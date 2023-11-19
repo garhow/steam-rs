@@ -72,10 +72,12 @@ impl SteamId {
         (self.0 & 0xFFFFFFFF) as u32
     }
 
+    /// Get Universe that the `SteamId` belongs to.
     pub fn get_universe(self) -> Universe {
         Universe::try_from((self.0 >> 56) & 0xF).unwrap_or(Universe::Invalid)
     }
 
+    /// Get account type of the `SteamId`.
     pub fn get_account_type(&self) -> AccountType {
         AccountType::try_from((self.0 >> 52) & 0xF).unwrap_or(AccountType::Invalid)
     }
@@ -133,6 +135,7 @@ impl std::fmt::Display for ParseSteamIdError {
 
 impl std::error::Error for ParseSteamIdError {}
 
+/// Denotes what kind of account the SteamID belongs to.
 #[derive(Copy, Clone, PartialEq, Eq, Debug, TryFromPrimitive)]
 #[repr(u64)]
 pub enum AccountType {
