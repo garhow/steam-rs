@@ -20,7 +20,7 @@ pub mod steam_user_auth;
 pub mod steam_user_stats;
 pub mod steam_webapi_util;
 
-mod errors; // This remains private - maybe
+pub mod errors;
 mod macros; // This remains private
 
 const BASE: &str = "https://api.steampowered.com";
