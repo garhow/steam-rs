@@ -116,6 +116,8 @@ macro_rules! error {
                 }
             }
         }
+
+        impl std::error::Error for $enum_name {}
     };
 }
 
