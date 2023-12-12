@@ -1,6 +1,7 @@
 use core::fmt;
 use std::str::FromStr;
 
+use num_enum::TryFromPrimitive;
 use serde::{Deserialize, Serialize};
 
 /// Represents a SteamID64 type which is used to uniquely identify users on the Steam platform.
@@ -62,13 +63,34 @@ impl SteamId {
     }
 
     /// Converts the `SteamId` into its underlying 64-bit unsigned integer value.
-    pub fn into_u64(self) -> u64 {
+    pub fn into_u64(&self) -> u64 {
         self.0
     }
 
-    /// Converts the `SteamId` into the unsigned 32-bit number used in its SteamID3.
-    pub fn into_u32(self) -> u32 {
+    /// Converts the `SteamId` into the unsigned 32-bit account ID used in its SteamID3 (and to some extent in the SteamID2).
+    pub fn get_account_id(&self) -> u32 {
         (self.0 & 0xFFFFFFFF) as u32
+    }
+
+    /// Get Universe that the `SteamId` belongs to.
+    pub fn get_universe(&self) -> Universe {
+        Universe::try_from((self.0 >> 56) & 0xF).unwrap_or(Universe::Invalid)
+    }
+
+    /// Get account type of the `SteamId`.
+    pub fn get_account_type(&self) -> AccountType {
+        AccountType::try_from((self.0 >> 52) & 0xF).unwrap_or(AccountType::Invalid)
+    }
+
+    /// Get the `SteamId`'s SteamID2 string representation.
+    pub fn to_id2_string(&self) -> String {
+        let id = self.get_account_id();
+        format!(
+            "STEAM_{}:{}:{}",
+            self.get_universe() as u64,
+            id & 1,
+            id >> 1
+        )
     }
 }
 
@@ -122,3 +144,38 @@ impl std::fmt::Display for ParseSteamIdError {
 }
 
 impl std::error::Error for ParseSteamIdError {}
+
+/// Denotes what kind of account the SteamID belongs to.
+#[derive(Copy, Clone, PartialEq, Eq, Debug, TryFromPrimitive)]
+#[repr(u64)]
+pub enum AccountType {
+    /// Used for bots and accounts which do not belong to another class.
+    Invalid,
+    /// Single user account.
+    Individual,
+    /// Multiseat (e.g. cybercafe) account.
+    Multiseat,
+    /// Game server account.
+    GameServer,
+    /// Anonymous game server account.
+    AnonGameServer,
+    /// Sometimes used to temporarily refer to Individual accounts until their credentials are verified with Steam.
+    Pending,
+    ContentServer,
+    Clan,
+    Chat,
+    /// Fake SteamID for local PSN account on PS3 or Live account on 360, etc.
+    P2PSuperSeeder,
+    AnonUser,
+}
+
+/// An "Universe" is an instance of Steam an account can belong to. "Public" is probably the one you'll be interacting with.
+#[derive(Copy, Clone, PartialEq, Eq, Debug, TryFromPrimitive)]
+#[repr(u64)]
+pub enum Universe {
+    Invalid,
+    Public,
+    Beta,
+    Internal,
+    Dev,
+}
