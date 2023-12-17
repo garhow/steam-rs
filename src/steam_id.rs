@@ -48,7 +48,7 @@ use serde::{Deserialize, Serialize};
 /// let steam_id = SteamId::from_str(steam_id_str).unwrap();
 /// println!("Parsed SteamId: {}", steam_id);
 /// ```
-#[derive(Clone, Copy, Debug, Deserialize, Eq, PartialEq, Serialize)]
+#[derive(Clone, Copy, Debug, Deserialize, Eq, PartialEq, Hash, Serialize)]
 pub struct SteamId(pub u64);
 impl fmt::Display for SteamId {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
