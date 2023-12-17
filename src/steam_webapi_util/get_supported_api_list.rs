@@ -15,7 +15,7 @@ const ENDPOINT: &str = "GetSupportedAPIList";
 const VERSION: &str = "1";
 
 /// Represents a parameter for an WebAPI method.
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Parameter {
     /// Name of the parameter.
     pub name: String,
@@ -31,7 +31,7 @@ pub struct Parameter {
 }
 
 /// Represents a method within an API interface.
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Method {
     /// Name of the method.
     pub name: String,
@@ -48,7 +48,7 @@ pub struct Method {
 }
 
 /// Represents an API interface
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Interface {
     /// Name of the interface.
     pub name: String,
@@ -58,7 +58,7 @@ pub struct Interface {
 }
 
 /// List of WebAPI interfaces
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct APIList {
     /// Vector of API interfaces
     pub interfaces: Vec<Interface>,

@@ -14,7 +14,7 @@ use super::INTERFACE;
 const ENDPOINT: &str = "GetServerInfo";
 const VERSION: &str = "1";
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct ServerInfo {
     /// Returns Unix timestamp of WebAPI server time.
     #[serde(rename = "servertime")]

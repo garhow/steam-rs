@@ -18,7 +18,7 @@ const VERSION: &str = "0002";
 /// Represents a user profile object.
 ///
 /// Contained information varies depending on whether or not the user has their profile set to Friends only or Private.
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Player {
     /// The user's 64-bit ID
     #[serde(rename = "steamid")]

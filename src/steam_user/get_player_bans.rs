@@ -22,7 +22,7 @@ struct Wrapper {
 }
 
 /// Represents a player object with data about bans.
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Player {
     /// A string containing the player's 64-bit ID.
     #[serde(rename = "SteamId")]

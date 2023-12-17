@@ -18,7 +18,7 @@ const ENDPOINT: &str = "GetFriendList";
 const VERSION: &str = "1";
 
 /// Represents the types of relationships a user can have with their friends on Steam.
-#[derive(PartialEq, Debug, Deserialize)]
+#[derive(PartialEq, Debug, Deserialize, Clone, Copy)]
 #[serde(rename_all = "lowercase")]
 pub enum Relationship {
     /// All relationships.
@@ -37,7 +37,7 @@ impl fmt::Display for Relationship {
 }
 
 /// Represents a friend of a Steam user.
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct Friend {
     /// The 64 bit ID of the friend.
     #[serde(rename = "steamid")]

@@ -10,7 +10,7 @@ use super::INTERFACE;
 const ENDPOINT: &str = "GetNewsForApp";
 const VERSION: &str = "0002";
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct NewsItem {
     gid: String,
     title: String,
@@ -26,7 +26,7 @@ pub struct NewsItem {
     tags: Option<Vec<String>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AppNews {
     appid: u32, // TODO: Convert to AppId
     newsitems: Vec<NewsItem>,

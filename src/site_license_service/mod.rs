@@ -9,7 +9,7 @@ use serde::{Deserialize, Serialize};
 
 const INTERFACE: &str = "ISiteLicenseService";
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct GameName {
     /// ID number of entry.
     pub id: u32,

@@ -19,7 +19,7 @@ struct Wrapper {
     response: Response,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Response {
     /// The message associated with the request status. Currently only used on resolution failures.
     pub message: Option<String>,

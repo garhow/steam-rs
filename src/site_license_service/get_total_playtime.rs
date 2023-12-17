@@ -14,7 +14,7 @@ use super::{GameName, INTERFACE};
 const ENDPOINT: &str = "GetTotalPlaytime";
 const VERSION: &str = "1";
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Game {
     /// ID of game in the `game_names` section of the response.
     pub id: u32,
@@ -26,7 +26,7 @@ pub struct Game {
     pub playtime_seconds: u32,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Site {
     /// 64-bit SiteID of the site.
     #[serde(rename = "siteid")]
@@ -39,7 +39,7 @@ pub struct Site {
     pub games: Vec<Game>,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct TotalPlaytime {
     /// A vector of site details.
     pub sites: Vec<Site>,

@@ -11,13 +11,13 @@ use super::INTERFACE;
 const ENDPOINT: &str = "GetGlobalAchievementPercentagesForApp";
 const VERSION: &str = "0002";
 
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct Achievement {
     name: String,
     percent: f64,
 }
 
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct AchievementPercentages {
     achievements: Vec<Achievement>,
 }

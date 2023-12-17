@@ -885,7 +885,7 @@ dependencies = [
 
 [[package]]
 name = "steam-rs"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "num_enum",
  "rayon",

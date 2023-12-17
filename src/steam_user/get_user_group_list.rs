@@ -20,7 +20,7 @@ struct Wrapper {
     response: Response,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct Response {
     /// Boolean indicating if request was successful.
     pub success: bool,
@@ -33,7 +33,7 @@ pub struct Response {
 }
 
 /// Represents a Steam group
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct Group {
     /// The group's ID
     pub gid: String,

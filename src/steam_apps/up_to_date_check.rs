@@ -13,7 +13,7 @@ use super::INTERFACE;
 const ENDPOINT: &str = "UpToDateCheck";
 const VERSION: &str = "1";
 
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct UpToDateResponse {
     /// Boolean indicating if request was successful.
     pub success: bool,

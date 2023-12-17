@@ -15,14 +15,14 @@ const VERSION: &str = "1";
 
 // https://wiki.teamfortress.com/wiki/WebAPI/GetCommunityBadgeProgress
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Quest {
     #[serde(rename = "questid")]
     quest_id: u32,
     completed: bool,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct CommunityBadgeProgress {
     pub quests: Option<Vec<Quest>>,
 }
