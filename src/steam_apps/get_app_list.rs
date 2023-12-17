@@ -14,7 +14,7 @@ const ENDPOINT: &str = "GetAppList";
 const VERSION: &str = "2";
 
 /// Represents a Steam app.
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct App {
     /// App ID of this application.
     pub appid: u32,
@@ -23,7 +23,7 @@ pub struct App {
     pub name: String,
 }
 
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct AppList {
     /// The vector containing the applications.
     pub apps: Vec<App>,

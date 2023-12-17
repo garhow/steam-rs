@@ -13,7 +13,7 @@ use super::INTERFACE;
 const ENDPOINT: &str = "GetServersAtAddress";
 const VERSION: &str = "1";
 
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct Server {
     /// Gives the ip address, and the port number. Ex: "64.94.100.204:27015"
     #[serde(rename = "addr")]
@@ -51,7 +51,7 @@ pub struct Server {
     pub specport: u32,
 }
 
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct ServersResponse {
     /// Returns true if IP address is valid, does not mean server is functioning properly.
     pub success: bool,

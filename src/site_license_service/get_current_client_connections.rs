@@ -14,7 +14,7 @@ use super::{GameName, INTERFACE};
 const ENDPOINT: &str = "GetCurrentClientConnections";
 const VERSION: &str = "1";
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Game {
     /// ID of game in the `game_names` section of the response.
     pub id: u32,
@@ -26,7 +26,7 @@ pub struct Game {
     pub license_type: String, // TODO: Define LicenseType enum as defined in https://partner.steamgames.com/doc/webapi/isitelicenseservice
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Client {
     /// IP address of client computer.
     pub ip_address: String,
@@ -38,7 +38,7 @@ pub struct Client {
     pub games: Vec<Game>,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Site {
     /// 64-bit SiteID of the site.
     #[serde(rename = "siteid")]
@@ -51,7 +51,7 @@ pub struct Site {
     pub clients: Vec<Client>,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct CurrentClientConnections {
     /// A vector of site details.
     pub sites: Vec<Site>,

@@ -13,7 +13,7 @@ use super::INTERFACE;
 const ENDPOINT: &str = "GetBadges";
 const VERSION: &str = "1";
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Badge {
     badgeid: u32,
     level: u32,
@@ -22,7 +22,7 @@ pub struct Badge {
     scarcity: u32,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct BadgeResponse {
     pub badges: Vec<Badge>,
     pub player_xp: u32,

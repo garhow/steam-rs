@@ -15,7 +15,7 @@ use super::INTERFACE;
 const ENDPOINT: &str = "AuthenticateUserTicket";
 const VERSION: &str = "1";
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct TicketAuthResponse {
     pub result: String,
     #[serde(rename = "steamid")]

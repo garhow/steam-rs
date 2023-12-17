@@ -10,14 +10,14 @@ use super::INTERFACE;
 const ENDPOINT: &str = "GetPublishedFileDetails";
 const VERSION: &str = "1";
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct PublishedFileDetails {
     #[serde(rename = "publishedfileid")]
     published_file_id: String,
     result: u32,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Response {
     pub result: u32,
     #[serde(rename = "resultcount")]

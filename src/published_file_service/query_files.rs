@@ -165,7 +165,7 @@ impl fmt::Display for PublishedFileInfoMatchingFileType {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Preview {
     #[serde(rename = "previewid")]
     preview_id: String,
@@ -178,24 +178,24 @@ pub struct Preview {
     preview_type: u8,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Tag {
     tag: String,
     display_name: String,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct VoteData {
     score: f32,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct PlaytimeStats {
     playtime_seconds: String,
     num_sessions: String,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct File {
     result: u64,
     #[serde(rename = "publishedfileid")]
@@ -254,7 +254,7 @@ pub struct File {
     ban_text_check_result: u32,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct PublishedFiles {
     total: u64,
     #[serde(rename = "publishedfiledetails")]

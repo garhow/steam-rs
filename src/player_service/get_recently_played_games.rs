@@ -13,7 +13,7 @@ use super::INTERFACE;
 const ENDPOINT: &str = "GetRecentlyPlayedGames";
 const VERSION: &str = "0001";
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Game {
     pub appid: u32,
     pub name: Option<String>,
@@ -23,7 +23,7 @@ pub struct Game {
     pub img_logo_url: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct RecentlyPlayedGames {
     pub total_count: u32,
     pub games: Vec<Game>,
