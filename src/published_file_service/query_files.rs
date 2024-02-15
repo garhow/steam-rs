@@ -16,29 +16,52 @@ use super::INTERFACE;
 const ENDPOINT: &str = "QueryFiles";
 const VERSION: &str = "1";
 
+/// Represents the query types used when querying published files on Steam Workshop.
 #[derive(Debug)]
 pub enum PublishedFileQueryType {
+    /// Ranked by vote.
     RankedByVote,
+    /// Ranked by publication date.
     RankedByPublicationDate,
+    /// Accepted for the game, ranked by acceptance date.
     AcceptedForGameRankedByAcceptanceDate,
+    /// Ranked by trend.
     RankedByTrend,
+    /// Favorited by friends, ranked by publication date.
     FavoritedByFriendsRankedByPublicationDate,
+    /// Created by friends, ranked by publication date.
     CreatedByFriendsRankedByPublicationDate,
+    /// Ranked by number of times reported.
     RankedByNumTimesReported,
+    /// Created by followed users, ranked by publication date.
     CreatedByFollowedUsersRankedByPublicationDate,
+    /// Not yet rated.
     NotYetRated,
+    /// Ranked by total unique subscriptions.
     RankedByTotalUniqueSubscriptions,
+    /// Ranked by total votes ascending.
     RankedByTotalVotesAsc,
+    /// Ranked by votes up.
     RankedByVotesUp,
+    /// Ranked by text search.
     RankedByTextSearch,
+    /// Ranked by playtime trend.
     RankedByPlaytimeTrend,
+    /// Ranked by total playtime.
     RankedByTotalPlaytime,
+    /// Ranked by average playtime trend.
     RankedByAveragePlaytimeTrend,
+    /// Ranked by lifetime average playtime.
     RankedByLifetimeAveragePlaytime,
+    /// Ranked by playtime sessions trend.
     RankedByPlaytimeSessionsTrend,
+    /// Ranked by lifetime playtime sessions.
     RankedByLifetimePlaytimeSessions,
+    /// Ranked by inappropriate content rating.
     RankedByInappropriateContentRating,
+    /// Ranked by ban content check.
     RankedByBanContentCheck,
+    /// Ranked by last updated date.
     RankedByLastUpdatedDate,
 }
 
@@ -72,66 +95,49 @@ impl fmt::Display for PublishedFileQueryType {
     }
 }
 
+/// Represents the matching file type for published file information.
 #[derive(Debug)]
 pub enum PublishedFileInfoMatchingFileType {
     /// Items.
     Items,
-
     /// A collection of Workshop items.
     Collections,
-
     /// Artwork.
     Art,
-
     /// Videos.
     Videos,
-
     /// Screenshots
     Screenshots,
-
     /// Items that can be put inside a collection.
     CollectionEligible,
-
     /// Unused.
     Games,
-
     /// Unused.
     Software,
-
     /// Unused.
     Concepts,
-
     /// Unused.
     GreenlightItems,
-
     /// Guides.
     AllGuides,
-
     /// Steam web guide.
     WebGuides,
-
     /// Application integrated guide.
     IntegratedGuides,
-
+    /// Usable in-game.
     UsableInGame,
-
     /// Workshop merchandise meant to be voted on for the purpose of being sold
     Merch,
-
     /// Steam Controller bindings.
     ControllerBindings,
-
     /// Used internally.
     SteamworksAccessInvites,
-
     /// Workshop items that can be sold in-game.
     ItemsMtx,
-
     /// Workshop items that can be used right away by the user.
     ItemsReadyToUse,
-
+    /// Workshop showcase.
     WorkshopShowcase,
-
     /// Managed completely by the game, not the user, and not shown on the web.
     GameManagedItems,
 }
@@ -165,100 +171,171 @@ impl fmt::Display for PublishedFileInfoMatchingFileType {
     }
 }
 
+/// Represents a preview associated with a file.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Preview {
+    /// The ID of the preview.
     #[serde(rename = "previewid")]
-    preview_id: String,
+    pub preview_id: String,
+    /// The sort order of the preview.
     #[serde(rename = "sortorder")]
-    sort_order: u16,
-    url: Option<String>,
-    size: Option<u32>,
+    pub sort_order: u16,
+    /// The URL of the preview, if available.
+    pub url: Option<String>,
+    /// The size of the preview, if available.
+    pub size: Option<u32>,
+    /// The filename of the preview, if available.
     #[serde(rename = "filename")]
-    file_name: Option<String>,
-    preview_type: u8,
+    pub file_name: Option<String>,
+    /// The type of the preview.
+    pub preview_type: u8,
 }
 
+/// Represents a tag associated with a file.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Tag {
-    tag: String,
-    display_name: String,
+    /// The tag string.
+    pub tag: String,
+    /// The display name of the tag.
+    pub display_name: String,
 }
 
+/// Represents voting data associated with a file.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct VoteData {
-    score: f32,
+    /// The score associated with the vote.
+    pub score: f32,
 }
 
+/// Represents playtime statistics.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct PlaytimeStats {
-    playtime_seconds: String,
-    num_sessions: String,
+    /// The total playtime in seconds.
+    pub playtime_seconds: String,
+    /// The number of play sessions.
+    pub num_sessions: String,
 }
 
+/// Represents file information retrieved from the Steam Workshop.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct File {
-    result: u64,
+    /// Result status of the file.
+    pub result: u64,
+    /// The published file ID.
     #[serde(rename = "publishedfileid")]
-    published_file_id: String,
+    pub published_file_id: String,
+    /// The Steam ID of the creator.
     #[serde(deserialize_with = "de_steamid_from_str")]
-    creator: SteamId,
-    creator_appid: u32,
-    consumer_appid: u32,
-    consumer_shortcutid: u32,
+    pub creator: SteamId,
+    /// The ID of the application (game) that created the file.
+    pub creator_appid: u32,
+    /// The ID of the application (game) that consumes the file.
+    pub consumer_appid: u32,
+    /// The ID of the shortcut used to create the file.
+    pub consumer_shortcutid: u32,
+    /// The name of the file.
     #[serde(rename = "filename")]
-    file_name: String,
-    file_size: String,
-    preview_file_size: String,
-    preview_url: String,
-    url: String,
-    hcontent_file: Option<String>,
-    hcontent_preview: String,
-    title: String,
-    short_description: String,
-    time_created: u32,
-    time_updated: u32,
-    visibility: u8,
-    flags: u32,
-    workshop_file: bool,
-    workshop_accepted: bool,
-    show_subscribe_all: bool,
-    num_comments_public: u64,
-    banned: bool,
-    ban_reason: String,
-    banner: String,
-    can_be_deleted: bool,
-    app_name: String,
-    file_type: u8,
-    can_subscribe: bool,
-    subscriptions: u64,
-    favorited: u64,
-    followers: u64,
-    lifetime_subscriptions: u64,
-    lifetime_favorited: u64,
-    lifetime_followers: u64,
-    lifetime_playtime: String,
-    lifetime_playtime_sessions: String,
-    views: u64,
-    num_children: u32,
-    num_reports: u32,
-    previews: Vec<Preview>,
-    tags: Vec<Tag>,
-    vote_data: VoteData,
-    playtime_stats: PlaytimeStats,
-    language: u32,
-    maybe_inappropriate_sex: bool,
-    maybe_inappropriate_violence: bool,
-    revision_change_number: String,
-    revision: u32,
-    available_revisions: Vec<u32>,
-    ban_text_check_result: u32,
+    pub file_name: String,
+    /// The size of the file.
+    pub file_size: String,
+    /// The size of the preview file.
+    pub preview_file_size: String,
+    /// The URL of the preview.
+    pub preview_url: String,
+    /// The URL of the file.
+    pub url: String,
+    /// The content file.
+    pub hcontent_file: Option<String>,
+    /// The content preview.
+    pub hcontent_preview: String,
+    /// The title of the file.
+    pub title: String,
+    /// The short description of the file.
+    pub short_description: String,
+    /// The time the file was created.
+    pub time_created: u32,
+    /// The time the file was last updated.
+    pub time_updated: u32,
+    /// The visibility status of the file.
+    pub visibility: u8,
+    /// Flags associated with the file.
+    pub flags: u32,
+    /// Indicates if the file is from the Steam Workshop.
+    pub workshop_file: bool,
+    /// Indicates if the file has been accepted on the Steam Workshop.
+    pub workshop_accepted: bool,
+    /// Indicates if all subscribers are shown.
+    pub show_subscribe_all: bool,
+    /// The number of public comments.
+    pub num_comments_public: u64,
+    /// Indicates if the file has been banned.
+    pub banned: bool,
+    /// The reason for the ban.
+    pub ban_reason: String,
+    /// The banner of the file.
+    pub banner: String,
+    /// Indicates if the file can be deleted.
+    pub can_be_deleted: bool,
+    /// The name of the application (game).
+    pub app_name: String,
+    /// The file type.
+    pub file_type: u8,
+    /// Indicates if the user can subscribe to the file.
+    pub can_subscribe: bool,
+    /// The number of subscriptions.
+    pub subscriptions: u64,
+    /// The number of favorites.
+    pub favorited: u64,
+    /// The number of followers.
+    pub followers: u64,
+    /// The lifetime number of subscriptions.
+    pub lifetime_subscriptions: u64,
+    /// The lifetime number of favorites.
+    pub lifetime_favorited: u64,
+    /// The lifetime number of followers.
+    pub lifetime_followers: u64,
+    /// The lifetime playtime.
+    pub lifetime_playtime: String,
+    /// The lifetime playtime sessions.
+    pub lifetime_playtime_sessions: String,
+    /// The number of views.
+    pub views: u64,
+    /// The number of children.
+    pub num_children: u32,
+    /// The number of reports.
+    pub num_reports: u32,
+    /// Previews associated with the file.
+    pub previews: Vec<Preview>,
+    /// Tags associated with the file.
+    pub tags: Vec<Tag>,
+    /// Vote data associated with the file.
+    pub vote_data: VoteData,
+    /// Playtime statistics associated with the file.
+    pub playtime_stats: PlaytimeStats,
+    /// The language of the file.
+    pub language: u32,
+    /// Indicates if the file may contain inappropriate content related to sex.
+    pub maybe_inappropriate_sex: bool,
+    /// Indicates if the file may contain inappropriate content related to violence.
+    pub maybe_inappropriate_violence: bool,
+    /// The revision change number.
+    pub revision_change_number: String,
+    /// The revision number.
+    pub revision: u32,
+    /// Available revisions for the file.
+    pub available_revisions: Vec<u32>,
+    /// Ban text check result.
+    pub ban_text_check_result: u32,
 }
 
+/// Represents published files information.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct PublishedFiles {
-    total: u64,
+    /// The total number of published files.
+    pub total: u64,
+    /// Details of the published files.
     #[serde(rename = "publishedfiledetails")]
-    published_file_details: Vec<File>,
+    pub published_file_details: Vec<File>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -271,7 +348,7 @@ impl Steam {
     ///
     /// # Arguments
     ///
-    /// * `query_type` - Type of the query, see [PublishedFileQueryType](crate::published_file_service::query_files::PublishedFileQueryType).
+    /// * `query_type` - Type of the query, see [PublishedFileQueryType].
     /// * `page` - Current page. Currently there is an upper limit of 1000.
     /// * `cursor` - Cursor to paginate through the results (set to '*' for the first request). Prefer this over using the page parameter, as it will allow you to do deep pagination. When used, the page parameter will be ignored. Use the "next_cursor" value returned in the response to set up the next query to get the next set of results.
     /// * `numperpage` - The number of results, per page to return.
