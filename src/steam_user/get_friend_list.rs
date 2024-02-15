@@ -82,7 +82,7 @@ impl Steam {
     ///     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
     ///
     ///     // Retrieves friend list of user `76561197960435530`.
-    ///     let friend_list = steam.get_friend_list(SteamId(76561197960435530), None).await.unwrap();
+    ///     let friend_list = steam.get_friend_list(730, None).await.unwrap();
     ///
     ///     // Prints their first friend's SteamID
     ///     println!("{:?}", friend_list[0].steamid);
