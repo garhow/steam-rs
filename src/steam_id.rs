@@ -1,5 +1,4 @@
 use core::fmt;
-use std::str::FromStr;
 
 use num_enum::TryFromPrimitive;
 use serde::{Deserialize, Serialize};
@@ -40,12 +39,14 @@ use serde::{Deserialize, Serialize};
 ///
 /// # Parsing
 ///
-/// You can parse a `SteamId` from a string representation:
+/// You can parse a `SteamId` from a string:
 /// ```
 /// use steam_rs::steam_id::SteamId;
 ///
-/// let steam_id_str = "76561197960287930";
-/// let steam_id = SteamId::from_str(steam_id_str).unwrap();
+/// let steam_id = SteamId::from(
+///     "76561197960287930".to_string()
+/// );
+/// 
 /// println!("Parsed SteamId: {}", steam_id);
 /// ```
 #[derive(Clone, Copy, Debug, Deserialize, Eq, PartialEq, Hash, Serialize)]
@@ -91,22 +92,6 @@ impl SteamId {
             id & 1,
             id >> 1
         )
-    }
-}
-
-impl FromStr for SteamId {
-    type Err = ParseSteamIdError;
-
-    /// Parses a `SteamId` from a string representation.
-    ///
-    /// # Errors
-    ///
-    /// Returns an `Err` if the parsing fails.
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s.parse::<u64>() {
-            Ok(value) => Ok(SteamId(value)),
-            Err(_) => Err(ParseSteamIdError),
-        }
     }
 }
 
