@@ -19,6 +19,29 @@ pub fn get_global_achievement_percentages_for_app() {
 }
 
 #[test]
+pub fn get_number_of_current_players() {
+    async_test!(async {
+        let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
+
+        // Expected result
+        assert!(
+            steam
+                .get_number_of_current_players(EXAMPLE_APP_ID)
+                .await
+                .is_ok()
+        );
+
+        // Error condition (nonexistent app)
+        assert!(
+            steam
+                .get_number_of_current_players(372198432)
+                .await
+                .is_err()
+        );
+    });
+}
+
+#[test]
 pub fn get_player_achievements() {
     async_test!(async {
         let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
