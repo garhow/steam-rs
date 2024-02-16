@@ -8,12 +8,11 @@ const EXAMPLE_STEAM_ID: SteamId = SteamId(76561197960435530); // Robin Walker
 pub fn get_global_achievement_percentages_for_app() {
     async_test!(async {
         let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-        println!(
-            "{:?}",
+        assert!(
             steam
                 .get_global_achievement_percentages_for_app(EXAMPLE_APP_ID)
                 .await
-                .unwrap()
+                .is_ok()
         );
     });
 }
@@ -34,7 +33,7 @@ pub fn get_number_of_current_players() {
         // Error condition (nonexistent app)
         assert!(
             steam
-                .get_number_of_current_players(372198432)
+                .get_number_of_current_players(0)
                 .await
                 .is_err()
         );
@@ -45,12 +44,11 @@ pub fn get_number_of_current_players() {
 pub fn get_player_achievements() {
     async_test!(async {
         let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-        println!(
-            "{:?}",
+        assert!(
             steam
                 .get_player_achievements(EXAMPLE_STEAM_ID, EXAMPLE_APP_ID, None)
                 .await
-                .unwrap()
+                .is_ok()
         );
     });
 }
