@@ -62,7 +62,7 @@ Interfaces that are prefixed with ✓ are fully implemented!
 ## ISteamUserStats
   - [x] GetGlobalAchievementPercentagesForApp
   - [ ] GetGlobalStatsForGame
-  - [ ] GetNumberOfCurrentPlayers
+  - [x] GetNumberOfCurrentPlayers
   - [x] GetPlayerAchievements
   - [ ] GetSchemaForGame
   - [x] GetUserStatsForGame
