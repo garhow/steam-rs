@@ -2,10 +2,8 @@ macro_rules! do_http {
     ($url:ident, $output_type:ty, $error_handle:ident, $error:expr) => {
         if let Ok(response) = reqwest::get($url).await {
             match response.status() {
-                reqwest::StatusCode::OK => {
-                    $error_handle!(response.json::<$output_type>().await, $error)
-                }
-
+                reqwest::StatusCode::OK => {$error_handle!(response.json::<$output_type>().await, $error)}
+                reqwest::StatusCode::NOT_FOUND => {$error_handle!(response.json::<$output_type>().await, $error)}
                 _ => {
                     return Err($error(format!(
                         "Expected 200 Status, got {}",
