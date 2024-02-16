@@ -74,16 +74,6 @@ impl Steam {
     /// # Arguments
     ///
     /// * `address` - IP or IP:queryport to list.
-    ///
-    /// # Example
-    ///
-    /// ```
-    ///     // Find servers at the specified address.
-    ///     let servers = Steam::get_servers_at_address("203.0.113.0").await.unwrap();
-    ///
-    ///     // Prints the response.
-    ///     println!("{:?}", servers);
-    /// ```
     pub async fn get_servers_at_address(address: &str) -> Result<ServersResponse, SteamAppsError> {
         let url = format!(
             "{}/{}/{}/v{}/?addr={}",

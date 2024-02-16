@@ -71,19 +71,6 @@ struct Wrapper {
 
 impl Steam {
     /// Lists all supported API calls.
-    ///
-    /// # Example
-    ///
-    /// ```
-    ///     // Creates new `Steam` instance using the environment variable `STEAM_API_KEY`.
-    ///     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-    ///
-    ///     // Retrieves list of supported WebAPIs.
-    ///     let api_list = steam.get_supported_api_list().await.unwrap();
-    ///
-    ///     // Prints the WebAPI list.
-    ///     println!("{:?}", api_list);
-    /// ```
     pub async fn get_supported_api_list(&self) -> Result<APIList, SteamWebAPIUtilError> {
         let url = format!(
             "{}/{}/{}/v{}/?key={}",

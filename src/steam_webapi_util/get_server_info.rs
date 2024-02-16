@@ -27,16 +27,6 @@ pub struct ServerInfo {
 
 impl Steam {
     /// Returns WebAPI server time & checks server status.
-    ///
-    /// # Example
-    ///
-    /// ```
-    ///     // Retrieves server info.
-    ///     let server_info = Steam::get_server_info().await.unwrap();
-    ///
-    ///     // Prints the current server time as a string.
-    ///     println!("{}", server_info.server_time_string);
-    /// ```
     pub async fn get_server_info() -> Result<ServerInfo, SteamWebAPIUtilError> {
         let url = format!("{}/{}/{}/v{}/", BASE, INTERFACE, ENDPOINT, VERSION);
         let json = do_http!(url, Value, ErrorHandle, SteamWebAPIUtilError::GetServerInfo);

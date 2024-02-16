@@ -67,24 +67,6 @@ impl Steam {
     /// * `start_time` - Report activity starting on or after this time. RFC 3339 UTC format.
     /// * `end_time` - Report activity starting before this time. RFC 3339 UTC format.
     /// * `site_id` - Site ID to see; zero for all sites
-    ///
-    /// # Example
-    ///
-    /// ```
-    ///     // Creates new `Steam` instance using the environment variable `STEAM_API_KEY`.
-    ///     let publisher_key = &std::env::var("STEAM_PUBLISHER_API_KEY").expect("Missing an API key");
-    ///
-    ///     // Retrive total playtime from 01 January 2020 to 14 March 2022.
-    ///     let total_playtime = Steam::get_total_playtime(
-    ///         publisher_key,
-    ///         "2020-01-01T04:30:10Z",
-    ///         "2022-03-14T02:29:44Z",
-    ///         0,
-    ///     ).await.unwrap();
-    ///
-    ///     // Prints the total playtime data.
-    ///     println!("{:?}", total_playtime);
-    /// ```
     pub async fn get_total_playtime(
         publisher_key: &str,
         start_time: &str,

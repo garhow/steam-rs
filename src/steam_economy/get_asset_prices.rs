@@ -72,20 +72,7 @@ impl Steam {
     ///
     /// * `appid` - The ID of the application (game) for which to retrieve asset prices. Must be a Steam economy app.
     /// * `language` - An optional parameter specifying the user's local language.
-    /// * `currency` - An optional parameter specifying the currency to filter for 
-    /// 
-    /// # Example
-    ///
-    /// ```
-    ///     // Creates new `Steam` instance using the environment variable `STEAM_API_KEY`.
-    ///     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-    ///
-    ///     // Retrieves asset prices of app `440` (Team Fortress 2).
-    ///     let asset_prices = steam.get_asset_prices(440, None, None).await.unwrap();
-    ///
-    ///     // Prints the vector of assets.
-    ///     println!("{:?}", asset_prices.assets);
-    /// ```
+    /// * `currency` - An optional parameter specifying the currency to filter for.
     pub async fn get_asset_prices(
         &self,
         appid: u32,

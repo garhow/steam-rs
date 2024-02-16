@@ -74,19 +74,6 @@ impl Steam {
     ///
     /// * `steam_id` - The SteamID of the user.
     /// * `relationship` - Optional relationship type (e.g., `Relationship::Friend`).
-    ///
-    /// # Example
-    ///
-    /// ```
-    ///     // Creates new `Steam` instance using the environment variable `STEAM_API_KEY`.
-    ///     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-    ///
-    ///     // Retrieves friend list of user `76561197960435530`.
-    ///     let friend_list = steam.get_friend_list(730, None).await.unwrap();
-    ///
-    ///     // Prints their first friend's SteamID
-    ///     println!("{:?}", friend_list[0].steamid);
-    /// ```
     pub async fn get_friend_list(
         &self,
         steam_id: SteamId,                  // SteamID of user

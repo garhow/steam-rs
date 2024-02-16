@@ -62,19 +62,6 @@ impl Steam {
     /// # Arguments
     ///
     /// * `steam_ids` - A vector of `SteamId` objects
-    ///
-    /// # Example
-    ///
-    /// ```
-    ///     // Creates new `Steam` instance using the environment variable `STEAM_API_KEY`.
-    ///     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-    ///
-    ///     // Retrieves player ban status of user `76561197960435530`.
-    ///     let player_bans = steam.get_player_bans(vec![SteamId(76561197960435530)]).await.unwrap();
-    ///
-    ///     // Prints the user's VAC ban status.
-    ///     println!("{:?}", player_bans[0].vac_banned);
-    /// ```
     pub async fn get_player_bans(
         &self,
         steam_ids: Vec<SteamId>,

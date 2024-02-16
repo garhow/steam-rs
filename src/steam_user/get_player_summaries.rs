@@ -132,19 +132,6 @@ impl Steam {
     /// # Arguments
     ///
     /// * `steam_ids` - A vector of `SteamId` objects
-    ///
-    /// # Example
-    ///
-    /// ```
-    ///     // Creates new `Steam` instance using the environment variable `STEAM_API_KEY`.
-    ///     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-    ///
-    ///     // Retrieves player summary of user `76561197960435530`.
-    ///     let player_summaries = steam.get_player_summaries(vec![SteamId(76561197960435530)]).await.unwrap();
-    ///
-    ///     // Prints the first user's profile name
-    ///     println!("{:?}", player_summaries[0].persona_name);
-    /// ```
     pub async fn get_player_summaries(
         &self,
         steam_ids: Vec<SteamId>,

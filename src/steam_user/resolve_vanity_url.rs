@@ -41,19 +41,6 @@ impl Steam {
     ///     * 1 (default): Individual profile
     ///     * 2: Group,
     ///     * 3: Official game group
-    ///
-    /// # Example
-    ///
-    /// ```
-    ///     // Creates new `Steam` instance using the environment variable `STEAM_API_KEY`.
-    ///     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-    ///
-    ///     // Resolves the vanity URL `gabelogannewell`.
-    ///     let resolved_vanity_url = steam.resolve_vanity_url("gabelogannewell", None).await.unwrap();
-    ///
-    ///     // Prints the 64-bit ID of the user of the vanity URL
-    ///     println!("{:?}", resolved_vanity_url.steamid);
-    /// ```
     pub async fn resolve_vanity_url(
         &self,
         vanity_url: &str,

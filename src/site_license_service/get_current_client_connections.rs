@@ -77,19 +77,6 @@ impl Steam {
     ///
     /// * `publisher_key` - Steamworks Web API publisher authentication key
     /// * `site_id` - Site ID to see; zero for all sites
-    ///
-    /// # Example
-    ///
-    /// ```
-    ///     // Creates new `Steam` instance using the environment variable `STEAM_API_KEY`.
-    ///     let publisher_key = &std::env::var("STEAM_PUBLISHER_API_KEY").expect("Missing an API key");
-    ///
-    ///     // Retrive current client connections at all sites.
-    ///     let current_connections = Steam::get_current_client_connections(publisher_key, 0).await.unwrap();
-    ///
-    ///     // Prints the client activity data.
-    ///     println!("{:?}", current_connections);
-    /// ```
     pub async fn get_current_client_connections(
         publisher_key: &str,
         site_id: u64,

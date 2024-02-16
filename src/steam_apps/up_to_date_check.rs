@@ -43,20 +43,6 @@ impl Steam {
     ///
     /// * `appid` - AppID of game.
     /// * `version` - The installed version of the game.
-    ///
-    /// # Example
-    ///
-    /// ```
-    ///     let appid = 440; // Team Fortress 2
-    ///
-    ///     let version = 8227024;
-    ///
-    ///     // Check if game is up-to-date.
-    ///     let up_to_date = Steam::up_to_date_check(appid, version).await.unwrap();
-    ///
-    ///     // Prints the response.
-    ///     println!("{:?}", up_to_date);
-    /// ```
     pub async fn up_to_date_check(
         appid: u32,
         version: u32,
