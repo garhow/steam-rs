@@ -10,8 +10,8 @@ const VERSION: &str = "1";
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct CollectionDetails {
     #[serde(rename = "publishedfileid")]
-    published_file_id: String,
-    result: u32,
+    pub published_file_id: String,
+    pub result: u32,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]

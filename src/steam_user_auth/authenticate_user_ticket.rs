@@ -30,7 +30,7 @@ pub struct TicketAuthResponse {
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct WrapperParams {
-    params: TicketAuthResponse,
+    pub params: TicketAuthResponse,
 }
 
 #[derive(Debug, Deserialize, Serialize)]

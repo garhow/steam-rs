@@ -15,13 +15,13 @@ const VERSION: &str = "0002";
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct Achievement {
-    name: String,
-    percent: f64,
+    pub name: String,
+    pub percent: f64,
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct AchievementPercentages {
-    achievements: Vec<Achievement>,
+    pub achievements: Vec<Achievement>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
