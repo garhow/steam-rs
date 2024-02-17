@@ -1,3 +1,5 @@
+//! Implements the `GetSteamLevel` endpoint.
+
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
@@ -24,6 +26,11 @@ struct Wrapper {
 }
 
 impl Steam {
+    /// Returns the Steam Level of a user.
+    ///
+    /// # Arguments
+    ///
+    /// * `steam_id` - The SteamID of the player we're asking about.
     pub async fn get_steam_level(&self, steam_id: SteamId) -> Result<u16, PlayerServiceError> {
         let query = format!("?key={}&steamid={}", &self.api_key, steam_id);
         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);

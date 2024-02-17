@@ -1,3 +1,5 @@
+//! Implements the `GetOwnedGames` endpoint.
+
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -36,13 +38,25 @@ pub struct Game {
 }
 
 impl Steam {
-    /// TODO: Extensive testing for each argument
+    /// Return a list of games owned by the player.
+    ///
+    /// # Arguments
+    ///
+    /// * `steamid` - The SteamID of the player we're asking about.
+    /// * `include_appinfo` - True if we want additional details (name, icon) about each game.
+    /// * `include_played_free_games` - Free games are excluded by default. If this is set, free games the user has played will be returned.
+    /// * `appids_filter` - If set, restricts result set to the passed in apps.
+    /// * `include_free_sub` - Some games are in the free sub, which are excluded by default.
+    /// * `skip_unvetted_apps` - If set, skip unvetted store apps.
+    /// * `language` - Will return data in this language (english, french, etc.).
+    /// * `include_extended_appinfo` - True if we want even more details (capsule, sortas, and capabilities) about each game. include_appinfo must also be true.
     pub async fn get_owned_games(
+        // TODO: Extensive testing for each argument
         &self,
         steamid: SteamId,
         include_appinfo: bool,
         include_played_free_games: bool,
-        appid_filter: u32, // TODO: should this be an option?
+        appids_filter: u32, // TODO: should this be an option?
         include_free_sub: bool,
         skip_unvetted_apps: Option<bool>,
         language: &str,
@@ -55,7 +69,7 @@ impl Steam {
             steamid,
             include_appinfo,
             include_played_free_games,
-            appid_filter,
+            appids_filter,
             include_free_sub,
             language,
             include_extended_appinfo

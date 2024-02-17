@@ -1,3 +1,5 @@
+//! Implements the `GetRecentlyPlayedGames` endpoint.
+
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
@@ -35,6 +37,12 @@ struct Response {
 }
 
 impl Steam {
+    /// Gets information about a player's recently played games
+    ///
+    /// # Arguments
+    ///
+    /// * `steam_id` - The SteamID of the player we're asking about.
+    /// * `count` - The number of games to return.
     pub async fn get_recently_played_games(
         &self,
         steam_id: SteamId,

@@ -1,3 +1,7 @@
+//! # Implements the `IPlayerService` interface
+//!
+//! Provides additional methods for interacting with Steam Users.
+
 const INTERFACE: &str = "IPlayerService";
 
 pub mod get_badges;

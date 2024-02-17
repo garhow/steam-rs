@@ -1,3 +1,5 @@
+//! Implements the `GetCommunityBadgeProgress` endpoint.
+
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
@@ -18,8 +20,8 @@ const VERSION: &str = "1";
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Quest {
     #[serde(rename = "questid")]
-    quest_id: u32,
-    completed: bool,
+    pub quest_id: u32,
+    pub completed: bool,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
@@ -33,6 +35,12 @@ struct Wrapper {
 }
 
 impl Steam {
+    /// Gets all the quests needed to get the specified badge, and which are completed.
+    ///
+    /// # Arguments
+    ///
+    /// * `steam_id` - The SteamID of the player we're asking about.
+    /// * `badge_id` - The badge we're asking about.
     pub async fn get_community_badge_progress(
         &self,
         steam_id: SteamId,

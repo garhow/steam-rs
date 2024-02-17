@@ -1,3 +1,5 @@
+//! Implements the `GetBadges` endpoint.
+
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
@@ -15,11 +17,11 @@ const VERSION: &str = "1";
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Badge {
-    badgeid: u32,
-    level: u32,
-    completion_time: u32,
-    xp: u32,
-    scarcity: u32,
+    pub badgeid: u32,
+    pub level: u32,
+    pub completion_time: u32,
+    pub xp: u32,
+    pub scarcity: u32,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
@@ -37,6 +39,11 @@ struct Wrapper {
 }
 
 impl Steam {
+    /// Gets badges that are owned by a specific user.
+    ///
+    /// # Arguments
+    ///
+    /// * `steam_id` - The SteamID of the player we're asking about.
     pub async fn get_badges(&self, steam_id: SteamId) -> Result<BadgeResponse, PlayerServiceError> {
         let query = format!("?key={}&steamid={}", &self.api_key, steam_id);
         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
