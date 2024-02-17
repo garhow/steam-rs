@@ -1,3 +1,5 @@
+//! Implements the `GetGlobalAchievementPercentagesForApp` endpoint
+
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -28,7 +30,11 @@ struct Response {
 }
 
 impl Steam {
-    /// Gets the global achievement percentages for an app.
+    /// Retrieves the global achievement percentages for the specified app.
+    /// 
+    /// # Arguments
+    /// 
+    /// * `game_id` - GameID to retrieve the achievement percentages for.
     pub async fn get_global_achievement_percentages_for_app(
         &self,
         game_id: u32,

@@ -40,6 +40,12 @@ pub struct Achievement {
 }
 
 impl Steam {
+    /// Gets the list of achievements the specified user has unlocked in an app.
+    ///
+    /// # Arguments
+    /// * `steamid` - The user's SteamID.
+    /// * `appid` - The ID of the application (game) to get achievements for.
+    /// * `language` - Localized language to return (english, french, etc.).
     pub async fn get_player_achievements(
         &self,
         steamid: SteamId,
