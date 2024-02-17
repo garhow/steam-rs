@@ -1,3 +1,5 @@
+//! Implements the `GetNewsForApp` endpoint
+
 use crate::{
     errors::{ErrorHandle, SteamNewsError},
     macros::{do_http, optional_argument},
@@ -12,25 +14,25 @@ const VERSION: &str = "0002";
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct NewsItem {
-    gid: String,
-    title: String,
-    url: String,
-    is_external_url: bool,
-    author: String,
-    contents: String,
-    feedlabel: String,
-    date: u32,
-    feedname: String,
-    feed_type: u8,
-    appid: u32,
-    tags: Option<Vec<String>>,
+    pub gid: String,
+    pub title: String,
+    pub url: String,
+    pub is_external_url: bool,
+    pub author: String,
+    pub contents: String,
+    pub feedlabel: String,
+    pub date: u32,
+    pub feedname: String,
+    pub feed_type: u8,
+    pub appid: u32,
+    pub tags: Option<Vec<String>>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AppNews {
-    appid: u32, // TODO: Convert to AppId
-    newsitems: Vec<NewsItem>,
-    count: u32,
+    pub appid: u32, // TODO: Convert to AppId
+    pub newsitems: Vec<NewsItem>,
+    pub count: u32,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -39,8 +41,17 @@ struct Response {
 }
 
 impl Steam {
+    /// Get the news for the specified app.
+    ///
+    /// # Arguments
+    ///
+    /// * `appid` - The ID of the application (game) for which to retrieve news for.
+    /// * `max_length` - Maximum length for the content to return, if this is 0 the full content is returned, if it's less then a blurb is generated to fit.
+    /// * `end_date` - Retrieve posts earlier than this date (unix epoch timestamp).
+    /// * `count` - Number of posts to retrieve (default 20).
+    /// * `feeds` - Comma-seperated list of feed names to return news for.
     pub async fn get_news_for_app(
-        app_id: u32,
+        appid: u32,
         max_length: Option<u32>,
         end_date: Option<u32>,
         count: Option<u32>,
