@@ -64,7 +64,7 @@ Interfaces that are prefixed with ✓ are fully implemented!
   - [ ] GetGlobalStatsForGame
   - [x] GetNumberOfCurrentPlayers
   - [x] GetPlayerAchievements
-  - [ ] GetSchemaForGame
+  - [x] GetSchemaForGame
   - [x] GetUserStatsForGame
 ## ✓ ISteamWebAPIUtil
   - [x] GetServerInfo

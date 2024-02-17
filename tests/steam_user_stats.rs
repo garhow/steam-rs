@@ -63,3 +63,17 @@ pub fn get_player_achievements() {
         );
     });
 }
+
+#[test]
+pub fn get_schema_for_game() {
+    async_test!(async {
+        let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
+
+        assert!(
+            steam
+                .get_schema_for_game(EXAMPLE_APP_ID, None)
+                .await
+                .is_ok()
+        );
+    });
+}

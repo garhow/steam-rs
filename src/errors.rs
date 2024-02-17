@@ -41,6 +41,7 @@ error!(SteamUserStatsError {
     GetGlobalAchievements(String),
     GetNumberOfCurrentPlayers(String),
     GetPlayerAchievements(String),
+    GetSchemaForGame(String),
     GetUserStatsForGame(String),
 });
 
