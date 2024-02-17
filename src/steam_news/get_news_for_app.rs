@@ -70,7 +70,7 @@ impl Steam {
 
         println!("{}", optional_arguments[3]);
 
-        let query = format!("?appid={}{}", app_id, optional_arguments.concat());
+        let query = format!("?appid={}{}", appid, optional_arguments.concat());
         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
 
         let response = do_http!(url, Response, ErrorHandle, SteamNewsError::GetNews);
