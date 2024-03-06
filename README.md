@@ -5,20 +5,13 @@
 [![MIT licensed](https://img.shields.io/crates/l/steam-rs.svg)](./LICENSE)
 [![CI](https://github.com/garhow/steam-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/garhow/steam-rs/actions/workflows/ci.yml)
 
-This crate provides safe and convenient Rust bindings for the Steam Web API.
+Provides safe and convenient Rust bindings for the Steam Web API.
 
-The following resources were used in the developement in this crate:
-- [Better Steam Web API Documentation](https://steamwebapi.azurewebsites.net/)
-- [Steam Web API - Valve Developer Community](https://developer.valvesoftware.com/wiki/Steam_Web_API)
-- [Steamworks Web API Reference](https://partner.steamgames.com/doc/webapi)
-- [WebAPI - Official TF2 Wiki](https://wiki.teamfortress.com/wiki/WebAPI)
-- [xpaw's Steam Web API Documentation](https://steamapi.xpaw.me/)
+> [!IMPORTANT]
+> As this project is still a work-in-progress, not all API endpoints are currently supported. Most unsupported endpoints require a Steamworks Publisher API key, something that none of the developers of this project currently have. For a list of all supported API interfaces and endpoints, please see [ENDPOINTS.md](./ENDPOINTS.md).
 
-### This is not production ready!
-This crate is highly experimental and unfinished so you are advised to be cautious when using it in your projects.
-
-### Supported API endpoints
-For a list of all supported API interfaces and endpoints, please see [ENDPOINTS.md](./ENDPOINTS.md).
+> [!NOTE]
+> This project is in early stages of development, so bug reports, suggestions, and pull requests are highly appreciated!
 
 ## Usage
 
@@ -43,8 +36,13 @@ async fn main() {
 }
 ```
 
-## Contributing
-This project is in early stages of development, so bug reports, suggestions, and pull requests are highly appreciated!
+## Acknowledgements
 
-## License
-This project is licensed under the [MIT License](./LICENSE).
+The following resources were used in the developement in this crate:
+- [Better Steam Web API Documentation](https://steamwebapi.azurewebsites.net/)
+- [Steam Web API - Valve Developer Community](https://developer.valvesoftware.com/wiki/Steam_Web_API)
+- [Steamworks Web API Reference](https://partner.steamgames.com/doc/webapi)
+- [WebAPI - Official TF2 Wiki](https://wiki.teamfortress.com/wiki/WebAPI)
+- [xpaw's Steam Web API Documentation](https://steamapi.xpaw.me/)
+
+Special thanks to [@harvey298](https://github.com/harvey298/) for developing the custom macros and error types used in this project.
