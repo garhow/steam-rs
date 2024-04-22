@@ -45,4 +45,4 @@ The following resources were used in the developement in this crate:
 - [WebAPI - Official TF2 Wiki](https://wiki.teamfortress.com/wiki/WebAPI)
 - [xpaw's Steam Web API Documentation](https://steamapi.xpaw.me/)
 
-Special thanks to [@hoovy](https://github.com/marcohoovy/) for developing the custom macros and error types used in this project.
+Special thanks to [@marcohoovy](https://github.com/marcohoovy/) for developing the custom macros and error types used in this project.
