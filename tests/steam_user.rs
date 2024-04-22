@@ -8,59 +8,49 @@ const EXAMPLE_VANITY_URLS: [&str; 2] = [
     "!@#$%^&*()",      // Represents a broken vanity URL that would fail
 ];
 
-#[test]
-pub fn get_friend_list() {
-    async_test!(async {
-        let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-        println!(
-            "{:?}",
-            steam.get_friend_list(EXAMPLE_STEAM_ID, None).await.unwrap()
-        );
-    });
+#[tokio::test]
+pub async fn get_friend_list() {
+    let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
+    println!(
+        "{:?}",
+        steam.get_friend_list(EXAMPLE_STEAM_ID, None).await.unwrap()
+    );
 }
 
-#[test]
-pub fn get_player_bans() {
-    async_test!(async {
-        let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-        println!(
-            "{:?}",
-            steam.get_player_bans(vec![EXAMPLE_STEAM_ID]).await.unwrap()
-        );
-    });
+#[tokio::test]
+pub async fn get_player_bans() {
+    let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
+    println!(
+        "{:?}",
+        steam.get_player_bans(vec![EXAMPLE_STEAM_ID]).await.unwrap()
+    );
 }
 
-#[test]
-pub fn get_player_summaries() {
-    async_test!(async {
-        let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-        println!(
-            "{:?}",
-            steam
-                .get_player_summaries(vec![EXAMPLE_STEAM_ID])
-                .await
-                .unwrap()
-        );
-    });
+#[tokio::test]
+pub async fn get_player_summaries() {
+    let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
+    println!(
+        "{:?}",
+        steam
+            .get_player_summaries(vec![EXAMPLE_STEAM_ID])
+            .await
+            .unwrap()
+    );
 }
 
-#[test]
-pub fn get_user_group_list() {
-    async_test!(async {
-        let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-        println!(
-            "{:?}",
-            steam.get_user_group_list(EXAMPLE_STEAM_ID).await.unwrap()
-        );
-    });
+#[tokio::test]
+pub async fn get_user_group_list() {
+    let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
+    println!(
+        "{:?}",
+        steam.get_user_group_list(EXAMPLE_STEAM_ID).await.unwrap()
+    );
 }
 
-#[test]
-pub fn resolve_vanity_url() {
-    async_test!(async {
-        for url in EXAMPLE_VANITY_URLS {
-            let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-            println!("{:?}", steam.resolve_vanity_url(url, None).await.unwrap());
-        }
-    });
+#[tokio::test]
+pub async fn resolve_vanity_url() {
+    for url in EXAMPLE_VANITY_URLS {
+        let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
+        println!("{:?}", steam.resolve_vanity_url(url, None).await.unwrap());
+    }
 }
