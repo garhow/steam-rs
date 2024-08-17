@@ -44,6 +44,10 @@ pub struct Player {
     #[serde(rename = "avatarfull")]
     pub avatar_full: String,
 
+    /// Hash of the user's avatar
+    #[serde(rename = "avatarhash")]
+    pub avatar_hash: String,
+
     /// The user's status
     /// - 0: Offline (Also set when the profile is Private)
     /// - 1: Online
