@@ -28,13 +28,13 @@ pub struct OwnedGames {
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Game {
     pub appid: u32,
-    pub name: String,
+    pub name: Option<String>,
     pub playtime_forever: u64,
-    pub img_icon_url: String,
+    pub img_icon_url: Option<String>,
     pub capsule_filename: Option<String>,
-    pub has_workshop: bool,
-    pub has_market: bool,
-    pub has_dlc: bool,
+    pub has_workshop: Option<bool>,
+    pub has_market: Option<bool>,
+    pub has_dlc: Option<bool>,
 }
 
 impl Steam {
