@@ -5,3 +5,4 @@
 const INTERFACE: &str = "IGameServersService";
 
 pub mod get_account_list;
+pub mod get_account_public_info;
