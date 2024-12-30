@@ -39,6 +39,11 @@ pub struct AccountsResponse {
     last_action_time: u32,
 }
 
+#[derive(Debug, Deserialize, Serialize)]
+struct Wrapper {
+    response: AccountsResponse,
+}
+
 impl Steam {
     /// Get the List of server accounts and details on them
     pub async fn get_account_list(&self) -> Result<AccountsResponse, GameServersServiceError> {
@@ -50,10 +55,10 @@ impl Steam {
             ErrorHandle,
             GameServersServiceError::GetAccountList
         );
-        let wrapper: AccountsResponse = ErrorHandle!(
+        let wrapper: Wrapper = ErrorHandle!(
             from_value(json.to_owned()),
             GameServersServiceError::GetAccountList
         );
-        Ok(wrapper)
+        Ok(wrapper.response)
     }
 }
