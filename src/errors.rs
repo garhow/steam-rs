@@ -14,6 +14,10 @@ error!(PlayerServiceError{
     GetSteamLevel(String)
 });
 
+error!(GameServersServiceError{
+    GetAccountList(String),
+});
+
 error!(SiteLicenseServiceError{
     GetCurrentClientConnections(String),
     GetTotalPlaytime(String)

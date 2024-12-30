@@ -7,6 +7,7 @@
 //! This crate is currently a work in progress, so please expect breaking changes and instability. Please be careful when using this! **This is not production ready!**
 
 pub mod econ_service;
+pub mod game_servers_service;
 pub mod player_service;
 pub mod published_file_service;
 pub mod site_license_service;
