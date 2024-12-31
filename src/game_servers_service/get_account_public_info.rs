@@ -24,7 +24,7 @@ pub struct Wrapper {
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct PublicInfoResponse {
     #[serde(rename = "steamid")]
-    #[serde(deserialize_with = "de_steamid_from_str_opt")]
+    #[serde(default, deserialize_with = "de_steamid_from_str_opt")]
     steam_id: Option<SteamId>,
     appid: Option<u32>,
 }
