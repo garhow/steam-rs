@@ -1,7 +1,7 @@
 use core::fmt;
 
 use num_enum::TryFromPrimitive;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize};
 
 /// Represents a SteamID64 type which is used to uniquely identify users on the Steam platform.
 /// SteamID64 is a 64-bit unsigned integer.
@@ -46,7 +46,7 @@ use serde::{Deserialize, Serialize};
 /// let steam_id = SteamId::from(
 ///     "76561197960287930".to_string()
 /// );
-/// 
+///
 /// println!("Parsed SteamId: {}", steam_id);
 /// ```
 #[derive(Clone, Copy, Debug, Deserialize, Eq, PartialEq, Hash, Serialize)]
@@ -116,6 +116,25 @@ where
 {
     let s = String::deserialize(deserializer)?;
     Ok(SteamId::from(s))
+}
+
+fn callback<'de, D>(deserializer: D) -> Result<SteamId, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    Ok(SteamId::from(String::deserialize(deserializer)?))
+}
+
+#[derive(Debug, Deserialize)]
+struct WrappedSteamId(#[serde(deserialize_with = "callback")] SteamId);
+
+pub fn de_steamid_from_str_opt<'de, D>(deserializer: D) -> Result<Option<SteamId>, D::Error>
+where
+    D: serde::Deserializer<'de>,
+{
+    Option::<WrappedSteamId>::deserialize(deserializer).map(
+        |opt_wrapped: Option<WrappedSteamId>| opt_wrapped.map(|wrapped: WrappedSteamId| wrapped.0),
+    )
 }
 
 /// Error type for parsing a `SteamId` from a `string`.

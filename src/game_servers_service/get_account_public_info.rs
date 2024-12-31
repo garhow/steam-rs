@@ -7,7 +7,7 @@ use serde_json::{from_value, Value};
 use crate::{
     errors::{ErrorHandle, GameServersServiceError},
     macros::do_http,
-    steam_id::{de_steamid_from_str, SteamId},
+    steam_id::{de_steamid_from_str_opt, SteamId},
     Steam, BASE,
 };
 
@@ -18,15 +18,15 @@ const VERSION: &str = "1";
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Wrapper {
-    response: Option<PublicInfoResponse>,
+    response: PublicInfoResponse,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct PublicInfoResponse {
     #[serde(rename = "steamid")]
-    #[serde(deserialize_with = "de_steamid_from_str")]
-    steam_id: SteamId,
-    appid: u32,
+    #[serde(deserialize_with = "de_steamid_from_str_opt")]
+    steam_id: Option<SteamId>,
+    appid: Option<u32>,
 }
 
 impl Steam {
