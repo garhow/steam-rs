@@ -33,7 +33,7 @@ impl Steam {
     pub async fn get_account_public_info(
         &self,
         steam_id: SteamId,
-    ) -> Result<Option<PublicInfoResponse>, GameServersServiceError> {
+    ) -> Result<PublicInfoResponse, GameServersServiceError> {
         let query = format!("?key={}&steamid={}", &self.api_key, steam_id.0);
         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
         let json = do_http!(
