@@ -1,5 +1,4 @@
 //! Implements the 'GetAccountPublicInfo' endpoint.
-//! TODO: ALL THE DOCUMENTATION
 
 use serde::{Deserialize, Serialize};
 use serde_json::{from_value, Value};
@@ -25,16 +24,20 @@ pub struct Wrapper {
 pub struct PublicInfoResponse {
     #[serde(rename = "steamid")]
     #[serde(default, deserialize_with = "de_steamid_from_str_opt")]
-    steam_id: Option<SteamId>,
+    server_steam_id: Option<SteamId>,
     appid: Option<u32>,
 }
 
 impl Steam {
+    // Get the public accessable info about a steam server from it's steam id.
+    //
+    // # Arguments
+    // * `server_steam_id` - The server's steam id, this can be got from such functions as 'get_account_list` user accounts wont return anything
     pub async fn get_account_public_info(
         &self,
-        steam_id: SteamId,
+        server_steam_id: SteamId,
     ) -> Result<PublicInfoResponse, GameServersServiceError> {
-        let query = format!("?key={}&steamid={}", &self.api_key, steam_id.0);
+        let query = format!("?key={}&steamid={}", &self.api_key, server_steam_id.0);
         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
         let json = do_http!(
             url,

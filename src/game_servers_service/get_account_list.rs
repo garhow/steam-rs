@@ -1,5 +1,4 @@
 //! Implements the 'GetAccountList' endpoint.
-//! TODO: ALL THE DOCUMENTATION
 
 use serde::{Deserialize, Serialize};
 use serde_json::{from_value, Value};
@@ -20,7 +19,7 @@ const VERSION: &str = "1";
 pub struct Server {
     #[serde(rename = "steamid")]
     #[serde(deserialize_with = "de_steamid_from_str")]
-    pub steam_id: SteamId,
+    pub server_steam_id: SteamId,
     pub appid: u32,
     pub login_token: String,
     pub memo: String,
@@ -36,7 +35,7 @@ pub struct AccountsResponse {
     pub expires: u32,
     #[serde(deserialize_with = "de_steamid_from_str")]
     pub actor: SteamId,
-    last_action_time: u32,
+    pub last_action_time: u32,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -45,7 +44,7 @@ struct Wrapper {
 }
 
 impl Steam {
-    /// Get the List of server accounts and details on them
+    /// Get the List of server accounts linked to the account the steam key is connected to
     pub async fn get_account_list(&self) -> Result<AccountsResponse, GameServersServiceError> {
         let query = format!("?key={}", &self.api_key);
         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
