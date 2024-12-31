@@ -17,6 +17,7 @@ error!(PlayerServiceError{
 error!(GameServersServiceError{
     GetAccountList(String),
     GetAccountPublicInfo(String),
+    QueryLoginToken(String),
 });
 
 error!(SiteLicenseServiceError{
