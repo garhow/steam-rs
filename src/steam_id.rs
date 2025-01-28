@@ -19,12 +19,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 ///
 /// # Conversions
 ///
-/// You can convert a `SteamId` to a `u64` using the `into()` method:
+/// You can convert a `u64` to a `SteamId` using the `into()` method:
 /// ```
 /// use steam_rs::steam_id::SteamId;
 ///
 /// let steam_id: SteamId = 76561197960287930.into();
-/// println!("SteamId as u64: {}", steam_id);
+/// println!("SteamId from u64: {}", steam_id);
 /// ```
 ///
 /// # Formatting

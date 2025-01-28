@@ -5,19 +5,22 @@ The following is a list of interfaces and endpoints that are currently supported
 Interfaces that are prefixed with ✓ are fully implemented!
 
 ## ✓ IEconService
+  - [ ] FlushAssetAppearanceCache **(requires publisher key)**
+  - [ ] FlushContextCache **(requires publisher key)**
+  - [ ] FlushInventoryCache **(requires publisher key)**
   - [x] GetTradeHistory
   - [x] GetTradeOffers
   - [x] GetTradeOffer
   - [x] GetTradeOffersSummary
 ## IGameServersService
-  - [ ] GetAccountList
+  - [x] GetAccountList
   - [ ] CreateAccount
   - [ ] SetMemo
   - [ ] ResetLoginToken
   - [ ] DeleteAccount
-  - [ ] GetAccountPublicInfo
-  - [ ] QueryLoginToken
-  - [ ] GetServerSteamIDsByIP
+  - [x] GetAccountPublicInfo
+  - [x] QueryLoginToken
+  - [x] GetServerSteamIDsByIP
   - [ ] GetServerIPsBySteamID
 ## ✓ IPlayerService
   - [x] GetOwnedGames
@@ -40,8 +43,13 @@ Interfaces that are prefixed with ✓ are fully implemented!
 ## ✓ ISteamNews
   - [x] GetNewsForApp
 ## ✓ ISteamRemoteStorage
+  - [ ] EnumerateUserSubscribedFiles **(requires publisher key)**
   - [x] GetCollectionDetails
   - [x] GetPublishedFileDetails
+  - [ ] GetUGCFileDetails
+  - [ ] SetUGCUsedByGC **(requires publisher key)**
+  - [ ] SubscribePublishedFile **(requires publisher key)**
+  - [ ] UnsubscribePublishedFile **(requires publisher key)**
 ## ISteamUser
   - [ ] CheckAppOwnership **(requires publisher key)**
   - [ ] GetAppPriceInfo **(requires publisher key)**

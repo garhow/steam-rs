@@ -1,4 +1,4 @@
-//! # Implements the IGameServersService interface
+//! # Implements the `IGameServersService` interface
 //!
 //! Provides addtional methods for administration of Steam Game Servers
 //! It's worth noting that steam ids aren't just for user accounts, servers also have steam ids
