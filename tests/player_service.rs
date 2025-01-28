@@ -7,13 +7,12 @@ const EXAMPLE_STEAM_ID: SteamId = SteamId(76561197960434622); // Al Farnsworth
 /// In wrong Test file!!
 /// TODO: Move this
 pub async fn get_badges() {
-        let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-        println!("{:?}", steam.get_badges(EXAMPLE_STEAM_ID).await.unwrap());
+    let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
+    println!("{:?}", steam.get_badges(EXAMPLE_STEAM_ID).await.unwrap());
 }
 
 #[tokio::test]
 pub async fn get_community_badge_progress() {
-    
     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
     println!(
         "{:?}",
@@ -26,7 +25,6 @@ pub async fn get_community_badge_progress() {
 
 #[tokio::test]
 pub async fn get_owned_games() {
-    
     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
     println!(
         "{:?}",
@@ -48,7 +46,6 @@ pub async fn get_owned_games() {
 
 #[tokio::test]
 pub async fn get_recently_played_games() {
-    
     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
     println!(
         "{:?}",
@@ -61,7 +58,6 @@ pub async fn get_recently_played_games() {
 
 #[tokio::test]
 pub async fn get_player_achievements() {
-    
     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
     println!(
         "{:?}",
@@ -74,7 +70,6 @@ pub async fn get_player_achievements() {
 
 #[tokio::test]
 pub async fn get_user_stats_for_game() {
-    
     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
     println!(
         "{:?}",

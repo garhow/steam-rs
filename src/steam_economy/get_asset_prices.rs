@@ -22,7 +22,7 @@ const VERSION: &str = "1";
 pub struct AssetPrices {
     /// Indicates whether the request to retrieve asset prices was successful.
     pub success: bool,
-    
+
     /// A vector containing information about each asset.
     pub assets: Vec<Asset>,
 
@@ -82,11 +82,13 @@ impl Steam {
         let key = &self.api_key.clone();
         let args = gen_args!(key, appid) + &optional_argument!(language, currency);
         let url = format!("{}/{}/{}/v{}/?{}", BASE, INTERFACE, ENDPOINT, VERSION, args);
-    
+
         let json = do_http!(url, Value, ErrorHandle, SteamEconomyError::GetAssetPrices);
-        let response: Wrapper =
-            ErrorHandle!(from_value(json.to_owned()), SteamEconomyError::GetAssetPrices);
-        
+        let response: Wrapper = ErrorHandle!(
+            from_value(json.to_owned()),
+            SteamEconomyError::GetAssetPrices
+        );
+
         Ok(response.result.unwrap())
     }
 }

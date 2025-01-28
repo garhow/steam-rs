@@ -31,9 +31,9 @@ struct Response {
 
 impl Steam {
     /// Retrieves the global achievement percentages for the specified app.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `game_id` - GameID to retrieve the achievement percentages for.
     pub async fn get_global_achievement_percentages_for_app(
         &self,

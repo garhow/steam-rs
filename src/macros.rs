@@ -2,8 +2,12 @@ macro_rules! do_http {
     ($url:ident, $output_type:ty, $error_handle:ident, $error:expr) => {
         if let Ok(response) = minreq::get($url).send() {
             match response.status_code {
-                200 => {$error_handle!(response.json::<$output_type>(), $error)}
-                404 => {$error_handle!(response.json::<$output_type>(), $error)}
+                200 => {
+                    $error_handle!(response.json::<$output_type>(), $error)
+                }
+                404 => {
+                    $error_handle!(response.json::<$output_type>(), $error)
+                }
                 _ => {
                     return Err($error(format!(
                         "Expected 200 Status, got {}",
@@ -66,9 +70,7 @@ macro_rules! do_http {
     };
 
     ($url:ident, $output_type:ty) => {
-        minreq::get($url)
-            .send()?
-            .json::<$output_type>()?
+        minreq::get($url).send()?.json::<$output_type>()?
     };
 
     ($url:ident, $error_handle:ident, $error:expr) => {
@@ -85,9 +87,7 @@ macro_rules! do_http {
         )
     };
     ($url:ident) => {
-        minreq::get($url)
-            .send()?
-            .as_str()?
+        minreq::get($url).send()?.as_str()?
     };
 }
 

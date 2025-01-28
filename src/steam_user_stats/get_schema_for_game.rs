@@ -3,7 +3,9 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    errors::{ErrorHandle, SteamUserStatsError}, macros::{do_http, gen_args, optional_argument}, Steam, BASE
+    errors::{ErrorHandle, SteamUserStatsError},
+    macros::{do_http, gen_args, optional_argument},
+    Steam, BASE,
 };
 
 use super::INTERFACE;
@@ -23,7 +25,7 @@ pub struct Game {
     #[serde(rename = "gameVersion")]
     pub game_version: String,
     #[serde(rename = "availableGameStats")]
-    pub available_game_stats: AvailableGameStats
+    pub available_game_stats: AvailableGameStats,
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
@@ -65,10 +67,15 @@ impl Steam {
     pub async fn get_schema_for_game(
         &self,
         appid: u32,
-        language: Option<&str>
+        language: Option<&str>,
     ) -> Result<Game, SteamUserStatsError> {
         let key = &self.api_key;
-        let query = format!("?key={}{}{}", key, gen_args!(appid), optional_argument!(language, "l"));
+        let query = format!(
+            "?key={}{}{}",
+            key,
+            gen_args!(appid),
+            optional_argument!(language, "l")
+        );
         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
         let response = do_http!(
             url,

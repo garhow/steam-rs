@@ -47,7 +47,9 @@ impl Steam {
 
         match wrapper.response.result {
             1 => Ok(wrapper.response.player_count.unwrap()),
-            _ => Err(SteamUserStatsError::GetNumberOfCurrentPlayers("App not found.".to_string())),
+            _ => Err(SteamUserStatsError::GetNumberOfCurrentPlayers(
+                "App not found.".to_string(),
+            )),
         }
     }
 }

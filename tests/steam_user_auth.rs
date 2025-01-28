@@ -9,14 +9,9 @@ pub async fn authenticate_user_ticket() {
     let ticket = &std::env::var("STEAM_GAME_TICKET").unwrap_or(String::new());
 
     if !ticket.is_empty() {
-        assert!(
-            steam
-                .authenticate_user_ticket(
-                    app_id,
-                    ticket,
-                )
-                .await
-                .is_ok()
-        );
+        assert!(steam
+            .authenticate_user_ticket(app_id, ticket,)
+            .await
+            .is_ok());
     }
 }

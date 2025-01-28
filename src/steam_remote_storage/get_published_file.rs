@@ -1,6 +1,10 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{errors::{ErrorHandle, SteamRemoteStorageError}, macros::do_http, Steam, BASE};
+use crate::{
+    errors::{ErrorHandle, SteamRemoteStorageError},
+    macros::do_http,
+    Steam, BASE,
+};
 
 use super::INTERFACE;
 
@@ -36,14 +40,10 @@ impl Steam {
 
         let mut params = String::new();
 
-        params.push_str(
-            &format!("itemcount={}", published_fileids.len())
-        );
+        params.push_str(&format!("itemcount={}", published_fileids.len()));
 
         for (index, fileid) in published_fileids.iter().enumerate() {
-            params.push_str(
-                &format!("&publishedfileids[{}]={}", index, fileid)
-            );
+            params.push_str(&format!("&publishedfileids[{}]={}", index, fileid));
         }
 
         let wrapper = do_http!(

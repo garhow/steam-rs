@@ -138,14 +138,15 @@ impl Steam {
         let args = gen_args!(key, appid, class_count, classid0)
             + &optional_argument!(language, instanceid0);
         let url = format!("{}/{}/{}/v{}/?{}", BASE, INTERFACE, ENDPOINT, VERSION, args);
-        
+
         let response = do_http!(
             url,
             UncleanAssetClassInfo,
             ErrorHandle,
             SteamEconomyError::GetAssetClassInfo
-        ).clean()?;
-        
+        )
+        .clean()?;
+
         Ok(response)
     }
 }

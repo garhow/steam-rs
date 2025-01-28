@@ -11,13 +11,16 @@ async fn main() {
     // Request the player summaries of SteamIDs `76561198136162943` and `76561197960435530`.
     let steam_ids = vec![
         SteamId::new(76561198136162943), // Garrett Howard
-        SteamId(76561197960435530), // Robin Walker
+        SteamId(76561197960435530),      // Robin Walker
     ];
 
     let player_summaries = steam.get_player_summaries(steam_ids).await.unwrap();
 
     // Print the recieved information about the players.
     for player in player_summaries {
-        println!("{:?}'s SteamID is {:?}", player.persona_name, player.steam_id)
+        println!(
+            "{:?}'s SteamID is {:?}",
+            player.persona_name, player.steam_id
+        )
     }
 }

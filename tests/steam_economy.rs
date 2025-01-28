@@ -16,10 +16,7 @@ pub async fn get_asset_class_info() {
 pub async fn get_asset_prices() {
     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
 
-    let tf2_data = steam
-        .get_asset_prices(440, None, None)
-        .await
-        .unwrap();
+    let tf2_data = steam.get_asset_prices(440, None, None).await.unwrap();
     println!("{tf2_data:?}");
 
     let cs2_data = steam
