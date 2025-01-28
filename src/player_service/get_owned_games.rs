@@ -35,6 +35,7 @@ pub struct Game {
     pub has_workshop: Option<bool>,
     pub has_market: Option<bool>,
     pub has_dlc: Option<bool>,
+    pub rtime_last_played: Option<u64>,
 }
 
 impl Steam {
