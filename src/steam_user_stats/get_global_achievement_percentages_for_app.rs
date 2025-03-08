@@ -1,6 +1,7 @@
 //! Implements the `GetGlobalAchievementPercentagesForApp` endpoint
 
 use serde::{Deserialize, Serialize};
+use serde_this_or_that::as_f64;
 
 use crate::{
     errors::{ErrorHandle, SteamUserStatsError},
@@ -16,6 +17,7 @@ const VERSION: &str = "0002";
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct Achievement {
     pub name: String,
+    #[serde(deserialize_with = "as_f64")]
     pub percent: f64,
 }
 
