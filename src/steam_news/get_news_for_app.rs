@@ -68,8 +68,6 @@ impl Steam {
             optional_argument!(feeds),
         ];
 
-        println!("{}", optional_arguments[3]);
-
         let query = format!("?appid={}{}", appid, optional_arguments.concat());
         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
 

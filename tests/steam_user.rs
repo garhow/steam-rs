@@ -51,6 +51,9 @@ pub async fn get_user_group_list() {
 pub async fn resolve_vanity_url() {
     for url in EXAMPLE_VANITY_URLS {
         let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-        println!("{:?}", steam.resolve_vanity_url(url, None).await.unwrap());
+        println!(
+            "{:?}",
+            steam.resolve_vanity_url(url, Some(1)).await.unwrap()
+        );
     }
 }
