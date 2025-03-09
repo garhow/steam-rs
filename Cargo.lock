@@ -912,15 +912,14 @@ dependencies = [
 
 [[package]]
 name = "ring"
-version = "0.17.8"
+version = "0.17.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c17fa4cb658e3583423e915b9f3acc01cceaee1860e33d59ebae66adc3a2dc0d"
+checksum = "70ac5d832aa16abd7d1def883a8545280c20a60f523a370aa3a9617c2b8550ee"
 dependencies = [
  "cc",
  "cfg-if",
  "getrandom 0.2.15",
  "libc",
- "spin",
  "untrusted",
  "windows-sys 0.52.0",
 ]
@@ -1043,6 +1042,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "serde-this-or-that"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f90e7ee61f57b2b1a195326bf7ee88651d3d5e688f34bd5971110851764200bf"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "serde_derive"
 version = "1.0.217"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1117,26 +1125,14 @@ dependencies = [
  "windows-sys 0.52.0",
 ]
 
-[[package]]
-name = "spin"
-version = "0.9.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6980e8d7511241f8acf4aebddbb1ff938df5eebe98691418c4468d0b72a96a67"
-
-[[package]]
-name = "stable_deref_trait"
-version = "1.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a8f112729512f8e442d81f95a8a7ddf2b7c6b8a1a6f509a95864142b30cab2d3"
-
-[[package]]
 name = "steam-rs"
-version = "0.5.0"
+version = "0.5.1"
 dependencies = [
  "num_enum",
  "rayon",
  "reqwest",
  "serde",
+ "serde-this-or-that",
  "serde_json",
  "tokio",
  "tokio-test",

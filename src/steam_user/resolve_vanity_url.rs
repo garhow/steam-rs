@@ -60,6 +60,7 @@ impl Steam {
             VERSION,
             query.concat()
         );
+
         let json = do_http!(url, Value, ErrorHandle, SteamUserError::ResolveVanityURL);
         let wrapper: Wrapper = ErrorHandle!(
             from_value(json.to_owned()),

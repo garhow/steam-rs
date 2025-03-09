@@ -117,7 +117,7 @@ macro_rules! optional_argument {
 
     ($key:ident, $rename:literal) => {
         match $key {
-            Some(value) => format!("&{}={}", stringify!($rename), value),
+            Some(value) => format!("&{}={}", String::from($rename), value),
             None => String::new()
         }
     };
