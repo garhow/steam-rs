@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     errors::{ErrorHandle, SteamUserStatsError},
-    macros::{do_http, gen_args},
+    macros::{do_http, EndPoint},
     steam_id::SteamId,
     Steam,
 };
@@ -38,23 +38,14 @@ pub struct Stat {
     pub value: u64,
 }
 
-impl Steam {
-    /// This end point gives a 1:1 output of the api, if you were to put the endpoint into a browser, expect the same layout
-    /// ( carbon-copy )
-    pub async fn get_user_stats_for_game(
-        &self,
-        steamid: SteamId,
-        appid: u32,
-    ) -> Result<UserGameStats, SteamUserStatsError> {
-        let key = &self.api_key.clone();
-        let steamid = steamid.into_u64();
-        let args = gen_args!(key, appid, steamid);
-        let url = format!("{END_POINT}?{args}");
-        Ok(do_http!(
-            url,
-            UserGameStats,
-            ErrorHandle,
-            SteamUserStatsError::GetUserStatsForGame
-        ))
+EndPoint!(
+    get_user_stats_for_game,
+    UserGameStatsReq,
+    format!("{END_POINT}?"),
+    UserGameStats,
+    ( steamid: SteamId, appid: u32 ),
+    [ ], // TODO: Remove the need to do this
+    async fn internal(url: String) -> Result<UserGameStats, SteamUserStatsError> {
+        Ok(do_http!(url, UserGameStats, ErrorHandle, SteamUserStatsError::GetUserStatsForGame))
     }
-}
+);

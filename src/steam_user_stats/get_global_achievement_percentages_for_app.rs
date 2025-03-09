@@ -5,7 +5,7 @@ use serde_this_or_that::as_f64;
 
 use crate::{
     errors::{ErrorHandle, SteamUserStatsError},
-    macros::do_http,
+    macros::{do_http, EndPoint},
     Steam, BASE,
 };
 
@@ -31,18 +31,14 @@ struct Response {
     achievementpercentages: AchievementPercentages,
 }
 
-impl Steam {
-    /// Retrieves the global achievement percentages for the specified app.
-    ///
-    /// # Arguments
-    ///
-    /// * `game_id` - GameID to retrieve the achievement percentages for.
-    pub async fn get_global_achievement_percentages_for_app(
-        &self,
-        game_id: u32,
-    ) -> Result<AchievementPercentages, SteamUserStatsError> {
-        let query = format!("?gameid={}", game_id);
-        let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
+EndPoint!(
+    get_global_achievement_percentages_for_app,
+    GetGlobalAchievementPercentagesForAppReq,
+    format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, "?"),
+    AchievementPercentages,
+    ( gameid: u32 ),
+    [ ],
+    async fn internal(url: String) -> Result<AchievementPercentages, SteamUserStatsError> {
         let response = do_http!(
             url,
             Response,
@@ -51,4 +47,26 @@ impl Steam {
         );
         Ok(response.achievementpercentages)
     }
-}
+);
+
+// impl Steam {
+//     /// Retrieves the global achievement percentages for the specified app.
+//     ///
+//     /// # Arguments
+//     ///
+//     /// * `game_id` - GameID to retrieve the achievement percentages for.
+//     pub async fn get_global_achievement_percentages_for_app(
+//         &self,
+//         game_id: u32,
+//     ) -> Result<AchievementPercentages, SteamUserStatsError> {
+//         let query = format!("?gameid={}", game_id);
+//         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
+//         let response = do_http!(
+//             url,
+//             Response,
+//             ErrorHandle,
+//             SteamUserStatsError::GetGlobalAchievements
+//         );
+//         Ok(response.achievementpercentages)
+//     }
+// }
