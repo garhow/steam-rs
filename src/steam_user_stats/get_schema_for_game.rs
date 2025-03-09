@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     errors::{ErrorHandle, SteamUserStatsError},
-    macros::{do_http, gen_args, optional_argument},
+    macros::{do_http, optional_argument, EndPoint},
     Steam, BASE,
 };
 
@@ -57,26 +57,14 @@ pub struct Achievement {
     pub icon_gray: String,
 }
 
-impl Steam {
-    /// Gets the complete list of stats and achievements for the specified game.
-    ///
-    /// # Arguments
-    ///
-    /// * `appid` - The ID of the application (game) for which to retrieve the number of current players.
-    /// * `language` - Localized language to return (english, french, etc.).
-    pub async fn get_schema_for_game(
-        &self,
-        appid: u32,
-        language: Option<&str>,
-    ) -> Result<Game, SteamUserStatsError> {
-        let key = &self.api_key;
-        let query = format!(
-            "?key={}{}{}",
-            key,
-            gen_args!(appid),
-            optional_argument!(language, "l")
-        );
-        let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
+EndPoint!(
+    get_schema_for_game,
+    SchemaForGameReq,
+    format!("{BASE}/{INTERFACE}/{ENDPOINT}/v{VERSION}/?"),
+    Game,
+    ( appid: u32 ),
+    [language: Option<String>],
+    async fn internal(url: String) -> Result<Game, SteamUserStatsError> {
         let response = do_http!(
             url,
             Response,
@@ -85,4 +73,4 @@ impl Steam {
         );
         Ok(response.game)
     }
-}
+);

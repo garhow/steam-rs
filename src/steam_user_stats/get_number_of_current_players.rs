@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     errors::{ErrorHandle, SteamUserStatsError},
-    macros::{do_http, gen_args},
+    macros::{do_http, EndPoint},
     Steam, BASE,
 };
 
@@ -24,20 +24,14 @@ struct Response {
     result: u8,
 }
 
-impl Steam {
-    /// Retrieves the number of current players for a game.
-    ///
-    /// # Arguments
-    ///
-    /// * `appid` - The ID of the application (game) for which to retrieve the number of current players.
-    pub async fn get_number_of_current_players(
-        &self,
-        appid: u32,
-    ) -> Result<u64, SteamUserStatsError> {
-        let key = &self.api_key.clone();
-        let args = gen_args!(key, appid);
-        let url = format!("{BASE}/{INTERFACE}/{ENDPOINT}/v{VERSION}/?{args}");
-
+EndPoint!(
+    get_number_of_current_players,
+    NumberOfCurrentPlayersReq,
+    format!("{BASE}/{INTERFACE}/{ENDPOINT}/v{VERSION}/?"),
+    u64,
+    ( appid: u32 ),
+    [ ],
+    async fn internal(url: String) -> Result<u64, SteamUserStatsError> {
         let wrapper = do_http!(
             url,
             Wrapper,
@@ -51,5 +45,6 @@ impl Steam {
                 "App not found.".to_string(),
             )),
         }
+        
     }
-}
+);
