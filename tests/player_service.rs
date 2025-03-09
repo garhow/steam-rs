@@ -60,10 +60,13 @@ pub async fn get_recently_played_games() {
 pub async fn get_player_achievements() {
     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
     let req = steam.get_player_achievements(EXAMPLE_STEAM_ID, 440);
+
+    let response = req.send().await;
+
     println!(
-        "{:?}",
-        req
-    );
+        "{:?}",response);
+
+    response.unwrap();
 }
 
 #[tokio::test]
@@ -72,7 +75,7 @@ pub async fn get_user_stats_for_game() {
     println!(
         "{:?}",
         steam
-            .get_user_stats_for_game(EXAMPLE_STEAM_ID, 440)
+            .get_user_stats_for_game(EXAMPLE_STEAM_ID, 440).send()
             .await
             .unwrap()
     );

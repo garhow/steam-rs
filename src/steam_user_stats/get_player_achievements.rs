@@ -1,12 +1,10 @@
 //! Implements the `GetPlayerAchievements` endpoint
 
-
-use crate::macros::SteamAPI;
 use serde::{Deserialize, Serialize};
 
 use crate::{
     errors::{ErrorHandle, SteamUserStatsError},
-    macros::{do_http, gen_args, optional_argument, EndPoint},
+    macros::{do_http, optional_argument, EndPoint},
     steam_id::SteamId,
     Steam, BASE,
 };
@@ -50,9 +48,20 @@ impl Achievement {
 EndPoint!(
     get_player_achievements,
     PlayerAchievementsReq,
+    format!("{BASE}/{INTERFACE}/{ENDPOINT}/v{VERSION}/?"),
     PlayerStats,
     ( steamid: SteamId,
         appid: u32
     ),
-    [language: Option<String>]
+    [language: Option<String>],
+
+    async fn internal(url: String) -> Result<PlayerStats, SteamUserStatsError> {
+        let wrapper = do_http!(
+            url,
+            Wrapper,
+            ErrorHandle,
+            SteamUserStatsError::GetPlayerAchievements
+        );
+        Ok(wrapper.playerstats)
+    }
 );

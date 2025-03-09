@@ -68,24 +68,24 @@ macro_rules! do_http {
     };
 
     ($url:ident, $output_type:ty) => {
-        reqwest::get($url).send()?.json::<$output_type>()?
+        reqwest::get($url).await?.json::<$output_type>()?
     };
 
     ($url:ident, $error_handle:ident, $error:expr) => {
         $error_handle!(
-            $error_handle!(reqwest::get($url).send().await?, $error).json()?,
+            $error_handle!(reqwest::get($url).await?, $error).json()?,
             $error
         )
     };
     ($url:ident, $error:expr) => {
         use crate::errors::ErrorHandle;
         ErrorHandle!(
-            ErrorHandle!(reqwest::get($url).send()?, $error).json().await,
+            ErrorHandle!(reqwest::get($url).await?, $error).json().await,
             $error
         )
     };
     ($url:ident) => {
-        reqwest::get($url).send()?.as_str()?
+        reqwest::get($url).await?.as_str()?
     };
 }
 
@@ -134,6 +134,7 @@ macro_rules! optional_argument {
 
 pub(crate) use optional_argument;
 
+#[macro_export]
 macro_rules! gen_args {
     // Base case: When there are no variables left to concatenate, return an empty string.
     () => { String::new() };
@@ -148,39 +149,23 @@ pub(crate) use gen_args;
 
 // 2025 Marco
 
-// TODO: ik what I did wrong here
-macro_rules! clean_args {
-    ($arg:expr) => {
-        if (&$arg as &dyn Any).type_id() == TypeId::of::<SteamId>() {
-            compile_error!(stringify!($arg));
-            $arg.into_u64()
-        } else {
-            $arg
-        }
-        
-    };
-}
-
-pub(crate) use clean_args;
-
 // TODO: I am yet to decided whether this is needed
-pub trait SteamAPI {
-    fn endpoint_name() -> &'static str;
-}
+// pub trait SteamAPI {
+//     fn endpoint_name() -> &'static str;
+// }
 
 macro_rules! EndPoint {
     (
-        $fn_name:ident,
-        $struct_name:ident,
-        $output_type:ty,
+        $fn_name:ident, // Name of the function to generate
+        $struct_name:ident, // Name of the Builder struct (i.e. RequestNameReq or RequestNameBuilder)
+        $url:expr, // The endpoint URL, without any ?
+        $output_type:ty, // The Finial output type
         ( $( $arg_name1:ident : $arg_ty1:ty ),* ),  // Required arguments
-        [ $( $arg_name2:ident : Option<$arg_ty2:ty> ),* ]  // Optional arguments
-        
+        [ $( $arg_name2:ident : Option<$arg_ty2:ty> ),* ],  // Optional arguments
+        $body:item // the HTTP handler
     ) => {
         use serde::ser::{Serializer, SerializeStruct};
-        use crate::macros::clean_args;
-        use std::any::TypeId;
-        use std::any::Any;
+        use crate::gen_args;
 
         #[derive(Debug)]
         pub struct $struct_name {
@@ -202,15 +187,30 @@ macro_rules! EndPoint {
                 }
             )*
 
-            pub fn to_request(&self) -> String {
+            fn to_args(&self) -> String {
                 let mut req = String::new();
+                let key = self._steam.api_key.clone();
+                req.push_str(&gen_args!(key));
                 $(
-                    req.push_str(&gen_args!(clean_args!(self.$arg_name1)));
+                    let $arg_name1 = self.$arg_name1;
+                    req.push_str(&gen_args!($arg_name1));
                 )*
                 $(
-                    req.push_str(&optional_argument!(clean_args!(self.$arg_name2)));
+                    let $arg_name2 = &self.$arg_name2;
+                    req.push_str(&optional_argument!(&$arg_name2));
                 )*
                 req
+            }
+
+            fn to_url(&self) -> String {
+                format!("{}{}", $url, self.to_args())
+            }
+
+            $body
+
+            pub async fn send(&self) -> Result<$output_type, Box<dyn std::error::Error>> {
+                let url = self.to_url();
+                Ok(Self::internal(url).await?)
             }
         }
 
@@ -230,11 +230,11 @@ macro_rules! EndPoint {
             }
         }
 
-        impl SteamAPI for $struct_name {
-            fn endpoint_name() -> &'static str {
-                stringify!($fn_name)
-            }
-        }
+        // impl SteamAPI for $struct_name {
+        //     fn endpoint_name() -> &'static str {
+        //         stringify!($fn_name)
+        //     }
+        // }
 
         impl Steam {
             pub fn $fn_name(&self, $( $arg_name1 : $arg_ty1 ),*) -> $struct_name {
