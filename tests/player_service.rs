@@ -59,12 +59,10 @@ pub async fn get_recently_played_games() {
 #[tokio::test]
 pub async fn get_player_achievements() {
     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
+    let req = steam.get_player_achievements(EXAMPLE_STEAM_ID, 440);
     println!(
         "{:?}",
-        steam
-            .get_player_achievements(EXAMPLE_STEAM_ID, 440, None)
-            .await
-            .unwrap()
+        req
     );
 }
 

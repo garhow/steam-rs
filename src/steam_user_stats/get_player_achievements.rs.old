@@ -1,12 +1,10 @@
 //! Implements the `GetPlayerAchievements` endpoint
 
-
-use crate::macros::SteamAPI;
 use serde::{Deserialize, Serialize};
 
 use crate::{
     errors::{ErrorHandle, SteamUserStatsError},
-    macros::{do_http, gen_args, optional_argument, EndPoint},
+    macros::{do_http, gen_args, optional_argument},
     steam_id::SteamId,
     Steam, BASE,
 };
@@ -41,18 +39,35 @@ pub struct Achievement {
     pub unlocktime: Option<u64>,
 }
 
+impl Steam {
+    /// Gets the list of achievements the specified user has unlocked in an app.
+    ///
+    /// # Arguments
+    /// * `steamid` - The user's SteamID.
+    /// * `appid` - The ID of the application (game) to get achievements for.
+    /// * `language` - Localized language to return (english, french, etc.).
+    pub async fn get_player_achievements(
+        &self,
+        steamid: SteamId,
+        appid: u32,
+        language: Option<&str>,
+    ) -> Result<PlayerStats, SteamUserStatsError> {
+        let key = &self.api_key.clone();
+        let steamid = steamid.into_u64();
+        let args = gen_args!(key, appid, steamid) + &optional_argument!(language, "l");
+        let url = format!("{BASE}/{INTERFACE}/{ENDPOINT}/v{VERSION}/?{args}");
+        let wrapper = do_http!(
+            url,
+            Wrapper,
+            ErrorHandle,
+            SteamUserStatsError::GetPlayerAchievements
+        );
+        Ok(wrapper.playerstats)
+    }
+}
+
 impl Achievement {
     pub fn achieved(&self) -> bool {
         self.achieved == 1
     }
 }
-
-EndPoint!(
-    get_player_achievements,
-    PlayerAchievementsReq,
-    PlayerStats,
-    ( steamid: SteamId,
-        appid: u32
-    ),
-    [language: Option<String>]
-);

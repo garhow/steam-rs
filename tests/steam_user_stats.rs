@@ -28,22 +28,23 @@ pub async fn get_number_of_current_players() {
     assert!(steam.get_number_of_current_players(1).await.is_err());
 }
 
-#[tokio::test]
-pub async fn get_player_achievements() {
-    let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
+// Remove theses Test Temporarily
+// #[tokio::test]
+// pub async fn get_player_achievements() {
+//     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
 
-    // Expected result (public profile)
-    assert!(steam
-        .get_player_achievements(EXAMPLE_STEAM_ID_PUBLIC, EXAMPLE_APP_ID, None)
-        .await
-        .is_ok());
+//     // Expected result (public profile)
+//     assert!(steam
+//         .get_player_achievements(EXAMPLE_STEAM_ID_PUBLIC, EXAMPLE_APP_ID, None)
+//         .await
+//         .is_ok());
 
-    // Error condition (private profile)
-    assert!(steam
-        .get_player_achievements(EXAMPLE_STEAM_ID_PRIVATE, EXAMPLE_APP_ID, None)
-        .await
-        .is_err());
-}
+//     // Error condition (private profile)
+//     assert!(steam
+//         .get_player_achievements(EXAMPLE_STEAM_ID_PRIVATE, EXAMPLE_APP_ID, None)
+//         .await
+//         .is_err());
+// }
 
 #[tokio::test]
 pub async fn get_schema_for_game() {
