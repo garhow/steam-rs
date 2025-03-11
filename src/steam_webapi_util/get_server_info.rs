@@ -5,7 +5,7 @@ use serde_json::Value;
 
 use crate::{
     errors::{ErrorHandle, SteamWebAPIUtilError},
-    macros::do_http,
+    macros::{do_http, EndPoint},
     Steam, BASE,
 };
 
@@ -25,6 +25,24 @@ pub struct ServerInfo {
     pub server_time_string: String,
 }
 
+// EndPoint!(
+//     get_server_info,
+//     ServerInfoReq,
+//     format!("{}/{}/{}/v{}/", BASE, INTERFACE, ENDPOINT, VERSION),
+//     ServerInfo,
+//     ( ),
+//     [ ],
+//     async fn internal(url: String) -> Result<ServerInfo, SteamWebAPIUtilError> {
+//         let json = do_http!(url, Value, ErrorHandle, SteamWebAPIUtilError::GetServerInfo);
+//         let server_info: ServerInfo = ErrorHandle!(
+//             serde_json::from_value(json.to_owned()),
+//             SteamWebAPIUtilError::GetServerInfo
+//         );
+//         Ok(server_info)
+//     }
+// );
+
+// This requires a macro change
 impl Steam {
     /// Returns WebAPI server time & checks server status.
     pub async fn get_server_info() -> Result<ServerInfo, SteamWebAPIUtilError> {

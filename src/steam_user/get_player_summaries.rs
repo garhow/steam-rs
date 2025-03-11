@@ -130,6 +130,7 @@ struct Wrapper {
     response: PlayerSummary,
 }
 
+// TODO: This requires a macro rework
 impl Steam {
     /// Get user profile data.
     ///

@@ -10,5 +10,5 @@ pub async fn get_server_info() {
 #[tokio::test]
 pub async fn get_supported_api_list() {
     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
-    println!("{:?}", steam.get_supported_api_list().await.unwrap());
+    println!("{:?}", steam.get_supported_api_list().send().await.unwrap());
 }

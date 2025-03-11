@@ -10,7 +10,7 @@ pub async fn authenticate_user_ticket() {
 
     if !ticket.is_empty() {
         assert!(steam
-            .authenticate_user_ticket(app_id, ticket,)
+            .authenticate_user_ticket(app_id, ticket.to_string()).send()
             .await
             .is_ok());
     }

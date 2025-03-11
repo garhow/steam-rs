@@ -13,7 +13,7 @@ pub async fn get_friend_list() {
     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
     println!(
         "{:?}",
-        steam.get_friend_list(EXAMPLE_STEAM_ID, None).await.unwrap()
+        steam.get_friend_list(EXAMPLE_STEAM_ID).send().await.unwrap()
     );
 }
 
@@ -43,7 +43,7 @@ pub async fn get_user_group_list() {
     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
     println!(
         "{:?}",
-        steam.get_user_group_list(EXAMPLE_STEAM_ID).await.unwrap()
+        steam.get_user_group_list(EXAMPLE_STEAM_ID).send().await.unwrap()
     );
 }
 
@@ -53,7 +53,7 @@ pub async fn resolve_vanity_url() {
         let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
         println!(
             "{:?}",
-            steam.resolve_vanity_url(url, Some(1)).await.unwrap()
+            steam.resolve_vanity_url(url.to_string()).url_type(1).send().await.unwrap()
         );
     }
 }

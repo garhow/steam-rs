@@ -164,7 +164,7 @@ macro_rules! EndPoint {
         [ $( $arg_name2:ident : Option<$arg_ty2:ty> ),* ],  // Optional arguments
         $body:item // the HTTP handler
     ) => {
-        use serde::ser::{Serializer, SerializeStruct};
+        // use serde::ser::{Serializer, SerializeStruct};
         use crate::gen_args;
 
         #[derive(Debug)]
@@ -192,7 +192,7 @@ macro_rules! EndPoint {
                 let key = self._steam.api_key.clone();
                 req.push_str(&gen_args!(key));
                 $(
-                    let $arg_name1 = self.$arg_name1;
+                    let $arg_name1 = &self.$arg_name1;
                     req.push_str(&gen_args!($arg_name1));
                 )*
                 $(
@@ -214,21 +214,21 @@ macro_rules! EndPoint {
             }
         }
 
-        impl Serialize for $struct_name {
-            fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-            where
-                S: Serializer,
-            {
-                let mut state = serializer.serialize_struct(stringify!($struct_name), 3)?;
-                $(
-                    state.serialize_field(stringify!($arg_name1), &self.$arg_name1)?;
-                )*
-                $(
-                    state.serialize_field(stringify!($arg_name2), &self.$arg_name2.as_ref().unwrap())?;
-                )*
-                state.end()
-            }
-        }
+        // impl Serialize for $struct_name {
+        //     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+        //     where
+        //         S: Serializer,
+        //     {
+        //         let mut state = serializer.serialize_struct(stringify!($struct_name), 3)?;
+        //         $(
+        //             state.serialize_field(stringify!($arg_name1), &self.$arg_name1)?;
+        //         )*
+        //         $(
+        //             state.serialize_field(stringify!($arg_name2), &self.$arg_name2.as_ref().unwrap())?;
+        //         )*
+        //         state.end()
+        //     }
+        // }
 
         // impl SteamAPI for $struct_name {
         //     fn endpoint_name() -> &'static str {

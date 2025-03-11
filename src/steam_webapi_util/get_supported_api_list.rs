@@ -5,7 +5,7 @@ use serde_json::Value;
 
 use crate::{
     errors::{ErrorHandle, SteamWebAPIUtilError},
-    macros::do_http,
+    macros::{do_http, EndPoint},
     Steam, BASE,
 };
 
@@ -69,13 +69,14 @@ struct Wrapper {
     apilist: APIList,
 }
 
-impl Steam {
-    /// Lists all supported API calls.
-    pub async fn get_supported_api_list(&self) -> Result<APIList, SteamWebAPIUtilError> {
-        let url = format!(
-            "{}/{}/{}/v{}/?key={}",
-            BASE, INTERFACE, ENDPOINT, VERSION, &self.api_key
-        );
+EndPoint!(
+    get_supported_api_list,
+    SupportedApiListReq,
+    format!("{}/{}/{}/v{}/",BASE, INTERFACE, ENDPOINT, VERSION),
+    APIList,
+    ( ),
+    [ ],
+    async fn internal(url: String ) -> Result<APIList, SteamWebAPIUtilError> {
         let json = do_http!(url, Value, ErrorHandle, SteamWebAPIUtilError::GetServerInfo);
         let wrapper: Wrapper = ErrorHandle!(
             serde_json::from_value(json.to_owned()),
@@ -83,4 +84,20 @@ impl Steam {
         );
         Ok(wrapper.apilist)
     }
-}
+);
+
+// impl Steam {
+//     /// Lists all supported API calls.
+//     pub async fn get_supported_api_list(&self) -> Result<APIList, SteamWebAPIUtilError> {
+//         let url = format!(
+//             "{}/{}/{}/v{}/?key={}",
+//             BASE, INTERFACE, ENDPOINT, VERSION, &self.api_key
+//         );
+//         let json = do_http!(url, Value, ErrorHandle, SteamWebAPIUtilError::GetServerInfo);
+//         let wrapper: Wrapper = ErrorHandle!(
+//             serde_json::from_value(json.to_owned()),
+//             SteamWebAPIUtilError::GetServerInfo
+//         );
+//         Ok(wrapper.apilist)
+//     }
+// }

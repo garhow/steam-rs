@@ -8,7 +8,7 @@ use serde_json::Value;
 
 use crate::{
     errors::{ErrorHandle, SteamEconomyError},
-    macros::{do_http, gen_args, optional_argument},
+    macros::{do_http, optional_argument, EndPoint},
     Steam, BASE,
 };
 
@@ -114,31 +114,14 @@ pub struct Tag {
     pub category_name: String,
 }
 
-impl Steam {
-    /// Retrieves asset class information for a specified app.
-    ///
-    /// # Arguments
-    ///
-    /// * `appid` - The ID of the application (game) for which to retrieve asset class information. Must be a steam economy app.
-    /// * `language` - An optional parameter specifying the user's local language.
-    /// * `class_count` - Number of classes requested. Must be at least one.
-    /// * `classid0` - Class ID of the nth class.
-    /// * `instanceid0` - Instance ID of the nth class.
-    ///
-    /// Note: This endpoint gets modified to provide easier access to the data! This will not give an exact copy of the data outputed by the API.
-    pub async fn get_asset_class_info(
-        &self,
-        appid: u32,
-        language: Option<&str>,
-        class_count: u32,
-        classid0: u64,
-        instanceid0: Option<u32>,
-    ) -> Result<HashMap<String, AssetClassInfo>, SteamEconomyError> {
-        let key = &self.api_key.clone();
-        let args = gen_args!(key, appid, class_count, classid0)
-            + &optional_argument!(language, instanceid0);
-        let url = format!("{}/{}/{}/v{}/?{}", BASE, INTERFACE, ENDPOINT, VERSION, args);
-
+EndPoint!(
+    get_asset_class_info,
+    GetAssetClassReq,
+    format!("{}/{}/{}/v{}/", BASE, INTERFACE, ENDPOINT, VERSION),
+    HashMap<String, AssetClassInfo>,
+    ( appid: u32,class_count: u32,classid0: u64 ),
+    [ instanceid0: Option<u32>,language: Option<String> ],
+    async fn internal(url: String) -> Result<HashMap<String, AssetClassInfo>, SteamEconomyError> {
         let response = do_http!(
             url,
             UncleanAssetClassInfo,
@@ -149,7 +132,44 @@ impl Steam {
 
         Ok(response)
     }
-}
+);
+
+// impl Steam {
+//     /// Retrieves asset class information for a specified app.
+//     ///
+//     /// # Arguments
+//     ///
+//     /// * `appid` - The ID of the application (game) for which to retrieve asset class information. Must be a steam economy app.
+//     /// * `language` - An optional parameter specifying the user's local language.
+//     /// * `class_count` - Number of classes requested. Must be at least one.
+//     /// * `classid0` - Class ID of the nth class.
+//     /// * `instanceid0` - Instance ID of the nth class.
+//     ///
+//     /// Note: This endpoint gets modified to provide easier access to the data! This will not give an exact copy of the data outputed by the API.
+//     pub async fn get_asset_class_info(
+//         &self,
+//         appid: u32,
+//         language: Option<&str>,
+//         class_count: u32,
+//         classid0: u64,
+//         instanceid0: Option<u32>,
+//     ) -> Result<HashMap<String, AssetClassInfo>, SteamEconomyError> {
+//         let key = &self.api_key.clone();
+//         let args = gen_args!(key, appid, class_count, classid0)
+//             + &optional_argument!(language, instanceid0);
+//         let url = format!("{}/{}/{}/v{}/?{}", BASE, INTERFACE, ENDPOINT, VERSION, args);
+
+//         let response = do_http!(
+//             url,
+//             UncleanAssetClassInfo,
+//             ErrorHandle,
+//             SteamEconomyError::GetAssetClassInfo
+//         )
+//         .clean()?;
+
+//         Ok(response)
+//     }
+// }
 
 impl UncleanAssetClassInfo {
     pub fn clean(mut self) -> Result<HashMap<String, AssetClassInfo>, SteamEconomyError> {

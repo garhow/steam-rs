@@ -7,7 +7,7 @@ use serde_json::{from_value, Value};
 
 use crate::{
     errors::{ErrorHandle, SteamUserError},
-    macros::{do_http, optional_argument},
+    macros::{do_http, optional_argument, EndPoint},
     steam_id::{de_steamid_from_str, SteamId},
     Steam, BASE,
 };
@@ -67,29 +67,45 @@ struct Wrapper {
     friends_list: Option<FriendsList>,
 }
 
-impl Steam {
-    /// Get a user's friend list.
-    ///
-    /// # Arguments
-    ///
-    /// * `steam_id` - The SteamID of the user.
-    /// * `relationship` - Optional relationship type (e.g., `Relationship::Friend`).
-    pub async fn get_friend_list(
-        &self,
-        steam_id: SteamId,                  // SteamID of user
-        relationship: Option<Relationship>, // relationship type (ex: Relationship::Friend)
-    ) -> Result<Vec<Friend>, SteamUserError> {
-        let query = format!(
-            "?key={}&steamid={}{}",
-            &self.api_key,
-            steam_id,
-            optional_argument!(relationship)
-        );
-        let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
+EndPoint!(
+    get_friend_list,
+    GetFriendListReq,
+    format!("{}/{}/{}/v{}/", BASE, INTERFACE, ENDPOINT, VERSION),
+    Vec<Friend>,
+    ( steam_id: SteamId ),
+    [ relationship: Option<Relationship> ],
+    async fn internal(url: String) -> Result<Vec<Friend>, SteamUserError> {
         let json = do_http!(url, Value, ErrorHandle, SteamUserError::GetFriendList);
-        let wrapper: Wrapper =
-            ErrorHandle!(from_value(json.to_owned()), SteamUserError::GetFriendList);
+        let wrapper: Wrapper = ErrorHandle!(from_value(json.to_owned()), SteamUserError::GetFriendList);
 
+            // TODO: Correct error handling here
         Ok(wrapper.friends_list.unwrap().friends)
     }
-}
+);
+
+// impl Steam {
+//     /// Get a user's friend list.
+//     ///
+//     /// # Arguments
+//     ///
+//     /// * `steam_id` - The SteamID of the user.
+//     /// * `relationship` - Optional relationship type (e.g., `Relationship::Friend`).
+//     pub async fn get_friend_list(
+//         &self,
+//         steam_id: SteamId,                  // SteamID of user
+//         relationship: Option<Relationship>, // relationship type (ex: Relationship::Friend)
+//     ) -> Result<Vec<Friend>, SteamUserError> {
+//         let query = format!(
+//             "?key={}&steamid={}{}",
+//             &self.api_key,
+//             steam_id,
+//             optional_argument!(relationship)
+//         );
+//         let url = format!("{}/{}/{}/v{}/{}", BASE, INTERFACE, ENDPOINT, VERSION, query);
+//         let json = do_http!(url, Value, ErrorHandle, SteamUserError::GetFriendList);
+//         let wrapper: Wrapper =
+//             ErrorHandle!(from_value(json.to_owned()), SteamUserError::GetFriendList);
+
+//         Ok(wrapper.friends_list.unwrap().friends)
+//     }
+// }

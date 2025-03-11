@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     errors::{ErrorHandle, SteamUserAuthError},
-    macros::do_http,
+    macros::{do_http, EndPoint},
     Steam, BASE,
 };
 
@@ -38,16 +38,14 @@ struct Wrapper {
     response: WrapperParams,
 }
 
-impl Steam {
-    pub async fn authenticate_user_ticket(
-        &self,
-        app_id: u32,
-        ticket: &str,
-    ) -> Result<TicketAuthResponse, SteamUserAuthError> {
-        let key = &self.api_key.clone();
-        let url = format!(
-            "{BASE}/{INTERFACE}/{ENDPOINT}/v{VERSION}/?key={key}&appid={app_id}&ticket={ticket}"
-        );
+EndPoint!(
+    authenticate_user_ticket,
+    AuthUserTicketReq,
+    format!("{BASE}/{INTERFACE}/{ENDPOINT}/v{VERSION}/"),
+    TicketAuthResponse,
+    ( app_id: u32, ticket: String),
+    [ ],
+    async fn internal(url: String) -> Result<TicketAuthResponse, SteamUserAuthError> {
         let wrapper = do_http!(
             url,
             Wrapper,
@@ -56,4 +54,24 @@ impl Steam {
         );
         Ok(wrapper.response.params)
     }
-}
+);
+
+// impl Steam {
+//     pub async fn authenticate_user_ticket(
+//         &self,
+//         app_id: u32,
+//         ticket: &str,
+//     ) -> Result<TicketAuthResponse, SteamUserAuthError> {
+//         let key = &self.api_key.clone();
+//         let url = format!(
+//             "{BASE}/{INTERFACE}/{ENDPOINT}/v{VERSION}/?key={key}&appid={app_id}&ticket={ticket}"
+//         );
+//         let wrapper = do_http!(
+//             url,
+//             Wrapper,
+//             ErrorHandle,
+//             SteamUserAuthError::AuthenticateUserTicket
+//         );
+//         Ok(wrapper.response.params)
+//     }
+// }

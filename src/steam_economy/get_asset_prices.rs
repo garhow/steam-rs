@@ -7,7 +7,7 @@ use serde_json::{from_value, Value};
 
 use crate::{
     errors::{ErrorHandle, SteamEconomyError},
-    macros::{do_http, gen_args, optional_argument},
+    macros::{do_http, optional_argument, EndPoint},
     Steam, BASE,
 };
 
@@ -65,24 +65,14 @@ struct Wrapper {
     result: Option<AssetPrices>,
 }
 
-impl Steam {
-    /// Retrieves asset prices for a specified app.
-    ///
-    /// # Arguments
-    ///
-    /// * `appid` - The ID of the application (game) for which to retrieve asset prices. Must be a Steam economy app.
-    /// * `language` - An optional parameter specifying the user's local language.
-    /// * `currency` - An optional parameter specifying the currency to filter for.
-    pub async fn get_asset_prices(
-        &self,
-        appid: u32,
-        language: Option<&str>,
-        currency: Option<&str>,
-    ) -> Result<AssetPrices, SteamEconomyError> {
-        let key = &self.api_key.clone();
-        let args = gen_args!(key, appid) + &optional_argument!(language, currency);
-        let url = format!("{}/{}/{}/v{}/?{}", BASE, INTERFACE, ENDPOINT, VERSION, args);
-
+EndPoint!(
+    get_asset_prices,
+    AssetPricesReq,
+    format!("{}/{}/{}/v{}/", BASE, INTERFACE, ENDPOINT, VERSION),
+    AssetPrices,
+    ( appid: u32 ),
+    [ language: Option<String>, currency: Option<String>],
+    async fn internal(url: String) -> Result<AssetPrices, SteamEconomyError> {
         let json = do_http!(url, Value, ErrorHandle, SteamEconomyError::GetAssetPrices);
         let response: Wrapper = ErrorHandle!(
             from_value(json.to_owned()),
@@ -91,4 +81,32 @@ impl Steam {
 
         Ok(response.result.unwrap())
     }
-}
+);
+
+// impl Steam {
+//     /// Retrieves asset prices for a specified app.
+//     ///
+//     /// # Arguments
+//     ///
+//     /// * `appid` - The ID of the application (game) for which to retrieve asset prices. Must be a Steam economy app.
+//     /// * `language` - An optional parameter specifying the user's local language.
+//     /// * `currency` - An optional parameter specifying the currency to filter for.
+//     pub async fn get_asset_prices(
+//         &self,
+//         appid: u32,
+//         language: Option<&str>,
+//         currency: Option<&str>,
+//     ) -> Result<AssetPrices, SteamEconomyError> {
+//         let key = &self.api_key.clone();
+//         let args = gen_args!(key, appid) + &optional_argument!(language, currency);
+//         let url = format!("{}/{}/{}/v{}/?{}", BASE, INTERFACE, ENDPOINT, VERSION, args);
+
+//         let json = do_http!(url, Value, ErrorHandle, SteamEconomyError::GetAssetPrices);
+//         let response: Wrapper = ErrorHandle!(
+//             from_value(json.to_owned()),
+//             SteamEconomyError::GetAssetPrices
+//         );
+
+//         Ok(response.result.unwrap())
+//     }
+// }

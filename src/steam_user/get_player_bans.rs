@@ -1,11 +1,13 @@
 //! Implements the `GetPlayerBans` endpoint
 
+use std::fmt::Display;
+
 use serde::{Deserialize, Serialize};
 use serde_json::{from_value, Value};
 
 use crate::{
     errors::{ErrorHandle, SteamUserError},
-    macros::do_http,
+    macros::{do_http, EndPoint},
     steam_id::SteamId,
     Steam, BASE,
 };
@@ -56,6 +58,23 @@ pub struct Player {
     pub economy_ban: String,
 }
 
+// EndPoint!(
+//     get_player_bans,
+//     GetPlayerBansReq,
+//     format!("{}/{}/{}/v{}/", BASE, INTERFACE, ENDPOINT, VERSION),
+//     Vec<Player>,
+//     ( steam_ids: Vec<SteamId> ),
+//     [ ],
+//     async fn internal(url: String) -> Result<Vec<Player>, SteamUserError> {
+//         let json = do_http!(url, Value, ErrorHandle, SteamUserError::GetPlayerBans);
+//         let wrapper: Wrapper =
+//             ErrorHandle!(from_value(json.to_owned()), SteamUserError::GetPlayerBans);
+
+//         Ok(wrapper.players)
+//     }
+// );
+
+// TODO: This requires a macro rework
 impl Steam {
     /// Get player ban/probation status.
     ///
