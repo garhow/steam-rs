@@ -49,3 +49,9 @@ async fn new_smart() {
     sid.set_account_universe(Universe::Internal as u64).unwrap();
     assert_eq!(Universe::Internal, sid.get_universe());
 }
+
+#[tokio::test]
+async fn from_account_id() {
+    let sid = SteamId::from_account_id(322428629);
+    assert_eq!(Ok(76561198282694357), sid.map(|s| s.0))
+}

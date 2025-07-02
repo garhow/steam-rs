@@ -186,6 +186,17 @@ impl SteamId {
             .map_err(|_| SteamIdError::Invalid)
     }
 
+    /// Creates a new [AccountType::Individual] `SteamId` in public universe from a given account id.
+    pub fn from_account_id(account_id: u32) -> Result<Self, SteamIdError> {
+        let mut steam_id = SteamId::new(0);
+        steam_id.set_account_id(account_id as u64)?;
+        steam_id.set_account_instance(AccountInstance::Desktop as u64)?;
+        steam_id.set_account_type(AccountType::Individual as u64)?;
+        steam_id.set_account_universe(Universe::Public as u64)?;
+
+        Ok(steam_id)
+    }
+
     /// Set account universe directly.
     pub fn set_account_universe(&mut self, value: u64) -> Result<(), SteamIdError> {
         if value > 0xFF {
