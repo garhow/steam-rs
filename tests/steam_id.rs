@@ -1,4 +1,4 @@
-use steam_rs::steam_id::SteamId;
+use steam_rs::steam_id::{SteamId, Universe};
 
 mod common;
 
@@ -32,4 +32,20 @@ pub async fn get_account_type() {
 #[tokio::test]
 pub async fn to_id2_string() {
     println!("{:?}", SteamId::new(EXAMPLE_STEAM_ID64).to_id2_string());
+}
+
+#[tokio::test]
+async fn new_smart() {
+    let sid = SteamId::new_smart("STEAM_1:1:161214314");
+    assert!(sid.is_ok());
+
+    let mut sid = sid.unwrap();
+    assert_eq!(76561198282694357, sid.0);
+    assert_eq!(322428629, sid.get_account_id());
+    assert_eq!("STEAM_1:1:161214314".to_owned(), sid.to_id2_string());
+    assert_eq!("[U:1:322428629]".to_owned(), sid.to_id3_string());
+    assert_eq!(Universe::Public, sid.get_universe());
+
+    sid.set_account_universe(Universe::Internal as u64).unwrap();
+    assert_eq!(Universe::Internal, sid.get_universe());
 }
