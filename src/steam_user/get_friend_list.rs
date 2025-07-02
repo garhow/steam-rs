@@ -8,7 +8,7 @@ use serde_json::{from_value, Value};
 use crate::{
     errors::{ErrorHandle, SteamUserError},
     macros::{do_http, optional_argument},
-    steam_id::{de_steamid_from_str, SteamId},
+    steam_id::SteamId,
     Steam, BASE,
 };
 
@@ -41,7 +41,6 @@ impl fmt::Display for Relationship {
 pub struct Friend {
     /// The 64 bit ID of the friend.
     #[serde(rename = "steamid")]
-    #[serde(deserialize_with = "de_steamid_from_str")]
     pub steam_id: SteamId,
 
     /// Role in relation to the given SteamID.
