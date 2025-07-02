@@ -48,7 +48,7 @@ static STEAM3_REGEX: LazyLock<Regex> = LazyLock::new(|| Regex::new(STEAM3_REGEX_
 /// println!("SteamId: {}", steam_id);
 ///
 /// let smart_steam_id = SteamId::new_smart("STEAM_1:0:11101");
-/// println!("SteamId: {}", steam_id);
+/// println!("SteamId: {}", smart_steam_id);
 /// ```
 ///
 /// # Conversions
