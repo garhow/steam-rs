@@ -216,6 +216,19 @@ pub struct PlaytimeStats {
     pub num_sessions: String,
 }
 
+/// Represents a file a given [File] depends on.
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct ChildFile {
+    /// The child's published file ID.
+    #[serde(rename = "publishedfileid")]
+    pub published_file_id: String,
+    /// The sort order of the child file.
+    #[serde(rename = "sortorder")]
+    pub sort_order: u16,
+    /// The child's filetype
+    pub file_type: u8,
+}
+
 /// Represents file information retrieved from the Steam Workshop.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct File {
@@ -303,6 +316,9 @@ pub struct File {
     pub num_children: u32,
     /// The number of reports.
     pub num_reports: u32,
+    /// The IDs of child items
+    #[serde(default)]
+    pub children: Vec<ChildFile>,
     /// Previews associated with the file.
     #[serde(default)]
     pub previews: Vec<Preview>,
