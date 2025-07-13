@@ -6,7 +6,7 @@ use serde_json::{from_value, Value};
 use crate::{
     errors::{ErrorHandle, SteamUserError},
     macros::do_http,
-    steam_id::{de_steamid_from_str, SteamId},
+    steam_id::SteamId,
     Steam, BASE,
 };
 
@@ -22,7 +22,6 @@ const VERSION: &str = "0002";
 pub struct Player {
     /// The user's 64-bit ID
     #[serde(rename = "steamid")]
-    #[serde(deserialize_with = "de_steamid_from_str")]
     pub steam_id: SteamId,
 
     /// User's display name.

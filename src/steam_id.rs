@@ -4,7 +4,7 @@ use std::sync::LazyLock;
 use num_enum::TryFromPrimitive;
 use pomsky_macro::pomsky;
 use regex::{Match, Regex};
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 const STEAM2_REGEX_STR: &str = pomsky! {
     ^
@@ -83,7 +83,7 @@ static STEAM3_REGEX: LazyLock<Regex> = LazyLock::new(|| Regex::new(STEAM3_REGEX_
 ///
 /// println!("Parsed SteamId: {}", steam_id);
 /// ```
-#[derive(Clone, Copy, Debug, Deserialize, Eq, PartialEq, Hash, Serialize)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash)]
 pub struct SteamId(pub u64);
 impl fmt::Display for SteamId {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -333,32 +333,23 @@ impl From<String> for SteamId {
     }
 }
 
-/// Deserializes the `SteamId` from a `String`
-pub fn de_steamid_from_str<'de, D>(deserializer: D) -> Result<SteamId, D::Error>
-where
-    D: serde::Deserializer<'de>,
-{
-    let s = String::deserialize(deserializer)?;
-    Ok(SteamId::from(s))
+impl<'de> Deserialize<'de> for SteamId {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s = String::deserialize(deserializer)?;
+        Ok(SteamId::from(s))
+    }
 }
 
-fn callback<'de, D>(deserializer: D) -> Result<SteamId, D::Error>
-where
-    D: Deserializer<'de>,
-{
-    Ok(SteamId::from(String::deserialize(deserializer)?))
-}
-
-#[derive(Debug, Deserialize)]
-struct WrappedSteamId(#[serde(deserialize_with = "callback")] SteamId);
-
-pub fn de_steamid_from_str_opt<'de, D>(deserializer: D) -> Result<Option<SteamId>, D::Error>
-where
-    D: serde::Deserializer<'de>,
-{
-    Option::<WrappedSteamId>::deserialize(deserializer).map(
-        |opt_wrapped: Option<WrappedSteamId>| opt_wrapped.map(|wrapped: WrappedSteamId| wrapped.0),
-    )
+impl Serialize for SteamId {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
 }
 
 /// Error type for parsing a `SteamId` from a `string`.

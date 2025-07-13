@@ -1,6 +1,5 @@
 //! Implements the `QueryLoginToken` endpoint
 
-use crate::steam_id::de_steamid_from_str;
 use serde::{Deserialize, Serialize};
 use serde_json::{from_value, Value};
 
@@ -26,7 +25,6 @@ pub struct LoginTokenResponse {
     is_banned: bool,
     expires: u32,
     #[serde(rename = "steamid")]
-    #[serde(deserialize_with = "de_steamid_from_str")]
     server_steam_id: SteamId,
 }
 
