@@ -14,3 +14,4 @@ pub mod get_number_of_current_players;
 pub mod get_player_achievements;
 pub mod get_schema_for_game;
 pub mod get_user_stats_for_game;
+pub mod get_global_stats_for_game;

@@ -1,13 +1,28 @@
 macro_rules! do_http {
     ($url:ident, $output_type:ty, $error_handle:ident, $error:expr) => {
         if let Ok(response) = reqwest::get($url).await {
-            match response.status() {
-                reqwest::StatusCode::OK => {$error_handle!(response.json::<$output_type>().await, $error)}
+
+            let status = response.status();
+
+            match status {
+                reqwest::StatusCode::OK => {$error_handle!({
+                    let text = response.text().await.unwrap();
+                    #[cfg(test)] println!("{}", text);
+                    serde_json::from_str::<$output_type>(&text)
+                }, $error)}
                 reqwest::StatusCode::NOT_FOUND => {$error_handle!(response.json::<$output_type>().await, $error)}
                 _ => {
+                    let data = response.text().await;
+                    let remark;
+                    if data.is_ok() {
+                        remark = format!(", alongside data: '{}'", data.unwrap());
+                    } else {
+                        remark = String::new();
+                    }
+
                     return Err($error(format!(
-                        "Expected 200 Status, got {}",
-                        response.status()
+                        "Expected 200 Status, got {}{}",
+                        status, remark
                     )));
                 }
             }
@@ -154,6 +169,7 @@ pub(crate) use gen_args;
 //     fn endpoint_name() -> &'static str;
 // }
 
+/// Macro to generate a builder pattern for an endpoint if it is needed
 macro_rules! EndPoint {
     (
         $fn_name:ident, // Name of the function to generate
@@ -192,7 +208,7 @@ macro_rules! EndPoint {
                 let key = self._steam.api_key.clone();
                 req.push_str(&gen_args!(key));
                 $(
-                    let $arg_name1 = self.$arg_name1;
+                    let $arg_name1 = self.$arg_name1.clone();
                     req.push_str(&gen_args!($arg_name1));
                 )*
                 $(

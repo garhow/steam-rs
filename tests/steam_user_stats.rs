@@ -54,3 +54,13 @@ pub async fn get_schema_for_game() {
         .await
         .is_ok());
 }
+
+
+#[tokio::test]
+pub async fn get_global_stats_for_game() {
+    let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
+
+    #[allow(deprecated)]
+    let request = steam.get_global_stats_for_game(EXAMPLE_APP_ID, 5, vec!["stat_deaths".to_string()]).await.unwrap();
+    // request.send().await.unwrap();
+}

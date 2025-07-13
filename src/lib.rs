@@ -82,7 +82,7 @@ const BASE: &str = "https://api.steampowered.com";
 #[cfg(feature = "partner")]
 const BASE: &str = "https://partner.steam-api.com";
 
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct Steam {
     api_key: String,
 }

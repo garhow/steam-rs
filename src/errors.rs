@@ -49,6 +49,7 @@ error!(SteamUserStatsError {
     GetPlayerAchievements(String),
     GetSchemaForGame(String),
     GetUserStatsForGame(String),
+    GetGlobalStatsForGame(String),
 });
 
 error!(EconServiceError{
