@@ -76,7 +76,11 @@ pub mod steam_webapi_util;
 pub mod errors;
 mod macros; // This remains private
 
+#[cfg(not(feature = "partner"))]
 const BASE: &str = "https://api.steampowered.com";
+
+#[cfg(feature = "partner")]
+const BASE: &str = "https://partner.steam-api.com";
 
 pub struct Steam {
     api_key: String,

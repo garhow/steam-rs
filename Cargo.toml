@@ -27,3 +27,7 @@ tokio = { version = "1.43.1", features = ["full"] }
 
 [dev-dependencies]
 tokio-test = "0.4.3"
+
+[features]
+default = []
+partner = []
