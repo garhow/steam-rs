@@ -60,7 +60,10 @@ pub async fn get_schema_for_game() {
 pub async fn get_global_stats_for_game() {
     let steam = Steam::new(&std::env::var("STEAM_API_KEY").expect("Missing an API key"));
 
-    #[allow(deprecated)]
-    let request = steam.get_global_stats_for_game(EXAMPLE_APP_ID, 5, vec!["stat_deaths".to_string()]).await.unwrap();
-    // request.send().await.unwrap();
+    let request = steam.get_global_stats_for_game(3247750, 3, vec!["targetsKilled".to_string(), "damageTaken".to_string(), "playersKilled".to_string()]).await.unwrap();
+    println!("{:#?}", request);
+    assert!(request.globalstats.get("playersKilled").is_some());
+    assert!(request.globalstats.get("damageTaken").is_some());
+    assert!(request.globalstats.get("targetsKilled").is_some());
+    assert!(request.globalstats.get("playersKilled").unwrap().total.is_some());
 }

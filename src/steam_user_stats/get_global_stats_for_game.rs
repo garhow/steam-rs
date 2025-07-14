@@ -3,7 +3,6 @@
 
 use std::collections::HashMap;
 
-use reqwest::Url;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
@@ -16,6 +15,13 @@ use super::INTERFACE;
 const ENDPOINT: &str = "GetGlobalStatsForGame";
 const VERSION: &str = "1";
 
+#[doc(hidden)]
+#[derive(Deserialize, Serialize, Debug)]
+/// Intermediate struct (this is meant to be private)
+struct GlobalStatsResponse {
+    pub response: GlobalStats,
+}
+
 // This is the best thing I could come up with
 #[derive(Deserialize, Serialize, Debug)]
 pub struct GlobalStats {
@@ -25,27 +31,19 @@ pub struct GlobalStats {
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Stat {
-    pub total: f64
+    pub total: Option<String>
 }
 
 impl Steam {
-    #[doc(hidden)]
-    #[deprecated(
-        note = "This function is implemented but not tested yet."
-    )]
     pub async fn get_global_stats_for_game(&self, appid: u32, count: u32, names: Vec<String>) -> Result<GlobalStats, SteamUserStatsError> {
         let url = format!("{}/{}/{}/v{}/", BASE, INTERFACE, ENDPOINT, VERSION);
-        #[cfg(test)] println!("{}", url);
 
         let mut args = gen_args!( appid, count);
-        #[cfg(test)] println!("{:?}", args);
         for (i, name) in names.iter().enumerate() {
             args.push_str(&format!("&name[{i}]={}", name));
         }
-        #[cfg(test)] println!("{:?}", args);
 
         let url = format!("{url}?{args}");
-        #[cfg(test)] println!("{}", url);
         // Most a carbon copy of the macro
         if let Ok(response) = reqwest::get(url).await {
 
@@ -55,8 +53,8 @@ impl Steam {
                 reqwest::StatusCode::OK => {
                     let txt = ErrorHandle!(response.text().await, SteamUserStatsError::GetGlobalStatsForGame);
                     let data = ErrorHandle!(serde_json::from_str::<Value>(&txt), SteamUserStatsError::GetGlobalStatsForGame);
-                    if let Ok(data) = serde_json::from_value::<GlobalStats>(data.clone()) {
-                        return Ok(data);
+                    if let Ok(data) = serde_json::from_value::<GlobalStatsResponse>(data.clone()) {
+                        return Ok(data.response);
                     } else {
                         return Err(SteamUserStatsError::GetGlobalStatsForGame(format!("{}", data["response"]["error"].as_str().unwrap())));
                     }
