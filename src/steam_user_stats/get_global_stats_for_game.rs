@@ -35,6 +35,15 @@ pub struct Stat {
 }
 
 impl Steam {
+    /// Get the global stats for a game
+    /// 
+    /// # Arguments
+    /// 
+    /// * `appid` - The app ID for which to retrieve the stats for.
+    /// * `count` - The number of stats to return (must be between 1,100 and equal to the number of names).
+    /// * `names` - The names of the stats to return.
+    /// 
+    /// The `count` option being provided to the consumer needs to be reviewed as it could be automatically generated (`names.len()+1`)
     pub async fn get_global_stats_for_game(&self, appid: u32, count: u32, names: Vec<String>) -> Result<GlobalStats, SteamUserStatsError> {
         let url = format!("{}/{}/{}/v{}/", BASE, INTERFACE, ENDPOINT, VERSION);
 
