@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 use crate::{
     errors::{ErrorHandle, PublishedFileServiceError},
     macros::{do_http, optional_argument},
-    steam_id::{de_steamid_from_str, SteamId},
+    steam_id::SteamId,
     Steam, BASE,
 };
 
@@ -225,7 +225,6 @@ pub struct File {
     #[serde(rename = "publishedfileid")]
     pub published_file_id: String,
     /// The Steam ID of the creator.
-    #[serde(deserialize_with = "de_steamid_from_str")]
     pub creator: SteamId,
     /// The ID of the application (game) that created the file.
     pub creator_appid: u32,
