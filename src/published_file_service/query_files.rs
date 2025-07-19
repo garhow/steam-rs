@@ -16,6 +16,18 @@ use super::INTERFACE;
 const ENDPOINT: &str = "QueryFiles";
 const VERSION: &str = "1";
 
+/// Encodes an ordered iterator into a URL array that Steam's web APIs accepts.
+fn url_encode_iter<T>(name: &str, i: impl IntoIterator<Item = T>) -> String
+where
+    T: ToString,
+{
+    i.into_iter()
+        .enumerate()
+        .map(|(i, item)| format!("&{name}[{i}]={}", item.to_string()))
+        .collect::<Vec<_>>()
+        .concat()
+}
+
 /// Represents the query types used when querying published files on Steam Workshop.
 #[derive(Debug)]
 pub enum PublishedFileQueryType {
@@ -386,11 +398,11 @@ impl Steam {
         numperpage: Option<u32>, // numperpage
         creator_app_id: u32,
         app_id: u32,
-        required_tags: &str,
-        excluded_tags: &str,
+        required_tags: Vec<String>,
+        excluded_tags: Vec<String>,
         match_all_tags: Option<bool>,
-        required_flags: &str,
-        omitted_flags: &str,
+        required_flags: Vec<String>,
+        omitted_flags: Vec<String>,
         search_text: &str,
         file_type: PublishedFileInfoMatchingFileType,
         child_published_file_id: u64,
@@ -418,10 +430,10 @@ impl Steam {
             format!("&cursor={}", cursor),
             format!("&creator_appid={}", creator_app_id),
             format!("&appid={}", app_id),
-            format!("&requiredtags={}", required_tags),
-            format!("&excludedtags={}", excluded_tags),
-            format!("&required_flags={}", required_flags),
-            format!("&omitted_flags={}", omitted_flags),
+            url_encode_iter("requiredtags", required_tags),
+            url_encode_iter("excludedtags", excluded_tags),
+            url_encode_iter("required_flags", required_flags),
+            url_encode_iter("omitted_flags", omitted_flags),
             format!("&search_text={}", search_text),
             format!("&filetype={}", file_type),
             format!("&child_publishedfileid={}", child_published_file_id),
