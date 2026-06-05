@@ -65,7 +65,7 @@ impl Steam {
             optional_argument!(max_length, "maxlength"),
             optional_argument!(end_date, "enddate"),
             optional_argument!(count),
-            optional_argument!(feeds),
+            feeds.map(|v| format!("&feeds={v}")).unwrap_or_default(),
         ];
 
         let query = format!("?appid={}{}", appid, optional_arguments.concat());
